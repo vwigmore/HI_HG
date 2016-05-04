@@ -45,8 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\src\controllers\CameraRayCast.cs" />
+     <Compile Include="Assets\src\controllers\GrabController.cs" />
      <Compile Include="Assets\src\controllers\PlayerController.cs" />
+     <Compile Include="Assets\src\model\Manager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
