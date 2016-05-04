@@ -28,6 +28,7 @@ t.n.nguyen@student.tudelft.nl 4287118
 * Clone or download the repository as a zip file.
 * Open up Unity and import project, import folder named 'Marketsim'
 * To run, press the play button in the editor of Unity.
+* To test the simulation, use keys wasd to move, look around with mouse, select an object (bottles) bij standing near to it and left-click it. To jump press space, to crouch down press left ctrl, to stand up press left shift. 
 
 # About
 (Draft version)
