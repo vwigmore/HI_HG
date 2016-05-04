@@ -29,4 +29,11 @@ t.n.nguyen@student.tudelft.nl 4287118
 * Open up Unity and import project, import folder named 'Marketsim'
 * To run, press the play button in the editor of Unity.
 
+# About
+(Draft version)
+The structure of the project is as follows:
+The Asset folder contains source code and 3D models.
+For the prototype, there are two scripts:
+- The GrabController.cs script in Assets/src/controllers/, controlling the grab function of the player in the simulation.
+- The PlayerController.cs script in Assets/src/controllers/, controlling the player and the camera in the simulation.
 
