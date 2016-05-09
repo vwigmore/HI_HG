@@ -35,6 +35,8 @@ public class GrabController : MonoBehaviour
             //Transform objectHit = hit.transform;
             GameObject objectHit = hit.transform.gameObject;
 
+            Debug.DrawLine(camera.transform.position, hit.point, Color.red);
+
             // If object is a pickup object
             if (objectHit.tag.Equals("pickup") && inProximity(hit.transform))
             {
@@ -60,10 +62,12 @@ public class GrabController : MonoBehaviour
                 grabbing = selected;
             else // if object is already grabbed, let go.
             {
-                Vector3 newpos = camera.transform.position + camera.transform.forward * 2;
-                newpos.y = 0f;
+                //Vector3 newpos = camera.transform.position + camera.transform.forward * 2;
+                Vector3 newpos = hit.point;
+                //newpos.y = 0f;
                 grabbing.transform.position = newpos;
                 grabbing.GetComponent<Collider>().enabled = true;
+                grabbing.GetComponent<Rigidbody>().Sleep();
                 grabbing = null;
             }
         }
