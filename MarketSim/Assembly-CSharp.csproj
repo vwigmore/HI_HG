@@ -45,6 +45,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Glove.cs" />
+     <Compile Include="Assets\HandController.cs" />
+     <Compile Include="Assets\HandSimulator.cs" />
+     <Compile Include="Assets\Manus.cs" />
      <Compile Include="Assets\Script\Kinect\KinectImgControllers\DisplayColor.cs" />
      <Compile Include="Assets\Script\Kinect\KinectImgControllers\DisplayDepth.cs" />
      <Compile Include="Assets\Script\Kinect\KinectModelControllers\KinectModelControllerV2.cs" />
@@ -60,6 +64,7 @@
      <Compile Include="Assets\src\controllers\PlayerController.cs" />
      <Compile Include="Assets\src\model\Manager.cs" />
      <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
