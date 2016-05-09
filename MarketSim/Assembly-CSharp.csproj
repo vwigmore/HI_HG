@@ -61,7 +61,9 @@
      <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectSensor.cs" />
      <Compile Include="Assets\Script\Kinect\KinectWrapper\SkeletonWrapper.cs" />
      <Compile Include="Assets\src\controllers\GrabController.cs" />
+     <Compile Include="Assets\src\controllers\LeftHandController.cs" />
      <Compile Include="Assets\src\controllers\PlayerController.cs" />
+     <Compile Include="Assets\src\controllers\RightHandController.cs" />
      <Compile Include="Assets\src\model\Manager.cs" />
      <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
