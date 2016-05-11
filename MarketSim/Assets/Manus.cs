@@ -48,53 +48,7 @@ namespace ManusMachina {
         internal static extern int ManusExit();
 #endif // UNITY_STANDALONE
 
-#if UNITY_ANDROID
-        private static AndroidJavaObject Android;
 
-        internal static int ManusGetData(GLOVE_HAND hand, ref GLOVE_DATA data, uint timeout = 0) {
-            float[] AndroidData = Android.Call<float[]>("getData", (int)hand);
-            if (AndroidData.Length != 15) return ERROR;
-
-            data.Acceleration = new GLOVE_VECTOR(new List<float>(AndroidData).GetRange(0, 3).ToArray());
-            data.Euler = new GLOVE_VECTOR(new List<float>(AndroidData).GetRange(3, 3).ToArray());
-            data.Quaternion = new GLOVE_QUATERNION(new List<float>(AndroidData).GetRange(6, 4).ToArray());
-            data.Fingers = new List<float>(AndroidData).GetRange(10, 5).ToArray();
-            return SUCCESS;
-        }
-
-        internal static int ManusSetHandedness(GLOVE_HAND hand, bool right_hand) {
-            return Android.Call<int>("setHandedness", (int)hand, right_hand);
-        }
-
-        internal static int ManusSetVibration(GLOVE_HAND hand, float power) {
-            return Android.Call<int>("setVibration", (int)hand, power);
-        }
-
-        internal static int ManusCalibrate(GLOVE_HAND hand, bool gyro = true, bool accel = true, bool fingers = false) {
-            return Android.Call<int>("calibrate", (int)hand, gyro, accel, fingers);
-        }
-
-        internal static int ManusInit() {
-            if (Android == null) {
-                using (AndroidJavaClass jcUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
-                    using (AndroidJavaObject joContext = jcUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity")) {
-                        Android = new AndroidJavaObject("com.manusmachina.labs.manussdk.Unity", joContext);
-                    }
-                }
-                if (null != Android) return SUCCESS;
-            }
-            return ERROR;
-        }
-
-        internal static int ManusExit() {
-            if (Android != null) {
-                Android.Dispose();
-                Android = null;
-                return SUCCESS;
-            }
-            return ERROR;
-        }
-#endif // UNITY_ANDROID
     }
 
 
@@ -147,7 +101,13 @@ namespace ManusMachina {
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     struct GLOVE_POSE {
+        /// <summary>
+        /// Orientation of the hand (palm)
+        /// </summary>
         public GLOVE_QUATERNION orientation;
+        /// <summary>
+        /// Position of the hand (palm)
+        /// </summary>
         public GLOVE_VECTOR position;
     }
 

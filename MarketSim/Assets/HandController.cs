@@ -19,7 +19,7 @@ using ManusMachina;
 
 public class HandController : MonoBehaviour {
     public GLOVE_HAND hand;
-    public Glove glove;
+    private Glove glove;
 
     void Start() {
         Manus.ManusInit();

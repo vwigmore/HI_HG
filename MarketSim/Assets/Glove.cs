@@ -32,8 +32,7 @@ namespace ManusMachina {
         /// <param name="q">Quaternion in Manus format</param>
         /// <returns>Quaternion in Unity format</returns>
         private Quaternion ManusToUnity(GLOVE_QUATERNION q) {
-            //return center * new Quaternion(q.x, q.z, q.y, q.w);
-            return new Quaternion(0, 0, 0, 0);
+            return center * new Quaternion(q.x, q.z, q.y, -q.w);
         }
 
         /// <summary>

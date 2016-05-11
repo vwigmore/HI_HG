@@ -17,8 +17,7 @@
 using UnityEngine;
 using ManusMachina;
 
-public class HandSimulator : MonoBehaviour
-{
+public class HandSimulator : MonoBehaviour {
     private const float timeFactor = 10.0f;
 
     public GLOVE_HAND hand;
@@ -53,8 +52,7 @@ public class HandSimulator : MonoBehaviour
     /// <summary>
     /// Constructor which loads the HandModel
     /// </summary>
-    void Start()
-    {
+    void Start() {
         // Ensure the library initialized correctly.
         Manus.ManusInit();
 
@@ -66,13 +64,10 @@ public class HandSimulator : MonoBehaviour
         // centering mechanism.
         glove.Recenter();
 
-        if (hand == GLOVE_HAND.GLOVE_LEFT)
-        {
+        if (hand == GLOVE_HAND.GLOVE_LEFT) {
             modelObject = Resources.Load<GameObject>("Manus_Handv2_Left");
             animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Left");
-        }
-        else
-        {
+        } else {
             modelObject = Resources.Load<GameObject>("Manus_Handv2_Right");
             animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Right");
         }
@@ -80,12 +75,10 @@ public class HandSimulator : MonoBehaviour
         // Associate the game transforms with the skeletal model.
         gameTransforms = new Transform[5][];
         modelTransforms = new Transform[5][];
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             gameTransforms[i] = new Transform[4];
             modelTransforms[i] = new Transform[4];
-            for (int j = 0; j < 4; j++)
-            {
+            for (int j = 0; j < 4; j++) {
                 gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
                 modelTransforms[i][j] = FindDeepChild(modelObject.transform, "Finger_" + i.ToString() + j.ToString());
             }
@@ -97,17 +90,14 @@ public class HandSimulator : MonoBehaviour
     /// <summary>
     /// Updates a skeletal from glove data
     /// </summary>
-    void Update()
-    {
+    void Update() {
         Quaternion q = glove.Quaternion;
         float[] fingers = glove.Fingers;
         RootTransform.localRotation = q;
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             animationClip.SampleAnimation(modelObject, fingers[i] * timeFactor);
-            for (int j = 0; j < 4; j++)
-            {
+            for (int j = 0; j < 4; j++) {
                 gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
         }
