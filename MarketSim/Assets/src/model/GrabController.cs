@@ -50,27 +50,27 @@ namespace Assets.src.model
         /// <summary>
         /// Detects objects to grab.
         /// </summary>
-        void detectObjects();
+        abstract void detectObjects();
 
         /// <summary>
         /// Grab selected object.
         /// </summary>
-        void grabObject();
+        abstract void grabObject();
 
         /// <summary>
         /// Drop currently grabbed object.
         /// </summary>
-        void dropObject();
+        abstract void dropObject();
 
         /// <summary>
         /// Highlight selected object
         /// </summary>
         /// <param name="obj">Object to highlight</param>
-        void colorSelectedObject(GameObject obj);
+        abstract void colorSelectedObject(GameObject obj);
 
         /// <summary>
         /// Clear previously highlighted objects
         /// </summary>
-        void clearSelectionColors();
+        abstract void clearSelectionColors();
     }
 }
