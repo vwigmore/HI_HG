@@ -14,23 +14,35 @@
    limitations under the License.
  */
 
-using UnityEngine;
 using ManusMachina;
+using UnityEngine;
 
-public class HandController : MonoBehaviour {
+public class HandController : MonoBehaviour
+{
+    #region Fields
+
     public GLOVE_HAND hand;
     public Glove glove;
 
-    void Start() {
+    #endregion Fields
+
+    #region Methods
+
+    private void Start()
+    {
         Manus.ManusInit();
         glove = new Glove(hand);
     }
 
-    void Update() {
+    private void Update()
+    {
         // Add your gameplay code here.
     }
 
-    void onApplicationQuit() {
+    private void onApplicationQuit()
+    {
         Manus.ManusExit();
     }
+
+    #endregion Methods
 }
