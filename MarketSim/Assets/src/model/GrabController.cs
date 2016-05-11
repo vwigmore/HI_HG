@@ -9,7 +9,7 @@ namespace Assets.src.model
     /// <summary>
     /// Controls the grab function.
     /// </summary>
-    internal abstract class Grab
+    internal abstract class GrabController
     {
         #region Fields
 
@@ -64,7 +64,7 @@ namespace Assets.src.model
 
         #endregion Methods
 
- Grab(GameObject grabber)
+ GrabController(GameObject grabber)
         {
             this.grabber = grabber;
             this.player = GameObject.FindGameObjectsWithTag("Player")[0];

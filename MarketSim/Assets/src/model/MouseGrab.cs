@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.src.model
 {
-    internal class MouseGrab : Grab
+    internal class MouseGrab : GrabController
     {
         #region Fields
 

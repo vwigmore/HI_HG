@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.src.model
 {
-    internal class ManusGrab : Grab
+    internal class ManusGrab : GrabController
     {
         #region Methods
 
