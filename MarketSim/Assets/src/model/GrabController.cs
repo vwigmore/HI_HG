@@ -14,7 +14,7 @@ namespace Assets.src.model
         /// <summary>
         /// The GameObject that the grabbed item will follow.
         /// </summary>
-        private GameObject grabber;
+        private  GameObject grabber;
 
         /// <summary>
         /// GameObject player.
@@ -57,6 +57,8 @@ namespace Assets.src.model
         /// </summary>
         public abstract void grabObject();
 
+        public abstract void moveGrabbedObject();
+
         /// <summary>
         /// Drop currently grabbed object.
         /// </summary>
@@ -73,4 +75,5 @@ namespace Assets.src.model
         /// </summary>
         public abstract void clearSelectionColors();
     }
+
 }
