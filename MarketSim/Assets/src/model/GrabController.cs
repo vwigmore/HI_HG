@@ -55,7 +55,7 @@ namespace Assets.src.model
         /// <summary>
         /// Grab selected object.
         /// </summary>
-       public  abstract void grabObject();
+        public abstract void grabObject();
 
         /// <summary>
         /// Drop currently grabbed object.

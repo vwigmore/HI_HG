@@ -31,7 +31,7 @@ namespace ManusMachina {
         internal const int OUT_OF_RANGE = 2;
         internal const int DISCONNECTED = 3;
 
-#if UNITY_STANDALONE //Linux, OSX, Windows
+// UNITY_STANDALONE //Linux, OSX, Windows
         [DllImport("Manus", CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ManusGetData(GLOVE_HAND hand, ref GLOVE_DATA data, uint timeout = 0);
         [DllImport("Manus", CallingConvention = CallingConvention.Cdecl)]
@@ -46,8 +46,7 @@ namespace ManusMachina {
         internal static extern int ManusInit();
         [DllImport("Manus", CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ManusExit();
-#endif // UNITY_STANDALONE
-
+ // UNITY_STANDALONE
 
     }
 
@@ -101,13 +100,7 @@ namespace ManusMachina {
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     struct GLOVE_POSE {
-        /// <summary>
-        /// Orientation of the hand (palm)
-        /// </summary>
         public GLOVE_QUATERNION orientation;
-        /// <summary>
-        /// Position of the hand (palm)
-        /// </summary>
         public GLOVE_VECTOR position;
     }
 

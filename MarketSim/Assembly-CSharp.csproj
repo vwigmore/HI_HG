@@ -61,6 +61,7 @@
      <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectSensor.cs" />
      <Compile Include="Assets\Script\Kinect\KinectWrapper\SkeletonWrapper.cs" />
      <Compile Include="Assets\src\controllers\EmulationGrabcontroller.cs" />
+     <Compile Include="Assets\src\controllers\Grab.cs" />
      <Compile Include="Assets\src\controllers\LeftHandController.cs" />
      <Compile Include="Assets\src\controllers\PlayerController.cs" />
      <Compile Include="Assets\src\controllers\RightHandController.cs" />
