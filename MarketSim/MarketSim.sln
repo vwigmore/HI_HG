@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{FFEAE604-9E3E-31CA-6000-DAC76CF202C5}") = "MarketSim", "Assembly-CSharp.csproj", "{F6EE6353-75BC-828A-F6CE-E6D579ACAF9E}"
 EndProject
-Project("{FFEAE604-9E3E-31CA-6000-DAC76CF202C5}") = "MarketSim", "Assembly-CSharp-Editor.csproj", "{C05EF41F-1B5C-E7D9-0C87-E5B1BC9C8465}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{F6EE6353-75BC-828A-F6CE-E6D579ACAF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6EE6353-75BC-828A-F6CE-E6D579ACAF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6EE6353-75BC-828A-F6CE-E6D579ACAF9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C05EF41F-1B5C-E7D9-0C87-E5B1BC9C8465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C05EF41F-1B5C-E7D9-0C87-E5B1BC9C8465}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C05EF41F-1B5C-E7D9-0C87-E5B1BC9C8465}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C05EF41F-1B5C-E7D9-0C87-E5B1BC9C8465}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
