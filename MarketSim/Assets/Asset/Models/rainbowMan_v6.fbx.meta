@@ -3,7 +3,7 @@ guid: c254fcd6c1a5b62409caba4b180ee5cf
 timeCreated: 1441837354
 licenseType: Pro
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 19
   fileIDToRecycleName:
     100000: head
     100002: hip_center
@@ -35,6 +35,17 @@ ModelImporter:
     100054: root_joint
     100056: skeleton
     100058: spine
+    100060: head_end
+    100062: left_fingers_end
+    100064: left_foot_end
+    100066: right_fingers_end
+    100068: right_foot_end
+    100070: head_end_end
+    100072: left_fingers_end_end
+    100074: left_foot_end_end
+    100076: MickeyMouse
+    100078: right_fingers_end_end
+    100080: right_foot_end_end
     400000: head
     400002: hip_center
     400004: left_ankle
@@ -65,11 +76,24 @@ ModelImporter:
     400054: root_joint
     400056: skeleton
     400058: spine
+    400060: head_end
+    400062: left_fingers_end
+    400064: left_foot_end
+    400066: right_fingers_end
+    400068: right_foot_end
+    400070: head_end_end
+    400072: left_fingers_end_end
+    400074: left_foot_end_end
+    400076: MickeyMouse
+    400078: right_fingers_end_end
+    400080: right_foot_end_end
     4300000: mesh
+    4300002: MickeyMouse
     7400000: Take 001
     9500000: //RootNode
     11100000: //RootNode
     13700000: mesh
+    13700002: MickeyMouse
   materials:
     importMaterials: 1
     materialName: 0
@@ -77,6 +101,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -84,9 +109,9 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations:
@@ -100,6 +125,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -176,6 +202,7 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -196,24 +223,25 @@ ModelImporter:
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

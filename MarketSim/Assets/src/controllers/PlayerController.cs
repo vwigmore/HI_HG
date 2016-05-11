@@ -50,6 +50,11 @@ public class PlayerController : MonoBehaviour {
         /* Update movement of player*/
         updateMove();
         updateCrouch();
+
+        GameObject left = GameObject.Find("left_foot");
+        GameObject right = GameObject.Find("right_foot");
+
+        // Debug.Log("left: " + left.transform.position + "\t right:" + right.transform.position);
 	}
 
     void updateMove()
@@ -137,5 +142,10 @@ public class PlayerController : MonoBehaviour {
             }
             pc.center = new Vector3(0, 0, 0);
         }
+    }
+
+    public bool inProximity(GameObject obj)
+    {
+        return (Vector3.Distance(pc.transform.position, obj.transform.position) <= 3f);
     }
 }
