@@ -1,5 +1,4 @@
 ﻿using ManusMachina;
-using System.Collections;
 using UnityEngine;
 
 public class LeftHandController : MonoBehaviour
@@ -30,24 +29,48 @@ public class LeftHandController : MonoBehaviour
 
     #region Methods
 
-    // Use this for initialization
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
     private void Start()
     {
         Manus.ManusInit();
-        glove = new Glove(glove_hand);
+        this.glove = new Glove(this.glove_hand);
         this.hand = GameObject.Find("Manus_Handv2_Left");
         this.root = GameObject.Find("left_wrist");
 
-        Debug.Log(glove + "\t" + glove_hand);
+        Debug.Log(this.glove + "\t" + this.glove_hand);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    ///  Update is called once per frame.
+    /// </summary>
     private void Update()
     {
-        updatePosition();
+        this.UpdatePosition();
     }
 
-    private void updatePosition()
+    /// <summary>
+    /// Checks whether the hand is a fist.
+    /// </summary>
+    /// <returns>Boolean value</returns>
+    private bool IsFist()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (this.glove.Fingers[i] <= 0.4f)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Update the position of the hand according to the arm.
+    /// </summary>
+    private void UpdatePosition()
     {
         Vector3 newpos = this.root.transform.position;
         this.hand.transform.position = newpos;
@@ -56,7 +79,10 @@ public class LeftHandController : MonoBehaviour
         this.hand.transform.Rotate(Vector3.forward, -90);
     }
 
-    private void onApplicationQuit()
+    /// <summary>
+    /// When application is terminated, cancel Manus communication.
+    /// </summary>
+    private void OnApplicationQuit()
     {
         Manus.ManusExit();
     }
