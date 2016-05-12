@@ -9,7 +9,7 @@ namespace Assets.src.model
     /// <summary>
     /// Controls the grab function.
     /// </summary>
-    internal abstract class GrabController
+    internal abstract class Grab
     {
         #region Fields
 
@@ -64,14 +64,14 @@ namespace Assets.src.model
 
         #endregion Methods
 
- GrabController(GameObject grabber)
+ Grab(GameObject grabber, Color highlightColor)
         {
             this.grabber = grabber;
             this.player = GameObject.FindGameObjectsWithTag("Player")[0];
             this.prevHighlightedColor = Color.clear;
             this.prevHighlighted = null;
             this.highlighted = null;
-            this.highlightColor = Color.blue;
+            this.highlightColor = highlightColor;
             this.grabbedObject = null;
         }
 
@@ -95,7 +95,7 @@ namespace Assets.src.model
         {
             if (isGrabbing())
             {
-                Vector3 newpos = grabber.transform.position + grabber.transform.forward;
+                Vector3 newpos = grabber.transform.position + grabber.transform.forward * .2f;
                 grabbedObject.transform.position = newpos;
                 grabbedObject.GetComponent<Collider>().enabled = false;
             }

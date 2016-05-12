@@ -46,7 +46,7 @@ public class RightHandController : MonoBehaviour
         this.hand = GameObject.Find("Manus_Handv2_Right");
         this.root = GameObject.Find("right_wrist");
 
-        this.manusGrab = new ManusGrab(this.hand);
+        this.manusGrab = new ManusGrab(this.hand, Color.green);
 
         Debug.Log(this.glove + "\t" + this.glove_hand);
     }
@@ -65,6 +65,9 @@ public class RightHandController : MonoBehaviour
         //// of 2 losse?
 
         this.UpdatePosition();
+
+        if (IsFist())
+            Debug.Log("fist");
     }
 
     /// <summary>
@@ -75,7 +78,7 @@ public class RightHandController : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            if (this.glove.Fingers[i] <= 0.4f)
+            if (this.glove.Fingers[i] <= 0.2f)
             {
                 return false;
             }
