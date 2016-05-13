@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.src.model
 {
-    internal class MouseGrab : GrabController
+    internal class MouseGrab : Grab
     {
         #region Fields
 
@@ -16,10 +16,11 @@ namespace Assets.src.model
 
         #region Methods
 
-        public MouseGrab(GameObject grabber)
-            : base(grabber)
+        public MouseGrab(GameObject grabber, Color highlightColor)
+            : base(grabber, highlightColor)
         {
             this.grabber = grabber;
+            this.highlightColor = highlightColor;
         }
 
         public override void dropObject()
@@ -34,6 +35,7 @@ namespace Assets.src.model
                 grabbedObject.GetComponent<Collider>().enabled = true;
                 grabbedObject.GetComponent<Rigidbody>().Sleep();
                 grabbedObject = null;
+                highlighted = null;
             }
         }
 

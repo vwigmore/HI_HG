@@ -17,7 +17,7 @@ public class MouseGrabController : MonoBehaviour
     private void Start()
     {
         camera = Camera.main;
-        mouseGrab = new MouseGrab(camera.gameObject);
+        mouseGrab = new MouseGrab(camera.gameObject, Color.blue);
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class MouseGrabController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             GameObject objectHit = hit.transform.gameObject;
-            Debug.DrawLine(camera.transform.position, hit.point, Color.green);
+            Debug.DrawLine(camera.transform.position, hit.point, Color.blue);
             if (objectHit != null)
             {
                 mouseGrab.highlightSelectedObject(objectHit);

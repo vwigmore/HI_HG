@@ -14,21 +14,25 @@
    limitations under the License.
  */
 
-using UnityEngine;
 using ManusMachina;
+using UnityEngine;
 
 public class HandSimulator : MonoBehaviour
 {
-    private const float timeFactor = 10.0f;
+    #region Fields
 
     public GLOVE_HAND hand;
     public Transform RootTransform;
-
+    private const float timeFactor = 10.0f;
     private Glove glove;
     private GameObject modelObject;
     private AnimationClip animationClip;
     private Transform[][] gameTransforms;
     private Transform[][] modelTransforms;
+
+    #endregion Fields
+
+    #region Methods
 
     /// <summary>
     /// Finds a deep child in a transform
@@ -53,7 +57,7 @@ public class HandSimulator : MonoBehaviour
     /// <summary>
     /// Constructor which loads the HandModel
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Ensure the library initialized correctly.
         Manus.ManusInit();
@@ -89,15 +93,14 @@ public class HandSimulator : MonoBehaviour
                 gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
                 modelTransforms[i][j] = FindDeepChild(modelObject.transform, "Finger_" + i.ToString() + j.ToString());
             }
-        }
-
+        };
         modelObject.SetActive(true);
     }
 
     /// <summary>
     /// Updates a skeletal from glove data
     /// </summary>
-    void Update()
+    private void Update()
     {
         Quaternion q = glove.Quaternion;
         float[] fingers = glove.Fingers;
@@ -110,6 +113,9 @@ public class HandSimulator : MonoBehaviour
             {
                 gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
+            Debug.Log(fingers[i]);
         }
     }
+
+    #endregion Methods
 }
