@@ -31,9 +31,8 @@ public class PlayerController : MonoBehaviour
     private float vAxis;
     private float hAxis;
 
-    private GameObject hip, leftFoot, rightFoot;
-    private float footDistance;
-    private float deltaHeight;
+    private GameObject leftFoot, rightFoot;
+    private float crouchRange, deltaHeight;
 
     private GameObject model;
 
@@ -74,8 +73,8 @@ public class PlayerController : MonoBehaviour
 
         leftFoot = GameObject.Find("left_foot");
         rightFoot = GameObject.Find("right_foot");
-        hip = GameObject.Find("hip_center");
-        footDistance = hip.transform.position.y - leftFoot.transform.position.y;
+
+        crouchRange = 0.4f;
     }
 
     // Update is called once per frame
@@ -153,46 +152,19 @@ public class PlayerController : MonoBehaviour
 
     private void updateCrouch()
     {
-        //float factor = 10 * Time.deltaTime;
+        float minFootY = Mathf.Min(leftFoot.transform.position.y, rightFoot.transform.position.y);
 
-        //// crouch
-        //if (Input.GetKey(KeyCode.LeftControl))
-        //{
-        //    if (pc.height > crouchHeight)
-        //    {
-        //        Camera.main.transform.localPosition =
-        //            Camera.main.transform.localPosition - new Vector3(0, factor, 0);
-        //        pc.height -= factor;
-        //    }
-        //    pc.center = new Vector3(0, -0.5f, 0);
-        //}
-
-        ////stand up
-        //if (Input.GetKey(KeyCode.LeftShift))
-        //{
-        //    if (pc.height < playerHeight)
-        //    {
-        //        Camera.main.transform.localPosition =
-        //            Camera.main.transform.localPosition + new Vector3(0, factor, 0);
-        //        pc.height += factor;
-        //    }
-        //    pc.center = new Vector3(0, 0, 0);
-        //}
-
-        if (leftFoot.transform.position.y < rightFoot.transform.position.y)
-            deltaHeight = footDistance - (hip.transform.position.y - leftFoot.transform.position.y);
-        else
-            deltaHeight = footDistance - (hip.transform.position.y - rightFoot.transform.position.y);
-
-        Debug.Log("hip: " + hip);
-        Debug.Log("delta: " + deltaHeight);
-
-        if (deltaHeight > 0)
+        Vector3 crouchDir = model.transform.position;
+        if (minFootY > crouchRange)
         {
-            Vector3 newpos = model.transform.position;
-            if (newpos.y > 0) newpos.y -= deltaHeight;
-            model.transform.position = newpos;
+            crouchDir.y = -0.2f;
         }
+        else if (minFootY < 0f)
+        {
+            crouchDir.y = 0.2f;
+        }
+
+        model.transform.position = crouchDir;
     }
 
     #endregion Methods
