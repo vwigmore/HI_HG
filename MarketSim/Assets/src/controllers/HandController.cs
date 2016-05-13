@@ -1,9 +1,10 @@
-﻿using Assets.src.model;
+﻿using UnityEngine;
+using System.Collections;
 using ManusMachina;
-using UnityEngine;
+using Assets.src.model;
 
-public class LeftHandController : MonoBehaviour
-{
+public class HandController : MonoBehaviour {
+
     #region Fields
 
     /// <summary>
@@ -44,7 +45,6 @@ public class LeftHandController : MonoBehaviour
     #endregion Fields
 
     #region Methods
-
     /// <summary>
     /// Finds a deep child in a transform
     /// </summary>
@@ -84,14 +84,23 @@ public class LeftHandController : MonoBehaviour
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    private void Start()
-    {
+    void Start() {
         Manus.ManusInit();
         this.glove = new Glove(this.glove_hand);
-        this.hand = Resources.Load<GameObject>("Manus_Handv2_Left");
-        this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Left");
-        this.handModel = GameObject.Find("Manus_Handv2_Left");
-        this.root = GameObject.Find("left_wrist");
+
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        {
+            this.hand = Resources.Load<GameObject>("Manus_Handv2_Left");
+            this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Left");
+            this.handModel = GameObject.Find("Manus_Handv2_Left");
+            this.root = GameObject.Find("left_wrist");
+        } else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        {
+            this.hand = Resources.Load<GameObject>("Manus_Handv2_Right");
+            this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Right");
+            this.handModel = GameObject.Find("Manus_Handv2_Right");
+            this.root = GameObject.Find("right_wrist");
+        }
 
         this.manusGrab = new ManusGrab(this.handModel, Color.green);
 
@@ -117,7 +126,9 @@ public class LeftHandController : MonoBehaviour
         hand.SetActive(true);
 
         Debug.Log(this.glove + "\t" + this.glove_hand);
+
     }
+
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -146,15 +157,17 @@ public class LeftHandController : MonoBehaviour
                 manusGrab.dropObject();
         }
 
-        if (gesture == Gesture.point)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        {
+            if (gesture == Gesture.point)
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
 
-        if (gesture == Gesture.thumb)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+            if (gesture == Gesture.thumb)
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
 
-        if (gesture == Gesture.twoFingersPoint)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
-
+            if (gesture == Gesture.twoFingersPoint)
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+        }
         manusGrab.updateGrabbedObject();
     }
 
@@ -195,7 +208,15 @@ public class LeftHandController : MonoBehaviour
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
         this.handModel.transform.rotation = this.root.transform.rotation;
-        this.handModel.transform.Rotate(Vector3.up, -90);
+        if ( glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        {
+            this.handModel.transform.Rotate(Vector3.up, -90);
+        }
+        else if ( glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        {
+            this.handModel.transform.Rotate(Vector3.up, 90);
+        }
+        
         this.handModel.transform.Rotate(Vector3.forward, -90);
     }
 
@@ -209,3 +230,5 @@ public class LeftHandController : MonoBehaviour
 
     #endregion Methods
 }
+
+
