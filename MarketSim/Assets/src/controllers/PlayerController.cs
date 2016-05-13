@@ -31,6 +31,12 @@ public class PlayerController : MonoBehaviour
     private float vAxis;
     private float hAxis;
 
+    private GameObject hip, leftFoot, rightFoot;
+    private float footDistance;
+    private float deltaHeight;
+
+    private GameObject model;
+
     #endregion Fields
 
     #region Methods
@@ -60,10 +66,16 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         pc = GetComponent<CharacterController>();
+        model = GameObject.Find("playermodel");
         moveDirection = Vector3.zero;
 
         playerHeight = pc.height;
         crouchHeight = playerHeight / 2;
+
+        leftFoot = GameObject.Find("left_foot");
+        rightFoot = GameObject.Find("right_foot");
+        hip = GameObject.Find("hip_center");
+        footDistance = hip.transform.position.y - leftFoot.transform.position.y;
     }
 
     // Update is called once per frame
@@ -74,16 +86,11 @@ public class PlayerController : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
 
         /* Update movement of player*/
-        updateMove();
+        UpdateMove();
         updateCrouch();
-
-        GameObject left = GameObject.Find("left_foot");
-        GameObject right = GameObject.Find("right_foot");
-
-        // Debug.Log("left: " + left.transform.position + "\t right:" + right.transform.position);
     }
 
-    private void updateMove()
+    private void UpdateMove()
     {
         /* Player Camera Controls */
         mouseAxisY = Input.GetAxis("Mouse Y");
@@ -146,30 +153,45 @@ public class PlayerController : MonoBehaviour
 
     private void updateCrouch()
     {
-        float factor = 10 * Time.deltaTime;
+        //float factor = 10 * Time.deltaTime;
 
-        // crouch
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            if (pc.height > crouchHeight)
-            {
-                Camera.main.transform.localPosition =
-                    Camera.main.transform.localPosition - new Vector3(0, factor, 0);
-                pc.height -= factor;
-            }
-            pc.center = new Vector3(0, -0.5f, 0);
-        }
+        //// crouch
+        //if (Input.GetKey(KeyCode.LeftControl))
+        //{
+        //    if (pc.height > crouchHeight)
+        //    {
+        //        Camera.main.transform.localPosition =
+        //            Camera.main.transform.localPosition - new Vector3(0, factor, 0);
+        //        pc.height -= factor;
+        //    }
+        //    pc.center = new Vector3(0, -0.5f, 0);
+        //}
 
-        //standup
-        if (Input.GetKey(KeyCode.LeftShift))
+        ////stand up
+        //if (Input.GetKey(KeyCode.LeftShift))
+        //{
+        //    if (pc.height < playerHeight)
+        //    {
+        //        Camera.main.transform.localPosition =
+        //            Camera.main.transform.localPosition + new Vector3(0, factor, 0);
+        //        pc.height += factor;
+        //    }
+        //    pc.center = new Vector3(0, 0, 0);
+        //}
+
+        if (leftFoot.transform.position.y < rightFoot.transform.position.y)
+            deltaHeight = footDistance - (hip.transform.position.y - leftFoot.transform.position.y);
+        else
+            deltaHeight = footDistance - (hip.transform.position.y - rightFoot.transform.position.y);
+
+        Debug.Log("hip: " + hip);
+        Debug.Log("delta: " + deltaHeight);
+
+        if (deltaHeight > 0)
         {
-            if (pc.height < playerHeight)
-            {
-                Camera.main.transform.localPosition =
-                    Camera.main.transform.localPosition + new Vector3(0, factor, 0);
-                pc.height += factor;
-            }
-            pc.center = new Vector3(0, 0, 0);
+            Vector3 newpos = model.transform.position;
+            if (newpos.y > 0) newpos.y -= deltaHeight;
+            model.transform.position = newpos;
         }
     }
 
