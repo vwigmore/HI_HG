@@ -167,7 +167,7 @@ public class LeftHandController : MonoBehaviour
         int fingersBent = 0;
         for (int i = 0; i < 5; i++)
         {
-            if (this.glove.Fingers[i] >= 0.6f)
+            if (this.glove.Fingers[i] >= 0.3f)
             {
                 fingersBent++;
             }

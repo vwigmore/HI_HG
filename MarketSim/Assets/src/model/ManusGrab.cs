@@ -26,6 +26,7 @@ namespace Assets.src.model
             grabbedObject.GetComponent<Collider>().enabled = true;
             grabbedObject.GetComponent<Rigidbody>().Sleep();
             grabbedObject = null;
+            highlighted = null;
         }
 
         #endregion Methods
