@@ -47,6 +47,11 @@ namespace Assets.src.model
         protected Color highlightColor;
 
         /// <summary>
+        /// Last position of the grabbed object.
+        /// </summary>
+        protected Vector3 lastPos;
+
+        /// <summary>
         /// The GameObject that the grabbed item will follow.
         /// </summary>
         protected GameObject grabber { set; get; }
@@ -91,13 +96,14 @@ namespace Assets.src.model
         /// </summary>
         public abstract void dropObject();
 
-        public void updateGrabbedObject()
+        public virtual void updateGrabbedObject()
         {
             if (isGrabbing())
             {
-                Vector3 newpos = grabber.transform.position + grabber.transform.forward * .2f;
+                Vector3 newpos = grabber.transform.position + grabber.transform.forward;
                 grabbedObject.transform.position = newpos;
                 grabbedObject.GetComponent<Collider>().enabled = false;
+                lastPos = grabber.transform.position;
             }
         }
 

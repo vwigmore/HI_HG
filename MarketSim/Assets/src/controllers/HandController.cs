@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Assets.src.model;
 using ManusMachina;
-using Assets.src.model;
+using System.Collections;
+using UnityEngine;
 
-public class HandController : MonoBehaviour {
-
+public class HandController : MonoBehaviour
+{
     #region Fields
 
     /// <summary>
@@ -45,6 +45,7 @@ public class HandController : MonoBehaviour {
     #endregion Fields
 
     #region Methods
+
     /// <summary>
     /// Finds a deep child in a transform
     /// </summary>
@@ -84,7 +85,8 @@ public class HandController : MonoBehaviour {
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    void Start() {
+    private void Start()
+    {
         Manus.ManusInit();
         this.glove = new Glove(this.glove_hand);
 
@@ -94,7 +96,8 @@ public class HandController : MonoBehaviour {
             this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Left");
             this.handModel = GameObject.Find("Manus_Handv2_Left");
             this.root = GameObject.Find("left_wrist");
-        } else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        }
+        else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
         {
             this.hand = Resources.Load<GameObject>("Manus_Handv2_Right");
             this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Right");
@@ -126,14 +129,17 @@ public class HandController : MonoBehaviour {
         hand.SetActive(true);
 
         Debug.Log(this.glove + "\t" + this.glove_hand);
-
     }
-
 
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collideObj = collision.gameObject;
         manusGrab.highlightSelectedObject(collideObj);
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        manusGrab.clearHighlights();
     }
 
     /// <summary>
@@ -180,7 +186,7 @@ public class HandController : MonoBehaviour {
         int fingersBent = 0;
         for (int i = 0; i < 5; i++)
         {
-            if (this.glove.Fingers[i] >= 0.3f)
+            if (this.glove.Fingers[i] >= 0.4f)
             {
                 fingersBent++;
             }
@@ -208,15 +214,15 @@ public class HandController : MonoBehaviour {
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
         this.handModel.transform.rotation = this.root.transform.rotation;
-        if ( glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             this.handModel.transform.Rotate(Vector3.up, -90);
         }
-        else if ( glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
         {
             this.handModel.transform.Rotate(Vector3.up, 90);
         }
-        
+
         this.handModel.transform.Rotate(Vector3.forward, -90);
     }
 
@@ -230,5 +236,3 @@ public class HandController : MonoBehaviour {
 
     #endregion Methods
 }
-
-
