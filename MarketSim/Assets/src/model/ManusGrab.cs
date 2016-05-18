@@ -18,13 +18,24 @@ namespace Assets.src.model
             this.highlightColor = highlightColor;
         }
 
+        public override void updateGrabbedObject()
+        {
+            if (isGrabbing())
+            {
+                Vector3 newpos = grabber.transform.position;
+                grabbedObject.transform.position = newpos;
+                grabbedObject.GetComponent<Collider>().enabled = false;
+            }
+        }
+
         public override void dropObject()
         {
-            Vector3 newpos = grabbedObject.transform.position;
-            newpos.y = 0;
-            grabbedObject.transform.position = newpos;
+            //Vector3 newpos = grabbedObject.transform.position;
+            //newpos.y = 0;
+            //grabbedObject.transform.position = newpos;
             grabbedObject.GetComponent<Collider>().enabled = true;
-            grabbedObject.GetComponent<Rigidbody>().Sleep();
+
+            //grabbedObject.GetComponent<Rigidbody>().Sleep();
             grabbedObject = null;
             highlighted = null;
         }
