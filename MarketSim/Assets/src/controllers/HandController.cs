@@ -214,6 +214,7 @@ public class HandController : MonoBehaviour
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
         this.handModel.transform.rotation = this.root.transform.rotation;
+
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             this.handModel.transform.Rotate(Vector3.up, -90);
@@ -222,7 +223,6 @@ public class HandController : MonoBehaviour
         {
             this.handModel.transform.Rotate(Vector3.up, 90);
         }
-
         this.handModel.transform.Rotate(Vector3.forward, -90);
     }
 
