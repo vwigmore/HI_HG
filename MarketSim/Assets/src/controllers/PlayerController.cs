@@ -150,7 +150,6 @@ public class PlayerController : MonoBehaviour
         float deltaHeight = hip.transform.position.y - minFootY;
 
         Vector3 crouchDir = model.transform.position;
-        Debug.Log(deltaHeight + "\t" + initialDeltaHeight);
 
         if (deltaHeight > lastDeltaHeight)
         {
