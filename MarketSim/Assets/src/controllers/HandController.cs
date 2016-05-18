@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Assets.src.model;
 using ManusMachina;
-using Assets.src.model;
+using System.Collections;
+using UnityEngine;
 
-public class HandController : MonoBehaviour {
-
+public class HandController : MonoBehaviour
+{
     #region Fields
 
     /// <summary>
@@ -45,6 +45,7 @@ public class HandController : MonoBehaviour {
     #endregion Fields
 
     #region Methods
+
     /// <summary>
     /// Finds a deep child in a transform
     /// </summary>
@@ -84,7 +85,8 @@ public class HandController : MonoBehaviour {
     /// <summary>
     /// Use this for initialization
     /// </summary>
-    void Start() {
+    private void Start()
+    {
         Manus.ManusInit();
         this.glove = new Glove(this.glove_hand);
 
@@ -94,7 +96,8 @@ public class HandController : MonoBehaviour {
             this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Left");
             this.handModel = GameObject.Find("Manus_Handv2_Left");
             this.root = GameObject.Find("left_wrist");
-        } else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        }
+        else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
         {
             this.hand = Resources.Load<GameObject>("Manus_Handv2_Right");
             this.animationClip = Resources.Load<AnimationClip>("Manus_Handv2_Right");
@@ -126,14 +129,12 @@ public class HandController : MonoBehaviour {
         hand.SetActive(true);
 
         Debug.Log(this.glove + "\t" + this.glove_hand);
-
     }
-
 
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collideObj = collision.gameObject;
-        manusGrab.highlightSelectedObject(collideObj);
+        manusGrab.HighlightSelectedObject(collideObj);
     }
 
     /// <summary>
@@ -144,38 +145,49 @@ public class HandController : MonoBehaviour {
         this.UpdatePosition();
         this.UpdateHand();
 
-        Gesture gesture = getGesture();
+        Gesture gesture = this.GetGesture();
 
-        if (!manusGrab.isGrabbing())
+        if (!this.manusGrab.IsGrabbing())
         {
             if (gesture == Gesture.grab)
-                manusGrab.grabHighlightedObject();
+            {
+                this.manusGrab.GrabHighlightedObject();
+            }
         }
         else
         {
             if (gesture == Gesture.open)
-                manusGrab.dropObject();
+            {
+                this.manusGrab.DropObject();
+            }
         }
 
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        if (this.glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             if (gesture == Gesture.point)
+            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+            }
 
             if (gesture == Gesture.thumb)
+            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+            }
 
             if (gesture == Gesture.twoFingersPoint)
+            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+            }
         }
-        manusGrab.updateGrabbedObject();
+
+        this.manusGrab.UpdateGrabbedObject();
     }
 
     /// <summary>
     /// Returns which gesture the hand is making.
     /// </summary>
     /// <returns>Gesture the hand is making</returns>
-    private Gesture getGesture()
+    private Gesture GetGesture()
     {
         int fingersBent = 0;
         for (int i = 0; i < 5; i++)
@@ -187,17 +199,29 @@ public class HandController : MonoBehaviour {
         }
 
         if (fingersBent == 5)
+        {
             return Gesture.grab;
-        else if (fingersBent == 3 && glove.Fingers[1] <= 0.3 && glove.Fingers[2] <= 0.3)
+        }
+        else if (fingersBent == 3 && this.glove.Fingers[1] <= 0.3 && this.glove.Fingers[2] <= 0.3)
+        {
             return Gesture.twoFingersPoint;
+        }
         else if (fingersBent < 4)
+        {
             return Gesture.open;
-        else if (fingersBent == 4 && glove.Fingers[1] <= 0.3)
+        }
+        else if (fingersBent == 4 && this.glove.Fingers[1] <= 0.3)
+        {
             return Gesture.point;
-        else if (fingersBent == 4 && glove.Fingers[0] <= 0.3)
+        }
+        else if (fingersBent == 4 && this.glove.Fingers[0] <= 0.3)
+        {
             return Gesture.thumb;
-
-        return Gesture.none;
+        }
+        else
+        {
+            return Gesture.none;
+        }
     }
 
     /// <summary>
@@ -208,15 +232,15 @@ public class HandController : MonoBehaviour {
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
         this.handModel.transform.rotation = this.root.transform.rotation;
-        if ( glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        if (this.glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             this.handModel.transform.Rotate(Vector3.up, -90);
         }
-        else if ( glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        else if (this.glove_hand == GLOVE_HAND.GLOVE_RIGHT)
         {
             this.handModel.transform.Rotate(Vector3.up, 90);
         }
-        
+
         this.handModel.transform.Rotate(Vector3.forward, -90);
     }
 
@@ -230,5 +254,3 @@ public class HandController : MonoBehaviour {
 
     #endregion Methods
 }
-
-
