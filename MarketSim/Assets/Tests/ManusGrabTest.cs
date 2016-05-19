@@ -1,14 +1,16 @@
 ﻿using Assets.src.model;
+using NSubstitute;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine;
 
 [TestFixture]
-public class UnitTest1
+public class ManusGrabTest
 {
     #region Fields
 
     private ManusGrab ms;
+    private ManusGrab gameobj;
 
     #endregion Fields
 
@@ -18,12 +20,14 @@ public class UnitTest1
     public void Setup()
     {
         ms = null;
+        gameobj = Substitute.For<ManusGrab>();
     }
 
     [TearDown]
     public void TearDown()
     {
         ms = null;
+        gameobj = null;
     }
 
     [Test]
