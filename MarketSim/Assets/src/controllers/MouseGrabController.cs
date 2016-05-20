@@ -50,6 +50,7 @@ public class MouseGrabController : MonoBehaviour
             }
         }
         mouseGrab.updateGrabbedObject();
+        mouseGrab.updateList();
     }
 
     #endregion Methods

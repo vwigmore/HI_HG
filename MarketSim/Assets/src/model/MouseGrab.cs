@@ -25,23 +25,20 @@ namespace Assets.src.model
 
         public override void dropObject()
         {
-            //if (!inProximity(hit.point))
-            //    return;
+            if (inProximity(basket) && !grabbedObject.tag.Equals("basket") && !basketItems.Contains(grabbedObject))
+            {                
+                Vector3 newpos = basket.transform.position;
+                newpos.y = newpos.y + 0.4f;
 
-            //if ((1.0 - hit.normal.y * hit.normal.y) < 0.4 &&
-            //    !hit.transform.gameObject.tag.Equals("Player"))
-            //{
-            //Vector3 newpos = hit.point;
-            grabbedObject.GetComponent<Collider>().enabled = true;
-
-            //newpos.y += grabbedObject.GetComponent<BoxCollider>().bounds.size.y / 2;
-            //grabbedObject.transform.position = newpos;
-
-            //grabbedObject.GetComponent<Rigidbody>().Sleep();
-            grabbedObject = null;
-            highlighted = null;
-
-            //}
+                if (basketItems.Count < rows * cols)
+                    basketItems.Add(grabbedObject);
+            }
+            else
+            {
+                grabbedObject.GetComponent<Collider>().enabled = true;
+                grabbedObject = null;
+                highlighted = null;
+            }
         }
 
         public void setHit(RaycastHit hit)
