@@ -152,6 +152,8 @@ public class HandController : MonoBehaviour
 
         Gesture gesture = getGesture();
 
+        Debug.Log("FingerPositions[ Thumb: " + glove.Fingers[0] + ", Index: " + glove.Fingers[1] + ", Middle: " + glove.Fingers[2] + ", Ring: " + glove.Fingers[3] + ", Pink: " + glove.Fingers[4] + " ]");
+
         if (!manusGrab.isGrabbing())
         {
             if (gesture == Gesture.grab)
@@ -165,11 +167,23 @@ public class HandController : MonoBehaviour
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
+            //if (gesture == Gesture.point)
+            //    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+
+            //if (gesture == Gesture.thumb)
+            //    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+
+            //if (gesture == Gesture.twoFingersPoint)
+            //    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateLeft();
+        }
+
+        if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        {
             if (gesture == Gesture.point)
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
 
-            if (gesture == Gesture.thumb)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+            //if (gesture == Gesture.thumb)
+            //    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
 
             if (gesture == Gesture.twoFingersPoint)
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
@@ -192,17 +206,38 @@ public class HandController : MonoBehaviour
             }
         }
 
-        if (fingersBent == 5)
-            return Gesture.grab;
-        else if (fingersBent == 3 && glove.Fingers[1] <= 0.3 && glove.Fingers[2] <= 0.3)
-            return Gesture.twoFingersPoint;
-        else if (fingersBent < 4)
+        Debug.Log("Fingersbent[" + fingersBent + "]");
+        if (fingersBent == 0)
+        {
+            Debug.Log("Open");
             return Gesture.open;
-        else if (fingersBent == 4 && glove.Fingers[1] <= 0.3)
+        }
+        else if (fingersBent == 2)
+        {
+            Debug.Log("2 Finger Point");
+            return Gesture.twoFingersPoint;
+        }
+        else if (fingersBent == 3)
+        {
+            Debug.Log("1 Finger Point");
             return Gesture.point;
-        else if (fingersBent == 4 && glove.Fingers[0] <= 0.3)
+        }
+        else if (fingersBent == 4)
+        {
+            Debug.Log("Thumbs up");
             return Gesture.thumb;
+        }
+        else if (fingersBent == 5)
+        {
+            Debug.Log("Grab");
+            return Gesture.grab;
+        }
 
+        //return Gesture.open;
+        //else if (fingersBent == 4 && glove.Fingers[0] <= 0.3)
+        //    return Gesture.thumb;
+        //else if (fingersBent == 5)
+        //    return Gesture.grab;
         return Gesture.none;
     }
 

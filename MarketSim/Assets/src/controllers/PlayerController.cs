@@ -55,6 +55,11 @@ public class PlayerController : MonoBehaviour
         pc.transform.Rotate(new Vector3(0, 50 * Time.deltaTime, 0));
     }
 
+    public void rotateLeft()
+    {
+        pc.transform.Rotate(new Vector3(0, -50 * Time.deltaTime, 0));
+    }
+
     public bool inProximity(GameObject obj)
     {
         return (Vector3.Distance(pc.transform.position, obj.transform.position) <= 3f);
