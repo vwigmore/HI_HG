@@ -16,6 +16,16 @@ namespace Assets.src.model
         #region Properties
 
         /// <summary>
+        /// The basket
+        /// </summary>
+        public ItemHolder basket;
+
+        /// <summary>
+        /// The cart
+        /// </summary>
+        public ItemHolder cart;
+
+        /// <summary>
         /// An object in proximity has to be within this distance.
         /// </summary>
         protected float proxDist = 4.0f;
@@ -32,7 +42,7 @@ namespace Assets.src.model
         protected GameObject prevHighlighted;
 
         /// <summary>
-        /// Previoulsy highlighted gameobject's color.
+        /// Previously highlighted gameobject's color.
         /// </summary>
         protected Color prevHighlightedColor;
 
@@ -61,63 +71,6 @@ namespace Assets.src.model
         /// </summary>
         protected GameObject grabbedObject { set; get; }
 
-        /// <summary>
-        /// Basket object.
-        /// </summary>
-        protected GameObject basket { set; get; }
-
-
-        /// <summary>
-        /// List with items that are in the basket.
-        /// </summary>
-        protected ArrayList basketItems;
-
-
-        /// <summary>
-        /// Offsets for each cel.
-        /// </summary>
-        protected Vector3[] offsets;
-
-        /// <summary>
-        /// Rows of grid.
-        /// </summary>
-        public int rows = 2;
-
-        /// <summary>
-        /// Columns of grid.
-        /// </summary>
-        public int cols = 3;
-
-        /// <summary>
-        /// X coordinate of start position.
-        /// </summary>
-        float startX;
-
-        /// <summary>
-        /// Y coordinate of start position.
-        /// </summary>
-        float startY;
-
-        /// <summary>
-        /// Z coordinate of start position.
-        /// </summary>
-        float startZ;
-
-        /// <summary>
-        /// Width of a cell
-        /// </summary>
-        float cellWidth;
-
-        /// <summary>
-        /// Height of a cell
-        /// </summary>
-        float cellHeight;
-
-        /// <summary>
-        /// Start position.
-        /// </summary>
-        public Vector3 start;
-
         #endregion Properties
 
         #region Methods
@@ -130,22 +83,15 @@ namespace Assets.src.model
         {
             this.grabber = grabber;
             this.player = GameObject.FindGameObjectWithTag("Player");
-            this.basket = GameObject.FindGameObjectWithTag("basket");
             this.prevHighlightedColor = Color.clear;
             this.prevHighlighted = null;
             this.highlighted = null;
             this.highlightColor = highlightColor;
             this.grabbedObject = null;
 
-            basketItems = new ArrayList();
-            
-            cellWidth = basket.GetComponent<BoxCollider>().bounds.size.x / cols;
-            cellHeight = basket.GetComponent<BoxCollider>().bounds.size.z / rows;
-            startX = basket.transform.position.x - (cellWidth / 2);
-            startY = basket.transform.position.y;
-            startZ = basket.transform.position.z - (cellHeight / 2);
-
-            initOffsets();
+            this.cart = new ItemHolder(GameObject.FindGameObjectWithTag("cart"), 3, 4);
+            this.basket = new ItemHolder(GameObject.FindGameObjectWithTag("basket"), 2, 3);
+            basket.InitOffsets();
         }
 
         /// <summary>
@@ -191,7 +137,7 @@ namespace Assets.src.model
         public void highlightSelectedObject(GameObject obj)
         {
             clearHighlights();
-            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && inProximity(obj))
+            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket") || obj.tag.Equals("cart")) && inProximity(obj))
             {
                 prevHighlighted = obj;
                 prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
@@ -231,43 +177,6 @@ namespace Assets.src.model
         public bool inProximity(Vector3 pos)
         {
             return (Vector3.Distance(grabber.transform.position, pos) <= proxDist);
-        }
-
-        /// <summary>
-        /// Updates the list with items that are in the basket
-        /// </summary>
-        public void updateList()
-        {
-            for (int i = 0; i < basketItems.Count; i++)
-            {
-                GameObject o = (GameObject)basketItems[i];
-                Vector3 newpos = basket.transform.position;
-                newpos += offsets[i];
-                newpos.y += 0.15f;
-                o.GetComponent<Collider>().enabled = false;
-                o.transform.position = newpos;
-
-            }
-
-        }
-
-        /// <summary>
-        /// Calculate offset for each cell
-        /// </summary>
-        public void initOffsets()
-        {
-            offsets = new Vector3[rows * cols];
-            int index = 0;
-            for (int i = 0; i < cols; i++)
-            {
-                float newX = startX + i * cellWidth / 1.5f - 0.06f;
-                for (int j = 0; j < rows; j++)
-                {
-                    float newZ = startZ + j * cellHeight / 1.8f + 0.08f;
-                    offsets[index] = basket.transform.position - (new Vector3(newX, startY, newZ));
-                    index++;
-                }
-            }
         }
 
         #endregion Fields

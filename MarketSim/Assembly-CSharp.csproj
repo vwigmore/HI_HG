@@ -63,6 +63,7 @@
      <Compile Include="Assets\src\controllers\MouseGrabController.cs" />
      <Compile Include="Assets\src\controllers\PlayerController.cs" />
      <Compile Include="Assets\src\model\Grab.cs" />
+     <Compile Include="Assets\src\model\ItemHolder.cs" />
      <Compile Include="Assets\src\model\Manager.cs" />
      <Compile Include="Assets\src\model\ManusGrab.cs" />
      <Compile Include="Assets\src\model\MouseGrab.cs" />

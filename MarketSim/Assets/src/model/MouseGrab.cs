@@ -25,13 +25,21 @@ namespace Assets.src.model
 
         public override void dropObject()
         {
-            if (inProximity(basket) && !grabbedObject.tag.Equals("basket") && !basketItems.Contains(grabbedObject))
-            {                
-                Vector3 newpos = basket.transform.position;
+            if (inProximity(basket.holder) && !grabbedObject.tag.Equals("basket") && !basket.items.Contains(grabbedObject))
+            {
+                Vector3 newpos = basket.holder.transform.position;
                 newpos.y = newpos.y + 0.4f;
 
-                if (basketItems.Count < rows * cols)
-                    basketItems.Add(grabbedObject);
+                if (basket.items.Count < basket.rows * basket.cols)
+                    basket.items.Add(grabbedObject);
+            }
+            else if (inProximity(cart.holder) && !grabbedObject.tag.Equals("cart") && !cart.items.Contains(grabbedObject))
+            {
+                Vector3 newpos = cart.holder.transform.position;
+                newpos.y = newpos.y + 0.4f;
+
+                if (cart.items.Count < cart.rows * cart.cols)
+                    cart.items.Add(grabbedObject);
             }
             else
             {
