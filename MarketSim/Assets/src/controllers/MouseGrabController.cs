@@ -2,54 +2,68 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Uses the mouse grab object to implement grabbing with the mouse
+/// </summary>
 public class MouseGrabController : MonoBehaviour
 {
     #region Fields
 
+    /// <summary>
+    /// The mouse grab object
+    /// </summary>
     private MouseGrab mouseGrab;
+
+    /// <summary>
+    /// The camera
+    /// </summary>
     private Camera camera;
 
     #endregion Fields
 
     #region Methods
 
-    // Use this for initialization
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
     private void Start()
     {
-        camera = Camera.main;
-        mouseGrab = new MouseGrab(camera.gameObject, Color.blue);
+        this.camera = Camera.main;
+        this.mouseGrab = new MouseGrab(this.camera.gameObject, Color.blue);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     private void Update()
     {
         RaycastHit hit;
 
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = this.camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit))
         {
             GameObject objectHit = hit.transform.gameObject;
-            Debug.DrawLine(camera.transform.position, hit.point, Color.blue);
+            Debug.DrawLine(this.camera.transform.position, hit.point, Color.blue);
             if (objectHit != null)
             {
-                mouseGrab.highlightSelectedObject(objectHit);
+                this.mouseGrab.HighlightSelectedObject(objectHit);
             }
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (!mouseGrab.isGrabbing())
+                if (!this.mouseGrab.IsGrabbing())
                 {
-                    mouseGrab.grabHighlightedObject();
+                    this.mouseGrab.GrabHighlightedObject();
                 }
                 else
                 {
-                    mouseGrab.setHit(hit);
-                    mouseGrab.dropObject();
+                    this.mouseGrab.SetHit(hit);
+                    this.mouseGrab.DropObject();
                 }
             }
         }
-        mouseGrab.updateGrabbedObject();
+        mouseGrab.UpdateGrabbedObject();
 
         mouseGrab.basket.UpdateList();
         mouseGrab.cart.UpdateList();

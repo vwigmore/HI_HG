@@ -134,12 +134,12 @@ public class HandController : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collideObj = collision.gameObject;
-        manusGrab.highlightSelectedObject(collideObj);
+        manusGrab.HighlightSelectedObject(collideObj);
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        manusGrab.clearHighlights();
+        manusGrab.ClearHighlights();
     }
 
     /// <summary>
@@ -150,38 +150,49 @@ public class HandController : MonoBehaviour
         this.UpdatePosition();
         this.UpdateHand();
 
-        Gesture gesture = getGesture();
+        Gesture gesture = this.GetGesture();
 
-        if (!manusGrab.isGrabbing())
+        if (!this.manusGrab.IsGrabbing())
         {
             if (gesture == Gesture.grab)
-                manusGrab.grabHighlightedObject();
+            {
+                this.manusGrab.GrabHighlightedObject();
+            }
         }
         else
         {
             if (gesture == Gesture.open)
-                manusGrab.dropObject();
+            {
+                this.manusGrab.DropObject();
+            }
         }
 
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        if (this.glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             if (gesture == Gesture.point)
+            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+            }
 
             if (gesture == Gesture.thumb)
+            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+            }
 
             if (gesture == Gesture.twoFingersPoint)
+            {
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+            }
         }
-        manusGrab.updateGrabbedObject();
+
+        this.manusGrab.UpdateGrabbedObject();
     }
 
     /// <summary>
     /// Returns which gesture the hand is making.
     /// </summary>
     /// <returns>Gesture the hand is making</returns>
-    private Gesture getGesture()
+    private Gesture GetGesture()
     {
         int fingersBent = 0;
         for (int i = 0; i < 5; i++)
@@ -193,17 +204,29 @@ public class HandController : MonoBehaviour
         }
 
         if (fingersBent == 5)
+        {
             return Gesture.grab;
-        else if (fingersBent == 3 && glove.Fingers[1] <= 0.3 && glove.Fingers[2] <= 0.3)
+        }
+        else if (fingersBent == 3 && this.glove.Fingers[1] <= 0.3 && this.glove.Fingers[2] <= 0.3)
+        {
             return Gesture.twoFingersPoint;
+        }
         else if (fingersBent < 4)
+        {
             return Gesture.open;
-        else if (fingersBent == 4 && glove.Fingers[1] <= 0.3)
+        }
+        else if (fingersBent == 4 && this.glove.Fingers[1] <= 0.3)
+        {
             return Gesture.point;
-        else if (fingersBent == 4 && glove.Fingers[0] <= 0.3)
+        }
+        else if (fingersBent == 4 && this.glove.Fingers[0] <= 0.3)
+        {
             return Gesture.thumb;
-
-        return Gesture.none;
+        }
+        else
+        {
+            return Gesture.none;
+        }
     }
 
     /// <summary>

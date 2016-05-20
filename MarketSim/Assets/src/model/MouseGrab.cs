@@ -1,55 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
-namespace Assets.src.model
+﻿namespace Assets.src.model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using UnityEngine;
+
+    /// <summary>
+    /// Implements specific grab functions for the Mouse.
+    /// </summary>
+    /// <seealso cref="Assets.src.model.Grab" />
     internal class MouseGrab : Grab
     {
         #region Fields
 
+        /// <summary>
+        /// The ray cast hit
+        /// </summary>
         private RaycastHit hit;
 
         #endregion Fields
 
-        #region Methods
+        #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseGrab"/> class.
+        /// </summary>
+        /// <param name="grabber">The grabber.</param>
+        /// <param name="highlightColor">Color of the highlight.</param>
         public MouseGrab(GameObject grabber, Color highlightColor)
             : base(grabber, highlightColor)
         {
-            this.grabber = grabber;
+            this.Grabber = grabber;
             this.highlightColor = highlightColor;
         }
 
-        public override void dropObject()
+        #endregion Constructors
+
+        #region Methods
+
+        /// <summary>
+        /// Drop currently grabbed object.
+        /// </summary>
+        public override void DropObject()
         {
-            if (inProximity(basket.holder) && !grabbedObject.tag.Equals("basket") && !basket.items.Contains(grabbedObject))
+            if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
                 Vector3 newpos = basket.holder.transform.position;
                 newpos.y = newpos.y + 0.4f;
 
                 if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(grabbedObject);
+                    basket.items.Add(GrabbedObject);
             }
-            else if (inProximity(cart.holder) && !grabbedObject.tag.Equals("cart") && !cart.items.Contains(grabbedObject))
+            else if (InProximity(cart.holder) && !GrabbedObject.tag.Equals("cart") && !cart.items.Contains(GrabbedObject))
             {
                 Vector3 newpos = cart.holder.transform.position;
                 newpos.y = newpos.y + 0.4f;
 
                 if (cart.items.Count < cart.rows * cart.cols)
-                    cart.items.Add(grabbedObject);
+                    cart.items.Add(GrabbedObject);
             }
             else
             {
-                grabbedObject.GetComponent<Collider>().enabled = true;
-                grabbedObject = null;
+                GrabbedObject.GetComponent<Collider>().enabled = true;
+                GrabbedObject = null;
                 highlighted = null;
             }
         }
 
-        public void setHit(RaycastHit hit)
+        /// <summary>
+        /// Sets the Ray cast hit.
+        /// </summary>
+        /// <param name="hit">The Ray cast hit.</param>
+        public void SetHit(RaycastHit hit)
         {
             this.hit = hit;
         }
