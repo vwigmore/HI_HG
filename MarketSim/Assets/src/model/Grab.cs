@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets.src.model
 {
     /// <summary>
-    /// Controls the grab function.
+    /// Controls the grab function
     /// </summary>
     internal abstract class Grab
     {
