@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ad1e9fd15ad14374ca3003b54a6f7184
-timeCreated: 1463559041
+timeCreated: 1463741854
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -164,6 +164,7 @@ ModelImporter:
     2300072: Sphere014
     2300074: Sphere07
     2300076: Sphere08
+    2300078: //RootNode
     3300000: Box006
     3300002: Box007
     3300004: Box008
@@ -203,6 +204,7 @@ ModelImporter:
     3300072: Sphere014
     3300074: Sphere07
     3300076: Sphere08
+    3300078: //RootNode
     4300000: Rectangle001
     4300002: Loft008
     4300004: Sphere013
