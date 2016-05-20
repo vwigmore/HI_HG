@@ -66,6 +66,7 @@
      <Compile Include="Assets\src\model\Manager.cs" />
      <Compile Include="Assets\src\model\ManusGrab.cs" />
      <Compile Include="Assets\src\model\MouseGrab.cs" />
+     <Compile Include="Assets\src\model\PlaySound.cs" />
      <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
