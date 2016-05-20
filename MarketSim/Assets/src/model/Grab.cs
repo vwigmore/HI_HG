@@ -3,11 +3,21 @@
     using UnityEngine;
 
     /// <summary>
-    /// Controls the grab function.
+    /// Controls the grab function
     /// </summary>
     internal abstract class Grab
     {
         #region Fields
+
+        /// <summary>
+        /// The basket
+        /// </summary>
+        public ItemHolder basket;
+
+        /// <summary>
+        /// The cart
+        /// </summary>
+        public ItemHolder cart;
 
         /// <summary>
         /// An object in proximity has to be within this distance.
@@ -40,6 +50,11 @@
         /// </summary>
         protected Color highlightColor;
 
+        /// <summary>
+        /// Last position of the grabbed object.
+        /// </summary>
+        protected Vector3 lastPos;
+
         #endregion Fields
 
         #region Constructors
@@ -51,18 +66,28 @@
         /// <param name="highlightColor">Color of the highlight.</param>
         public Grab(GameObject grabber, Color highlightColor)
         {
-            this.Grabber = grabber;
-            this.player = GameObject.FindGameObjectsWithTag("Player")[0];
+            this.grabber = grabber;
+            this.player = GameObject.FindGameObjectWithTag("Player");
             this.prevHighlightedColor = Color.clear;
             this.prevHighlighted = null;
             this.highlighted = null;
             this.highlightColor = highlightColor;
+
             this.GrabbedObject = null;
+
+            this.cart = new ItemHolder(GameObject.FindGameObjectWithTag("cart"), 3, 4);
+            this.basket = new ItemHolder(GameObject.FindGameObjectWithTag("basket"), 2, 3);
+            basket.InitOffsets();
         }
 
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// The GameObject that the grabbed item will follow.
+        /// </summary>
+        protected GameObject grabber { set; get; }
 
         /// <summary>
         /// Gets or sets the grabber.
@@ -103,13 +128,14 @@
         /// <summary>
         /// Updates the grabbed object.
         /// </summary>
-        public void UpdateGrabbedObject()
+        public virtual void UpdateGrabbedObject()
         {
-            if (this.IsGrabbing())
+            if (IsGrabbing())
             {
-                Vector3 newpos = this.Grabber.transform.position + (this.Grabber.transform.forward * .2f);
-                this.GrabbedObject.transform.position = newpos;
-                this.GrabbedObject.GetComponent<Collider>().enabled = false;
+                Vector3 newpos = grabber.transform.position + grabber.transform.forward;
+                GrabbedObject.transform.position = newpos;
+                GrabbedObject.GetComponent<Collider>().enabled = false;
+                lastPos = grabber.transform.position;
             }
         }
 
@@ -129,7 +155,7 @@
         public void HighlightSelectedObject(GameObject obj)
         {
             this.ClearHighlights();
-            if (obj.tag.Equals("pickup") && this.InProximity(obj))
+            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket") || obj.tag.Equals("cart")) && InProximity(obj))
             {
                 this.prevHighlighted = obj;
                 this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;

@@ -137,6 +137,11 @@ public class HandController : MonoBehaviour
         manusGrab.HighlightSelectedObject(collideObj);
     }
 
+    private void OnTriggerExit(Collider collision)
+    {
+        manusGrab.ClearHighlights();
+    }
+
     /// <summary>
     ///  Update is called once per frame.
     /// </summary>
@@ -192,7 +197,7 @@ public class HandController : MonoBehaviour
         int fingersBent = 0;
         for (int i = 0; i < 5; i++)
         {
-            if (this.glove.Fingers[i] >= 0.3f)
+            if (this.glove.Fingers[i] >= 0.4f)
             {
                 fingersBent++;
             }
@@ -232,15 +237,15 @@ public class HandController : MonoBehaviour
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
         this.handModel.transform.rotation = this.root.transform.rotation;
-        if (this.glove_hand == GLOVE_HAND.GLOVE_LEFT)
+
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             this.handModel.transform.Rotate(Vector3.up, -90);
         }
-        else if (this.glove_hand == GLOVE_HAND.GLOVE_RIGHT)
+        else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
         {
             this.handModel.transform.Rotate(Vector3.up, 90);
         }
-
         this.handModel.transform.Rotate(Vector3.forward, -90);
     }
 

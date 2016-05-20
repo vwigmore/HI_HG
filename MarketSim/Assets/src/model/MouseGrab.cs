@@ -44,20 +44,27 @@
         /// </summary>
         public override void DropObject()
         {
-            if (!this.InProximity(this.hit.point))
+            if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
-                return;
-            }
+                Vector3 newpos = basket.holder.transform.position;
+                newpos.y = newpos.y + 0.4f;
 
-            if ((1.0 - (this.hit.normal.y * this.hit.normal.y)) < 0.4 &&
-                !this.hit.transform.gameObject.tag.Equals("Player"))
+                if (basket.items.Count < basket.rows * basket.cols)
+                    basket.items.Add(GrabbedObject);
+            }
+            else if (InProximity(cart.holder) && !GrabbedObject.tag.Equals("cart") && !cart.items.Contains(GrabbedObject))
             {
-                Vector3 newpos = this.hit.point;
-                GrabbedObject.transform.position = newpos;
+                Vector3 newpos = cart.holder.transform.position;
+                newpos.y = newpos.y + 0.4f;
+
+                if (cart.items.Count < cart.rows * cart.cols)
+                    cart.items.Add(GrabbedObject);
+            }
+            else
+            {
                 GrabbedObject.GetComponent<Collider>().enabled = true;
-                GrabbedObject.GetComponent<Rigidbody>().Sleep();
-                this.GrabbedObject = null;
-                this.highlighted = null;
+                GrabbedObject = null;
+                highlighted = null;
             }
         }
 

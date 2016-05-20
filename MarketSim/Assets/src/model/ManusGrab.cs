@@ -31,18 +31,26 @@
 
         #region Methods
 
-        /// <summary>
-        /// Drops the object.
-        /// </summary>
+        public override void UpdateGrabbedObject()
+        {
+            if (IsGrabbing())
+            {
+                Vector3 newpos = grabber.transform.position;
+                GrabbedObject.transform.position = newpos;
+                GrabbedObject.GetComponent<Collider>().enabled = false;
+            }
+        }
+
         public override void DropObject()
         {
-            Vector3 newpos = GrabbedObject.transform.position;
-            newpos.y = 0;
-            GrabbedObject.transform.position = newpos;
+            //Vector3 newpos = grabbedObject.transform.position;
+            //newpos.y = 0;
+            //grabbedObject.transform.position = newpos;
             GrabbedObject.GetComponent<Collider>().enabled = true;
-            GrabbedObject.GetComponent<Rigidbody>().Sleep();
-            this.GrabbedObject = null;
-            this.highlighted = null;
+
+            //grabbedObject.GetComponent<Rigidbody>().Sleep();
+            GrabbedObject = null;
+            highlighted = null;
         }
 
         #endregion Methods

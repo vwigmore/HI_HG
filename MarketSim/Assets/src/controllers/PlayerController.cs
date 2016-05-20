@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
     private float vAxis;
     private float hAxis;
 
-    private GameObject leftFoot, rightFoot;
-    private float crouchRange, deltaHeight;
+    private GameObject hip, leftFoot, rightFoot;
+    private float lastDeltaHeight, initialDeltaHeight;
 
     private GameObject model;
 
@@ -73,10 +73,12 @@ public class PlayerController : MonoBehaviour
         playerHeight = pc.height;
         crouchHeight = playerHeight / 2;
 
+        hip = GameObject.Find("hip_center");
         leftFoot = GameObject.Find("left_foot");
         rightFoot = GameObject.Find("right_foot");
 
-        crouchRange = 0.4f;
+        initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
+        lastDeltaHeight = initialDeltaHeight;
     }
 
     /// <summary>
@@ -98,32 +100,29 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdateMove()
     {
-        /* Player Camera Controls */
+        updateRotation();
+        updateMovement();
+    }
+
+    private void updateRotation()
+    {
         mouseAxisY = Input.GetAxis("Mouse Y");
         cam_vert_rot -= mouseAxisY;
 
-        // cap vertical rotation of camera
         cam_vert_rot = Mathf.Min(Mathf.Max(-cam_cap, cam_vert_rot), cam_cap);
 
         Camera.main.transform.localRotation = Quaternion.Euler(cam_vert_rot, 0, 0);
 
-        // Debug.Log(cam_vert_rot);
-
         mouseAxisX = Input.GetAxis("Mouse X");
         Vector3 rotAngles = new Vector3(0, mouseAxisX * mouseSensitivity, 0);
         transform.Rotate(rotAngles);
+    }
 
-        /* Player Movement */
-
-        // Get axis -> between -1 and 1
-        // Discrete if KB, continuous if using joystick.
+    private void updateMovement()
+    {
         vAxis = Input.GetAxis("Vertical");
         hAxis = Input.GetAxis("Horizontal");
 
-        // move the player
-        // http://docs.unity3d.com/ScriptReference/CharacterController.Move.html
-
-        // prevents unlimited jumps
         if (pc.isGrounded)
         {
             // movement vector, consists of axes to move to.
@@ -163,17 +162,21 @@ public class PlayerController : MonoBehaviour
     private void UpdateCrouch()
     {
         float minFootY = Mathf.Min(this.leftFoot.transform.position.y, this.rightFoot.transform.position.y);
+        float deltaHeight = hip.transform.position.y - minFootY;
         Vector3 crouchDir = this.model.transform.position;
-        if (minFootY > this.crouchRange)
+        if (deltaHeight > lastDeltaHeight)
         {
-            crouchDir.y = -0.2f;
+            if (minFootY + (deltaHeight - lastDeltaHeight) <= 0)
+                crouchDir.y += deltaHeight - lastDeltaHeight;
         }
-        else if (minFootY < 0f)
+        else if (deltaHeight < lastDeltaHeight)
         {
-            crouchDir.y = 0.2f;
+            if (minFootY - (lastDeltaHeight - deltaHeight) >= 0)
+                crouchDir.y -= lastDeltaHeight - deltaHeight;
         }
 
         this.model.transform.position = crouchDir;
+        lastDeltaHeight = deltaHeight;
     }
 
     #endregion Methods
