@@ -2,9 +2,9 @@ MarketSim/Temp/*
 MarketSim/Library/*
 MarketSim/obj/*
 
-*.csproj
-*.unityproj
-*.sln
-*.user
-*.userprefs
-*.DS_store
+**.csproj
+**.unityproj
+**.sln
+**.user
+**.userprefs
+**.DS_store
