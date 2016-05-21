@@ -1,6 +1,6 @@
-$PROJDIR/Temp/
-$PROJDIR/Library/
-$PROJDIR/obj/
+MarketSim/Temp/*
+MarketSim/Library/*
+MarketSim/obj/*
 
 *.csproj
 *.unityproj
