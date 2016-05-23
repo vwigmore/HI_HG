@@ -154,19 +154,19 @@ public class HandController : MonoBehaviour
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
-            Gesture gesture = getGesture();
+            Gesture gesture = GetGesture();
             Rotation rotation = getRotation();
             Debug.Log("FingerPositions[ Thumb: " + glove.Fingers[0] + ", Index: " + glove.Fingers[1] + ", Middle: " + glove.Fingers[2] + ", Ring: " + glove.Fingers[3] + ", Pink: " + glove.Fingers[4] + " ]");
 
-            if (!manusGrab.isGrabbing())
+            if (!manusGrab.IsGrabbing())
             {
                 if (gesture == Gesture.grab)
-                    manusGrab.grabHighlightedObject();
+                    manusGrab.GrabHighlightedObject();
             }
             else
             {
                 if (gesture == Gesture.open)
-                    manusGrab.dropObject();
+                    manusGrab.DropObject();
             }
 
             if (gesture == Gesture.thumb)
@@ -216,6 +216,8 @@ public class HandController : MonoBehaviour
             Debug.Log("Open");
             return Gesture.open;
         }
+
+        return Gesture.none;
     }
 
     private Rotation getRotation()
