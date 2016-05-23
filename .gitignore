@@ -2,6 +2,7 @@ MarketSim/Temp/*
 MarketSim/Library/*
 MarketSim/obj/*
 MarketSim/.vs/*
+MarketSim/packages/*
 
 **.csproj
 **.unityproj
