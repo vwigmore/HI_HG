@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
-namespace Assets.src.model
+﻿namespace Assets.src.model
 {
+    using UnityEngine;
+
     /// <summary>
-    /// Controls the grab function.
+    /// Controls the grab function
     /// </summary>
-    internal abstract class Grab
+    public abstract class Grab
     {
         #region Fields
 
-        #region Properties
+        /// <summary>
+        /// The basket
+        /// </summary>
+        public ItemHolder basket;
+
+        /// <summary>
+        /// The cart
+        /// </summary>
+        public ItemHolder cart;
 
         /// <summary>
         /// An object in proximity has to be within this distance.
@@ -26,13 +30,13 @@ namespace Assets.src.model
         protected GameObject player;
 
         /// <summary>
-        /// Previously selected gameobject.
+        /// Previously selected GameObject.
         /// Used to restore their colors when they're not selected.
         /// </summary>
         protected GameObject prevHighlighted;
 
         /// <summary>
-        /// Previoulsy highlighted gameobject's color.
+        /// Previously highlighted GameObject's color.
         /// </summary>
         protected Color prevHighlightedColor;
 
@@ -51,58 +55,86 @@ namespace Assets.src.model
         /// </summary>
         protected Vector3 lastPos;
 
+        #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Grab"/> class.
+        /// </summary>
+        /// <param name="grabber">The grabber.</param>
+        /// <param name="highlightColor">Color of the highlight.</param>
+        public Grab(GameObject grabber, Color highlightColor)
+        {
+            this.grabber = grabber;
+            this.player = GameObject.FindGameObjectWithTag("Player");
+            this.prevHighlightedColor = Color.clear;
+            this.prevHighlighted = null;
+            this.highlighted = null;
+            this.highlightColor = highlightColor;
+
+            this.GrabbedObject = null;
+
+            this.cart = new ItemHolder(GameObject.FindGameObjectWithTag("cart"), 3, 4);
+            this.basket = new ItemHolder(GameObject.FindGameObjectWithTag("basket"), 2, 3);
+            basket.InitOffsets();
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         /// <summary>
         /// The GameObject that the grabbed item will follow.
         /// </summary>
         protected GameObject grabber { set; get; }
 
         /// <summary>
-        /// Object currently selected.
+        /// Gets or sets the grabber.
         /// </summary>
-        protected GameObject grabbedObject { set; get; }
+        /// <value>
+        /// The grabber.
+        /// </value>
+        protected GameObject Grabber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the grabbed object.
+        /// </summary>
+        /// <value>
+        /// The grabbed object.
+        /// </value>
+        protected GameObject GrabbedObject { get; set; }
 
         #endregion Properties
 
         #region Methods
 
-        public
-
-        #endregion Methods
-
- Grab(GameObject grabber, Color highlightColor)
-        {
-            this.grabber = grabber;
-            this.player = GameObject.FindGameObjectsWithTag("Player")[0];
-            this.prevHighlightedColor = Color.clear;
-            this.prevHighlighted = null;
-            this.highlighted = null;
-            this.highlightColor = highlightColor;
-            this.grabbedObject = null;
-        }
-
         /// <summary>
         /// Grab selected object.
         /// </summary>
-        public void grabHighlightedObject()
+        public void GrabHighlightedObject()
         {
             if (this.highlighted != null)
             {
-                this.grabbedObject = highlighted;
+                this.GrabbedObject = this.highlighted;
             }
         }
 
         /// <summary>
         /// Drop currently grabbed object.
         /// </summary>
-        public abstract void dropObject();
+        public abstract void DropObject();
 
-        public virtual void updateGrabbedObject()
+        /// <summary>
+        /// Updates the grabbed object.
+        /// </summary>
+        public virtual void UpdateGrabbedObject()
         {
-            if (isGrabbing())
+            if (IsGrabbing())
             {
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
-                grabbedObject.transform.position = newpos;
-                grabbedObject.GetComponent<Collider>().enabled = false;
+                GrabbedObject.transform.position = newpos;
+                GrabbedObject.GetComponent<Collider>().enabled = false;
                 lastPos = grabber.transform.position;
             }
         }
@@ -111,38 +143,40 @@ namespace Assets.src.model
         /// Tells whether an object is being grabbed.
         /// </summary>
         /// <returns>True if an object is currently being held, else false.</returns>
-        public bool isGrabbing()
+        public bool IsGrabbing()
         {
-            return (grabbedObject != null);
+            return this.GrabbedObject != null;
         }
 
         /// <summary>
         /// Highlight selected object
         /// </summary>
         /// <param name="obj">Object to highlight</param>
-        public void highlightSelectedObject(GameObject obj)
+        public void HighlightSelectedObject(GameObject obj)
         {
-            clearHighlights();
-            if (obj.tag.Equals("pickup") && inProximity(obj))
+            this.ClearHighlights();
+            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket") || obj.tag.Equals("cart")) && InProximity(obj))
             {
-                prevHighlighted = obj;
-                prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
-                highlighted = obj;
-                obj.GetComponent<Renderer>().material.color = highlightColor;
+                this.prevHighlighted = obj;
+                this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
+                this.highlighted = obj;
+                obj.GetComponent<Renderer>().material.color = this.highlightColor;
             }
             else
             {
-                highlighted = null;
+                this.highlighted = null;
             }
         }
 
         /// <summary>
         /// Clear previously highlighted objects
         /// </summary>
-        public void clearHighlights()
+        public void ClearHighlights()
         {
-            if (prevHighlighted != null)
-                prevHighlighted.GetComponent<Renderer>().material.color = prevHighlightedColor;
+            if (this.prevHighlighted != null)
+            {
+                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
+            }
         }
 
         /// <summary>
@@ -150,9 +184,9 @@ namespace Assets.src.model
         /// </summary>
         /// <param name="obj">The object to check.</param>
         /// <returns>True if object is in range, else false.</returns>
-        public bool inProximity(GameObject obj)
+        public bool InProximity(GameObject obj)
         {
-            return (Vector3.Distance(grabber.transform.position, obj.transform.position) <= proxDist);
+            return Vector3.Distance(this.Grabber.transform.position, obj.transform.position) <= this.proxDist;
         }
 
         /// <summary>
@@ -160,11 +194,11 @@ namespace Assets.src.model
         /// </summary>
         /// <param name="pos">The position to check.</param>
         /// <returns>True if object is in range, else false.</returns>
-        public bool inProximity(Vector3 pos)
+        public bool InProximity(Vector3 pos)
         {
-            return (Vector3.Distance(grabber.transform.position, pos) <= proxDist);
+            return Vector3.Distance(this.Grabber.transform.position, pos) <= this.proxDist;
         }
 
-        #endregion Fields
+        #endregion Methods
     }
 }

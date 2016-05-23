@@ -1,42 +1,55 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
-namespace Assets.src.model
+﻿namespace Assets.src.model
 {
-    internal class ManusGrab : Grab
-    {
-        #region Methods
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using UnityEngine;
 
+    /// <summary>
+    /// Implements specific grab functions for the Manus.
+    /// </summary>
+    /// <seealso cref="Assets.src.model.Grab" />
+    public class ManusGrab : Grab
+    {
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManusGrab"/> class.
+        /// </summary>
+        /// <param name="grabber">The grabber.</param>
+        /// <param name="highlightColor">Color of the highlight.</param>
         public ManusGrab(GameObject grabber, Color highlightColor)
             : base(grabber, highlightColor)
         {
-            this.grabber = grabber;
+            this.Grabber = grabber;
             this.highlightColor = highlightColor;
         }
 
-        public override void updateGrabbedObject()
+        #endregion Constructors
+
+        #region Methods
+
+        public override void UpdateGrabbedObject()
         {
-            if (isGrabbing())
+            if (IsGrabbing())
             {
                 Vector3 newpos = grabber.transform.position;
-                grabbedObject.transform.position = newpos;
-                grabbedObject.GetComponent<Collider>().enabled = false;
+                GrabbedObject.transform.position = newpos;
+                GrabbedObject.GetComponent<Collider>().enabled = false;
             }
         }
 
-        public override void dropObject()
+        public override void DropObject()
         {
             //Vector3 newpos = grabbedObject.transform.position;
             //newpos.y = 0;
             //grabbedObject.transform.position = newpos;
-            grabbedObject.GetComponent<Collider>().enabled = true;
+            GrabbedObject.GetComponent<Collider>().enabled = true;
 
             //grabbedObject.GetComponent<Rigidbody>().Sleep();
-            grabbedObject = null;
+            GrabbedObject = null;
             highlighted = null;
         }
 

@@ -1,10 +1,13 @@
-$PROJDIR/Temp/
-$PROJDIR/Library/
-$PROJDIR/obj/
+MarketSim/Temp/*
+MarketSim/Library/*
+MarketSim/obj/*
+MarketSim/.vs/*
 
-*.csproj
-*.unityproj
-*.sln
-*.user
-*.userprefs
-*.DS_store
+**.csproj
+**.unityproj
+**.sln
+**.vs
+**.suo
+**.user
+**.userprefs
+**.DS_store

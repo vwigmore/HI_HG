@@ -1,12 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{F6EE6353-75BC-828A-F6CE-E6D579ACAF9E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -34,12 +33,6 @@
     <NoWarn>0169</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
-      <HintPath>packages\NSubstitute.1.10.0.0\lib\net35\NSubstitute.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL" />
-    <Reference Include="nunitlite, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.XML" />
     <Reference Include="System.Core" />
@@ -52,37 +45,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Glove.cs" />
-    <Compile Include="Assets\HandSimulator.cs" />
-    <Compile Include="Assets\Manus.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectImgControllers\DisplayColor.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectImgControllers\DisplayDepth.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectModelControllers\KinectModelControllerV2.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectModelControllers\KinectPointController.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\DepthWrapper.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\DeviceOrEmulator.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectEmulator.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectInterop.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectRecorder.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectSensor.cs" />
-    <Compile Include="Assets\Script\Kinect\KinectWrapper\SkeletonWrapper.cs" />
-    <Compile Include="Assets\Tests\ManusGrabTest.cs" />
-    <Compile Include="Assets\src\controllers\HandController.cs" />
-    <Compile Include="Assets\src\controllers\MouseGrabController.cs" />
-    <Compile Include="Assets\src\controllers\PlayerController.cs" />
-    <Compile Include="Assets\src\model\Grab.cs" />
-    <Compile Include="Assets\src\model\Manager.cs" />
-    <Compile Include="Assets\src\model\ManusGrab.cs" />
-    <Compile Include="Assets\src\model\MouseGrab.cs" />
-    <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
-    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
-    <None Include="packages.config" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Glove.cs" />
+     <Compile Include="Assets\HandSimulator.cs" />
+     <Compile Include="Assets\Manus.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectImgControllers\DisplayColor.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectImgControllers\DisplayDepth.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectModelControllers\KinectModelControllerV2.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectModelControllers\KinectPointController.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\DepthWrapper.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\DeviceOrEmulator.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectEmulator.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectInterop.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectRecorder.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectSensor.cs" />
+     <Compile Include="Assets\Script\Kinect\KinectWrapper\SkeletonWrapper.cs" />
+     <Compile Include="Assets\src\controllers\HandController.cs" />
+     <Compile Include="Assets\src\controllers\MouseGrabController.cs" />
+     <Compile Include="Assets\src\controllers\PlayerController.cs" />
+     <Compile Include="Assets\src\model\Grab.cs" />
+     <Compile Include="Assets\src\model\ItemHolder.cs" />
+     <Compile Include="Assets\src\model\Manager.cs" />
+     <Compile Include="Assets\src\model\ManusGrab.cs" />
+     <Compile Include="Assets\src\model\MouseGrab.cs" />
+     <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -92,4 +84,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
