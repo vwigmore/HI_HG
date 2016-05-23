@@ -52,14 +52,6 @@
                 if (basket.items.Count < basket.rows * basket.cols)
                     basket.items.Add(GrabbedObject);
             }
-            else if (InProximity(cart.holder) && !GrabbedObject.tag.Equals("cart") && !cart.items.Contains(GrabbedObject))
-            {
-                Vector3 newpos = cart.holder.transform.position;
-                newpos.y = newpos.y + 0.4f;
-
-                if (cart.items.Count < cart.rows * cart.cols)
-                    cart.items.Add(GrabbedObject);
-            }
             else
             {
                 GrabbedObject.GetComponent<Collider>().enabled = true;

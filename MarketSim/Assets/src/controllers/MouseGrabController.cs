@@ -66,7 +66,6 @@ public class MouseGrabController : MonoBehaviour
         mouseGrab.UpdateGrabbedObject();
 
         mouseGrab.basket.UpdateList();
-        mouseGrab.cart.UpdateList();
     }
 
     #endregion Methods

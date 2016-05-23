@@ -15,11 +15,6 @@
         public ItemHolder basket;
 
         /// <summary>
-        /// The cart
-        /// </summary>
-        public ItemHolder cart;
-
-        /// <summary>
         /// An object in proximity has to be within this distance.
         /// </summary>
         protected float proxDist = 4.0f;
@@ -75,7 +70,6 @@
 
             this.GrabbedObject = null;
 
-            this.cart = new ItemHolder(GameObject.FindGameObjectWithTag("cart"), 3, 4);
             this.basket = new ItemHolder(GameObject.FindGameObjectWithTag("basket"), 2, 3);
             basket.InitOffsets();
         }
@@ -155,7 +149,7 @@
         public void HighlightSelectedObject(GameObject obj)
         {
             this.ClearHighlights();
-            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket") || obj.tag.Equals("cart")) && InProximity(obj))
+            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
                 this.prevHighlighted = obj;
                 this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
