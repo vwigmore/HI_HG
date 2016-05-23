@@ -136,12 +136,12 @@ public class HandController : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collideObj = collision.gameObject;
-        manusGrab.highlightSelectedObject(collideObj);
+        manusGrab.HighlightSelectedObject(collideObj);
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        manusGrab.clearHighlights();
+        manusGrab.ClearHighlights();
     }
 
     /// <summary>
@@ -151,6 +151,7 @@ public class HandController : MonoBehaviour
     {
         this.UpdatePosition();
         this.UpdateHand();
+
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
             Gesture gesture = getGesture();
@@ -174,14 +175,15 @@ public class HandController : MonoBehaviour
             if (gesture == Gesture.point)
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
         }
-        manusGrab.updateGrabbedObject();
+
+        this.manusGrab.UpdateGrabbedObject();
     }
 
     /// <summary>
     /// Returns which gesture the hand is making.
     /// </summary>
     /// <returns>Gesture the hand is making</returns>
-    private Gesture getGesture()
+    private Gesture GetGesture()
     {
         int fingersBent = 0;
         for (int i = 0; i < 5; i++)
@@ -214,13 +216,6 @@ public class HandController : MonoBehaviour
             Debug.Log("Open");
             return Gesture.open;
         }
-
-        //return Gesture.open;
-        //else if (fingersBent == 4 && glove.Fingers[0] <= 0.3)
-        //    return Gesture.thumb;
-        //else if (fingersBent == 5)
-        //    return Gesture.grab;
-        return Gesture.none;
     }
 
     private Rotation getRotation()

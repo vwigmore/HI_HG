@@ -60,12 +60,14 @@ public class PlayerController : MonoBehaviour
         pc.transform.Rotate(new Vector3(0, -50 * Time.deltaTime, 0));
     }
 
-    public bool inProximity(GameObject obj)
+    private bool inProximity(GameObject obj)
     {
         return (Vector3.Distance(pc.transform.position, obj.transform.position) <= 3f);
     }
 
-    // Use this for initialization
+    /// <summary>
+    /// Use this for initialization
+    /// </summary>
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -84,7 +86,9 @@ public class PlayerController : MonoBehaviour
         lastDeltaHeight = initialDeltaHeight;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     private void Update()
     {
         /* Controls exiting editor application by pressing ESC */
@@ -93,9 +97,12 @@ public class PlayerController : MonoBehaviour
 
         /* Update movement of player*/
         UpdateMove();
-        updateCrouch();
+        UpdateCrouch();
     }
 
+    /// <summary>
+    /// Updates the movement of the player.
+    /// </summary>
     private void UpdateMove()
     {
         updateRotation();
@@ -123,39 +130,45 @@ public class PlayerController : MonoBehaviour
 
         if (pc.isGrounded)
         {
-            moveDirection = new Vector3(hAxis, 0, vAxis);
+            // movement vector, consists of axes to move to.
+            this.moveDirection = new Vector3(hAxis, 0, vAxis);
 
-            moveDirection = transform.TransformDirection(moveDirection);
+            // Transforms direction from local space to world space.
+            this.moveDirection = transform.TransformDirection(moveDirection);
 
-            moveDirection *= moveSpeed;
+            // Multiplies vector with speed (axes are between -1 and 1, not much).
+            this.moveDirection *= moveSpeed;
+            if (Input.GetButton("Jump"))
+
+                this.moveDirection.y = jumpSpeed;
 
             // Capping move speed: moveDirection hypotenuse
-            if (moveDirection.x < -moveSpeed)
-                moveDirection.x = -moveSpeed;
-            else if (moveDirection.x > moveSpeed)
-                moveDirection.x = moveSpeed;
+            if (this.moveDirection.x < -moveSpeed)
+                this.moveDirection.x = -moveSpeed;
+            else if (this.moveDirection.x > moveSpeed)
+                this.moveDirection.x = moveSpeed;
 
-            if (moveDirection.z < -moveSpeed)
-                moveDirection.z = -moveSpeed;
-            else if (moveDirection.z > moveSpeed)
-                moveDirection.z = moveSpeed;
+            if (this.moveDirection.z < -moveSpeed)
+                this.moveDirection.z = -moveSpeed;
+            else if (this.moveDirection.z > moveSpeed)
+                this.moveDirection.z = moveSpeed;
         }
         else
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            this.moveDirection.y -= gravity * Time.deltaTime;
         }
 
         pc.Move(moveDirection * Time.deltaTime);
     }
 
-    private void updateCrouch()
+    /// <summary>
+    /// Updates transform for crouching.
+    /// </summary>
+    private void UpdateCrouch()
     {
-        float minFootY = Mathf.Min(leftFoot.transform.position.y, rightFoot.transform.position.y);
-
+        float minFootY = Mathf.Min(this.leftFoot.transform.position.y, this.rightFoot.transform.position.y);
         float deltaHeight = hip.transform.position.y - minFootY;
-
-        Vector3 crouchDir = model.transform.position;
-
+        Vector3 crouchDir = this.model.transform.position;
         if (deltaHeight > lastDeltaHeight)
         {
             if (minFootY + (deltaHeight - lastDeltaHeight) <= 0)
@@ -166,8 +179,8 @@ public class PlayerController : MonoBehaviour
             if (minFootY - (lastDeltaHeight - deltaHeight) >= 0)
                 crouchDir.y -= lastDeltaHeight - deltaHeight;
         }
-        model.transform.position = crouchDir;
 
+        this.model.transform.position = crouchDir;
         lastDeltaHeight = deltaHeight;
     }
 

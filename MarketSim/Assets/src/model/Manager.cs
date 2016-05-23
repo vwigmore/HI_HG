@@ -1,31 +1,49 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 /**
  * The manager keeps track of global variables, settings.
  * Should be singleton as there is only 1 manager for the simulation.
  **/
-public class Manager : MonoBehaviour {
+
+public class Manager : MonoBehaviour
+{
+    #region Fields
 
     public bool NO_VR = true;
 
+    #endregion Fields
+
+    #region Properties
+
     public static Manager Instance { get; private set; }
 
-    // Initialize instance
-    void Awake()
+    #endregion Properties
+
+    #region Methods
+
+    /// <summary>
+    ///  Initialize instance
+    /// </summary>
+    private void Awake()
     {
         Instance = this;
         Debug.Log("I'm alive");
-
     }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    /// <summary>
+    ///  Use this for initialization
+    /// </summary>
+    private void Start()
+    {
+    }
+
+    /// <summary>
+    ///  Update is called once per frame
+    /// </summary>
+    private void Update()
+    {
+    }
+
+    #endregion Methods
 }
