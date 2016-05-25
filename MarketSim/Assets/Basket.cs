@@ -19,8 +19,8 @@ public class Basket : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.handle = Resources.Load<GameObject>("single_basket_handle");
-        this.basket = Resources.Load<GameObject>("single_basket_no_handle");
+        ///this.handle = Resources.Load<GameObject>("single_basket_handle");
+        //this.basket = Resources.Load<GameObject>("single_basket_no_handle");
         this.basketModel = GameObject.Find("single_basket_no_handle");
         this.handleModel = GameObject.Find("single_basket_handle");
 
@@ -34,10 +34,10 @@ public class Basket : MonoBehaviour
     {
       
         basketModel.GetComponent<Collider>().enabled = false;
-        Vector3 newPos = handleModel.transform.position;
-        float y = handleModel.transform.position.y;
-        newPos.y += 0.15f;
-        basketModel.transform.position = newPos;
+        Vector3 newPos = basketModel.transform.position;
+        float height = handleModel.GetComponent<BoxCollider>().bounds.size.y;
+        newPos.y += height;
+        handleModel.transform.position = newPos;
         
     }
     #endregion Methods 
