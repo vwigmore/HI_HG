@@ -91,10 +91,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void Update()
     {
+#if UNITY_EDITOR
         /* Controls exiting editor application by pressing ESC */
         if (Input.GetKey(KeyCode.Escape))
             UnityEditor.EditorApplication.isPlaying = false;
-
+#endif
         /* Update movement of player*/
         UpdateMove();
         UpdateCrouch();
