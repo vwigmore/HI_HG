@@ -9,6 +9,8 @@ public class ItemHolderTest
 {
     #region Fields
 
+    private readonly int four = 4;
+    private readonly int two = 2;
     private ItemHolder itemH;
 
     #endregion Fields
@@ -21,7 +23,7 @@ public class ItemHolderTest
         GameObject basket = new GameObject("basket");
         basket.AddComponent<Rigidbody>();
         basket.AddComponent<BoxCollider>();
-        itemH = new ItemHolder(basket, 2, 4);
+        itemH = new ItemHolder(basket, two, four);
     }
 
     [TearDown]
@@ -34,7 +36,7 @@ public class ItemHolderTest
     public void TestSizeOfOffsets()
     {
         itemH.InitOffsets();
-        Assert.AreEqual(itemH.offsets.Length, 2 * 4);
+        Assert.AreEqual(itemH.offsets.Length, two * four);
     }
 
     #endregion Methods
