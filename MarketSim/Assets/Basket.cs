@@ -24,7 +24,6 @@ public class Basket : MonoBehaviour
         this.basketModel = GameObject.Find("single_basket_no_handle");
         this.handleModel = GameObject.Find("single_basket_handle");
 
-        basketModel.transform.position = handleModel.transform.position;
     }
 
     /// <summary>
@@ -32,10 +31,8 @@ public class Basket : MonoBehaviour
     /// </summary>
     void Update()
     {
-      
-        basketModel.GetComponent<Collider>().enabled = false;
         Vector3 newPos = basketModel.transform.position;
-        float height = handleModel.GetComponent<BoxCollider>().bounds.size.y;
+        float height = handleModel.GetComponent<MeshCollider>().bounds.size.y;
         newPos.y += height;
         handleModel.transform.position = newPos;
         
