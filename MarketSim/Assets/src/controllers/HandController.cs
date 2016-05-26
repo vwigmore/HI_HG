@@ -37,17 +37,44 @@ public class HandController : MonoBehaviour
     /// </summary>
     private GameObject hand;
 
+    /// <summary>
+    /// The hand model
+    /// </summary>
     private GameObject handModel;
 
+    /// <summary>
+    /// The manus grab
+    /// </summary>
     private ManusGrab manusGrab;
+
+    /// <summary>
+    /// The sphere collider
+    /// </summary>
     private SphereCollider sphereCollider;
 
+    /// <summary>
+    /// The game transforms
+    /// </summary>
     private Transform[][] gameTransforms;
+
+    /// <summary>
+    /// The model transforms
+    /// </summary>
     private Transform[][] modelTransforms;
+
+    /// <summary>
+    /// The animation clip
+    /// </summary>
     private AnimationClip animationClip;
 
+    /// <summary>
+    /// the gestures of hand
+    /// </summary>
     private enum Gesture { none, grab, open, point, thumb };
 
+    /// <summary>
+    /// the rotation of the player
+    /// </summary>
     private enum Rotation { none, right, left };
 
     #endregion Fields
