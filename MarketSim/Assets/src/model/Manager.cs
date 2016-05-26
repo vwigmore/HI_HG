@@ -10,12 +10,21 @@ public class Manager : MonoBehaviour
 {
     #region Fields
 
+    /// <summary>
+    /// The n o_ vr
+    /// </summary>
     public bool NO_VR = true;
 
     #endregion Fields
 
     #region Properties
 
+    /// <summary>
+    /// Gets the instance.
+    /// </summary>
+    /// <value>
+    /// The instance.
+    /// </value>
     public static Manager Instance { get; private set; }
 
     #endregion Properties

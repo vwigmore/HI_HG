@@ -130,6 +130,11 @@
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.GetComponent<Collider>().enabled = false;
                 lastPos = grabber.transform.position;
+
+                //Vector3 move = grabber.transform.position * Time.deltaTime * 5f;
+                //Vector3 newpos = grabber.transform.position + move;
+                //GrabbedObject.GetComponent<Collider>().enabled = false;
+                //GrabbedObject.transform.position = newpos;
             }
         }
 
