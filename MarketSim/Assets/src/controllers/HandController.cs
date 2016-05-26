@@ -152,7 +152,7 @@ public class HandController : MonoBehaviour
         this.UpdatePosition();
         this.UpdateHand();
 
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
             Gesture gesture = GetGesture();
             Rotation rotation = getRotation();
@@ -201,7 +201,7 @@ public class HandController : MonoBehaviour
             Debug.Log("Grab");
             return Gesture.grab;
         }
-        else if (glove.Fingers[2] <= 0.4f && fingersBent >= 2)
+        else if (glove.Fingers[1] <= 0.4f && fingersBent >= 2)
         {
             Debug.Log("Point");
             return Gesture.point;
