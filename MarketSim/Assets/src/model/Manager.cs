@@ -71,8 +71,6 @@ public class Manager : MonoBehaviour
         Instance = this;
         Manager.highlightOn = true;
         Manager.gestureMovementOn = true;
-
-        Debug.Log("I'm alive");
     }
 
     #endregion Methods
