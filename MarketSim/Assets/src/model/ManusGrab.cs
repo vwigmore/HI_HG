@@ -33,10 +33,15 @@
 
         public override void UpdateGrabbedObject()
         {
+        }
+
+        public void UpdateGrabbedObject(Transform trans)
+        {
             if (IsGrabbing())
             {
                 Vector3 newpos = grabber.transform.position;
                 GrabbedObject.transform.position = newpos;
+                GrabbedObject.transform.rotation = trans.rotation;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
