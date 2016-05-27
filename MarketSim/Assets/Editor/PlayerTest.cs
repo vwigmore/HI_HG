@@ -34,8 +34,15 @@ public class PlayerTest
         hip = GameObject.Find("hip_center");
         leftFoot = GameObject.Find("left_foot");
         rightFoot = GameObject.Find("right_foot");
-        pc = model.GetComponent<CharacterController>();
-        Debug.Log("gr: " + model.GetComponent<CharacterController>().ToString());
+        CharacterController c = new CharacterController();
+        model.AddComponent<CharacterController>();
+       pc = model.GetComponent<CharacterController>();
+       //pc.height = 0.4f;
+       pc.stepOffset = 0.0f;
+       Debug.Log("height: " + pc.height + " radius:" + pc.radius + " off: "+pc.stepOffset );
+
+
+       Debug.Log("gr: " + model.GetComponent<CharacterController>().ToString());
         player = new Player(pc, model, hip, leftFoot, rightFoot);
 
     }
@@ -103,7 +110,7 @@ public class PlayerTest
 
         Vector3 newPos = new Vector3(x1, y1, z1);
         player.updateMovement();
-        Assert.AreEqual(player.model.transform.position.ToString(), newPos.ToString());
+        Assert.AreEqual(player.pc.transform.position.ToString(), newPos.ToString());
     }
 
     [Test]
@@ -112,7 +119,7 @@ public class PlayerTest
 
         Vector3 newPos = new Vector3(x1, y1, z1);
         player.updateRotation();
-        Assert.AreEqual(player.model.transform.position.ToString(), newPos.ToString());
+        Assert.AreEqual(player.pc.transform.position.ToString(), newPos.ToString());
     }
 }
 #endregion Methods
