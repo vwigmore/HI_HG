@@ -36,11 +36,6 @@
         protected Color prevHighlightedColor;
 
         /// <summary>
-        /// Object currently selected.
-        /// </summary>
-        protected GameObject highlighted;
-
-        /// <summary>
         /// Color used to highlight selected objects.
         /// </summary>
         protected Color highlightColor;
@@ -49,6 +44,11 @@
         /// Last position of the grabbed object.
         /// </summary>
         protected Vector3 lastPos;
+
+        /// <summary>
+        /// Object currently selected.
+        /// </summary>
+        public GameObject highlighted { get; protected set; }
 
         #endregion Fields
 

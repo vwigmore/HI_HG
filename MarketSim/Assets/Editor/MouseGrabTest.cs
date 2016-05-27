@@ -19,7 +19,8 @@ namespace Assets.Editor
 
         public override Grab PassGrab()
         {
-            return new MouseGrab(new GameObject(), Color.cyan);
+            GameObject player = new GameObject("player");
+            return new MouseGrab(player, Color.cyan);
         }
 
         #endregion Methods
