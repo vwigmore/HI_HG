@@ -130,6 +130,8 @@
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    GrabbedObject.GetComponent<Collider>());
                 lastPos = grabber.transform.position;
             }
         }

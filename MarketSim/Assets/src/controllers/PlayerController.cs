@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         pc = GetComponent<CharacterController>();
-        model = GameObject.Find("playermodel");
+        model = GameObject.Find("KinectPointMan");
         moveDirection = Vector3.zero;
 
         playerHeight = pc.height;
