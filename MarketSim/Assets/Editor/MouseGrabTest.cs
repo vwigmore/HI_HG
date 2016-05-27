@@ -1,7 +1,5 @@
 ﻿using Assets.src.model;
 using NUnit.Framework;
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Editor
@@ -11,46 +9,68 @@ namespace Assets.Editor
     {
         #region Fields
 
+        /// <summary>
+        /// The mouse grab
+        /// </summary>
         private MouseGrab mouseGrab;
-        Color highlightColor = Color.cyan;
-        private RaycastHit hit;
-        GameObject highlighted;
-        ItemHolder h;
 
-        float x = 0.0f, y = 0.0f, z = 0.0f;
+        /// <summary>
+        /// The highlight color
+        /// </summary>
+        private Color highlightColor = Color.cyan;
+
+        /// <summary>
+        /// The highlighted
+        /// </summary>
+        private GameObject highlighted;
+
+        /// <summary>
+        /// the item holder
+        /// </summary>
+        private ItemHolder h;
+
         #endregion Fields
 
         #region Methods
 
+        /// <summary>
+        /// Setups of all instances
+        /// </summary>
         [SetUp]
         public new void Setup()
         {
-
             GameObject basket = new GameObject("basket");
             basket.AddComponent<Rigidbody>();
             basket.AddComponent<BoxCollider>();
             h = new ItemHolder(basket, 2, 4);
-            // GameObject player = new GameObject("player");
-            //  mouseGrab = new MouseGrab(player, highlightColor);
             mouseGrab = (MouseGrab)PassGrab();
-           // Debug.Log("maouseGrab: " + mouseGrab.GrabbedObject.GetComponent<Collider>());
         }
 
+        /// <summary>
+        /// Pass Grab test 
+        /// </summary>
+        /// <returns></returns>
         public override Grab PassGrab()
         {
             GameObject player = new GameObject("player");
-            return new MouseGrab(player, Color.cyan);
+            return new MouseGrab(player, highlightColor);
         }
 
+        /// <summary>
+        /// Test to verify that the object is being grabbed
+        /// </summary>
         [Test]
         public void GrabTest1()
         {
             mouseGrab.GrabHighlightedObject();
             mouseGrab.DropObject();
-          
+
             Assert.IsFalse(mouseGrab.IsGrabbing());
         }
 
+        /// <summary>
+        /// Test to verify that the grabbed object is now dropped
+        /// </summary>
         [Test]
         public void DropObject1()
         {
@@ -58,18 +78,25 @@ namespace Assets.Editor
             Assert.AreEqual(h.items.Count, 0);
         }
 
+        /// <summary>
+        /// Test for verifying if the highlighted object is grabbed
+        /// </summary>
         [Test]
         public void GrabTest2()
         {
             mouseGrab.GrabHighlightedObject();
-            Assert.AreEqual(mouseGrab.GrabbedObject, highlighted );
+            Assert.AreEqual(mouseGrab.GrabbedObject, highlighted);
         }
 
+        /// <summary>
+        /// Constructor test
+        /// </summary>
         [Test]
         public void ConstructorTest()
         {
             Assert.NotNull(this.mouseGrab);
         }
+
         #endregion Methods
     }
 }

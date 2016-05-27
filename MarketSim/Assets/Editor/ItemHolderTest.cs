@@ -1,7 +1,5 @@
 ﻿using Assets.src.model;
 using NUnit.Framework;
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 [TestFixture]
@@ -14,6 +12,7 @@ public class ItemHolderTest
     private ItemHolder itemH;
 
     #endregion Fields
+
     #region Methods
 
     [SetUp]
