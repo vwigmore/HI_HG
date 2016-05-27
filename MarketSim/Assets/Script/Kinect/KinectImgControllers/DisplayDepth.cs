@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Renderer))]
-public class DisplayDepth : MonoBehaviour {
+public class DisplayDepth : MonoBehaviour
+{
 	
 	public DepthWrapper dw;
 	

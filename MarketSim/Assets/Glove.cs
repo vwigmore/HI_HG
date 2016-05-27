@@ -31,7 +31,7 @@ namespace ManusMachina
         #region Constructors
 
         /// <summary>
-        /// Constructor for Glove class
+        /// Initializes a new instance of the Glove 
         /// </summary>
         /// <param name="gh">Left or right glove</param>
         public Glove(GLOVE_HAND gh)
@@ -157,10 +157,10 @@ namespace ManusMachina
         /// </summary>
         public void Recenter()
         {
-            center = Quaternion.identity;
-            center = Quaternion.Inverse(this.Quaternion);
-            center.x = center.z = 0.0f;
-            center.w = (center.w > 0 ? 1 : -1) * (float)Mathf.Sqrt(1 - center.y * center.y);
+            this.center = Quaternion.identity;
+            this.center = Quaternion.Inverse(this.Quaternion);
+            this.center.x = this.center.z = 0.0f;
+            this.center.w = (this.center.w > 0 ? 1 : -1) * (float)Mathf.Sqrt(1 - this.center.y * this.center.y);
         }
 
         /// <summary>

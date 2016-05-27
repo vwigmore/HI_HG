@@ -5,7 +5,7 @@
     /// <summary>
     /// Controls the grab function
     /// </summary>
-    internal abstract class Grab
+    public abstract class Grab
     {
         #region Fields
 
@@ -36,11 +36,6 @@
         protected Color prevHighlightedColor;
 
         /// <summary>
-        /// Object currently selected.
-        /// </summary>
-        protected GameObject highlighted;
-
-        /// <summary>
         /// Color used to highlight selected objects.
         /// </summary>
         protected Color highlightColor;
@@ -49,6 +44,11 @@
         /// Last position of the grabbed object.
         /// </summary>
         protected Vector3 lastPos;
+
+        /// <summary>
+        /// Object currently selected.
+        /// </summary>
+        public GameObject highlighted { get; protected set; }
 
         #endregion Fields
 
@@ -97,7 +97,7 @@
         /// <value>
         /// The grabbed object.
         /// </value>
-        protected GameObject GrabbedObject { get; set; }
+        public GameObject GrabbedObject { get; set; }
 
         #endregion Properties
 
@@ -157,7 +157,7 @@
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
                 this.prevHighlighted = obj;
-                this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
+                this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
                 this.highlighted = obj;
                 if (Manager.HighlightOn)
                 {

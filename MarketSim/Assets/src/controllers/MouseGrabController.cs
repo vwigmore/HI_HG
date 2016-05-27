@@ -47,6 +47,7 @@ public class MouseGrabController : MonoBehaviour
             Debug.DrawLine(this.camera.transform.position, hit.point, Color.blue);
             if (objectHit != null)
             {
+                // highlght the object that is detected 
                 this.mouseGrab.HighlightSelectedObject(objectHit);
             }
 

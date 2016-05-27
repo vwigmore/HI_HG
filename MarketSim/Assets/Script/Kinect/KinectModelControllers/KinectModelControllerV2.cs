@@ -206,8 +206,8 @@ public class KinectModelControllerV2 : MonoBehaviour {
 		//shoulders are determined differently.
 		
 		Vector3 dir = _boneDir[bone];
-		Vector3 target;
-		
+		Vector3 target; 
+
 		//if bone % 4 == 0 then it is either an outside shoulder or the hip override
 		if(bone % 4 == 0)
 		{
@@ -283,10 +283,9 @@ public class KinectModelControllerV2 : MonoBehaviour {
 		//transform target into bone-local space (independant of the transform of the controller)
 		//target = transform.TransformDirection(target);
 		target = bone.transform.InverseTransformDirection(target);
+
 		//create a rotation that rotates dir into target
 		Quaternion quat = Quaternion.FromToRotation(dir,target);
 		bone.transform.localRotation *= quat;
 	}
 }
-
-

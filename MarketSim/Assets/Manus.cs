@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace ManusMachina {
+
     /// <summary>
     /// ManusController class to load/unload Manus library.
     /// To be assigned to an empty GameObject

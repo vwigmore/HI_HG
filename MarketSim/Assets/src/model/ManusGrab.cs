@@ -11,7 +11,7 @@
     /// Implements specific grab functions for the Manus.
     /// </summary>
     /// <seealso cref="Assets.src.model.Grab" />
-    internal class ManusGrab : Grab
+    public class ManusGrab : Grab
     {
         #region Constructors
 
