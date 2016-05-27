@@ -33,22 +33,22 @@
 
         public override void UpdateGrabbedObject()
         {
+        }
+
+        public void UpdateGrabbedObject(Transform trans)
+        {
             if (IsGrabbing())
             {
                 Vector3 newpos = grabber.transform.position;
                 GrabbedObject.transform.position = newpos;
-                GrabbedObject.GetComponent<Collider>().enabled = false;
+                GrabbedObject.transform.rotation = trans.rotation;
+                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
 
         public override void DropObject()
         {
-            //Vector3 newpos = grabbedObject.transform.position;
-            //newpos.y = 0;
-            //grabbedObject.transform.position = newpos;
-            GrabbedObject.GetComponent<Collider>().enabled = true;
-
-            //grabbedObject.GetComponent<Rigidbody>().Sleep();
+            GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
             GrabbedObject = null;
             highlighted = null;
         }

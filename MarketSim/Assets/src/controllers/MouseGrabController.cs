@@ -50,20 +50,21 @@ public class MouseGrabController : MonoBehaviour
                 // highlght the object that is detected 
                 this.mouseGrab.HighlightSelectedObject(objectHit);
             }
+        }
 
-            if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!this.mouseGrab.IsGrabbing())
             {
-                if (!this.mouseGrab.IsGrabbing())
-                {
-                    this.mouseGrab.GrabHighlightedObject();
-                }
-                else
-                {
-                    this.mouseGrab.SetHit(hit);
-                    this.mouseGrab.DropObject();
-                }
+                this.mouseGrab.GrabHighlightedObject();
+            }
+            else
+            {
+                this.mouseGrab.SetHit(hit);
+                this.mouseGrab.DropObject();
             }
         }
+
         mouseGrab.UpdateGrabbedObject();
 
         mouseGrab.basket.UpdateList();

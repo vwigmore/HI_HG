@@ -1,5 +1,6 @@
 ﻿namespace Assets.src.model
 {
+    using System.Collections;
     using UnityEngine;
 
     /// <summary>
@@ -67,7 +68,6 @@
             this.prevHighlighted = null;
             this.highlighted = null;
             this.highlightColor = highlightColor;
-
             this.GrabbedObject = null;
 
             this.basket = new ItemHolder(GameObject.FindGameObjectWithTag("basket"), 2, 3);
@@ -77,6 +77,14 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the grabbed object.
+        /// </summary>
+        /// <value>
+        /// The grabbed object.
+        /// </value>
+        public GameObject GrabbedObject { get; set; }
 
         /// <summary>
         /// The GameObject that the grabbed item will follow.
@@ -90,14 +98,6 @@
         /// The grabber.
         /// </value>
         protected GameObject Grabber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the grabbed object.
-        /// </summary>
-        /// <value>
-        /// The grabbed object.
-        /// </value>
-        public GameObject GrabbedObject { get; set; }
 
         #endregion Properties
 
@@ -128,13 +128,10 @@
             {
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
                 GrabbedObject.transform.position = newpos;
-                GrabbedObject.GetComponent<Collider>().enabled = false;
+                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    GrabbedObject.GetComponent<Collider>());
                 lastPos = grabber.transform.position;
-
-                //Vector3 move = grabber.transform.position * Time.deltaTime * 5f;
-                //Vector3 newpos = grabber.transform.position + move;
-                //GrabbedObject.GetComponent<Collider>().enabled = false;
-                //GrabbedObject.transform.position = newpos;
             }
         }
 
@@ -153,9 +150,11 @@
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
         {
-            this.ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
+                //                this.prevHighlighted.Add(obj);
+                //                this.prevHighlightedColor.Add(obj.GetComponent<Renderer>().material.color);
+
                 this.prevHighlighted = obj;
                 this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
                 this.highlighted = obj;
@@ -166,6 +165,7 @@
             }
             else
             {
+                ClearHighlights();
                 this.highlighted = null;
             }
         }
