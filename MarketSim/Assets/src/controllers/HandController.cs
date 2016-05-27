@@ -135,12 +135,16 @@ public class HandController : MonoBehaviour
         };
         hand.SetActive(true);
 
+        BoxCollider bc2 = new BoxCollider();
+        bc2 = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
+        bc2.size = new Vector3(0.05f, 0.02f, 0.08f);
+        Vector3 pos2 = bc2.center;
+
         Debug.Log(this.glove + "\t" + this.glove_hand);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject);
         GameObject collideObj = collision.gameObject;
         manusGrab.HighlightSelectedObject(collideObj);
     }
@@ -181,7 +185,7 @@ public class HandController : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
         }
 
-        this.manusGrab.UpdateGrabbedObject();
+        this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
     }
 
     /// <summary>
