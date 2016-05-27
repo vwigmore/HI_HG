@@ -34,7 +34,8 @@ public class Basket : MonoBehaviour
     #region Methods
 
     // Use this for initialization
-    /// <summary>
+
+    /// <summary> 
     /// Starts this instance
     /// </summary>
     public void Start()
