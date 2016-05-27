@@ -33,7 +33,6 @@ t.n.nguyen@student.tudelft.nl 4287118
 * [Visual Studio Spell Checker](http://visualstudiogallery.msdn.microsoft.com/a23de100-31a1-405c-b4b7-d6be40c3dfff)
 * [GhostDoc](http://submain.com/products/ghostdoc.aspx)
 * [CodeMaid](http://www.codemaid.net/)
-* [Unity Cloud (Might need Unity Account and invite first)] (https://build.cloud.unity3d.com/orgs/msimidzioski/projects/hi_hg/) 
 
 # Unity Cloud Build
 * Most recent builds:
