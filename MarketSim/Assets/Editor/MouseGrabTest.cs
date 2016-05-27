@@ -6,12 +6,22 @@ using UnityEngine;
 
 namespace Assets.Editor
 {
-    public class MouseGrabTest
+    [TestFixture]
+    public class MouseGrabTest : GrabTest
     {
         #region Fields
 
         private MouseGrab mouseGrab;
 
         #endregion Fields
+
+        #region Methods
+
+        public override Grab PassGrab()
+        {
+            return new MouseGrab(new GameObject(), Color.cyan);
+        }
+
+        #endregion Methods
     }
 }
