@@ -27,7 +27,7 @@ public class Player
     /// <summary>
     /// Character controller for the player
     /// </summary>
-    private CharacterController pc;
+    public CharacterController pc;
     /// <summary>
     /// The move direction
     /// </summary>
@@ -71,7 +71,7 @@ public class Player
     /// <summary>
     /// The hip
     /// </summary>
-    private GameObject hip, leftFoot, rightFoot;
+    public GameObject hip, leftFoot, rightFoot;
     /// <summary>
     /// The last delta height
     /// </summary>
