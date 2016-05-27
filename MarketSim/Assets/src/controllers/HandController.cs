@@ -140,6 +140,7 @@ public class HandController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        Debug.Log(collision.gameObject);
         GameObject collideObj = collision.gameObject;
         manusGrab.HighlightSelectedObject(collideObj);
     }
@@ -227,9 +228,9 @@ public class HandController : MonoBehaviour
         Vector3 newrot = this.root.transform.rotation.eulerAngles;
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-            newrot.y -= 180;
+            newrot.y += 90;
         else if (glove_hand == GLOVE_HAND.GLOVE_RIGHT)
-            newrot.y -= 90;
+            newrot.y -= 180;
 
         this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
