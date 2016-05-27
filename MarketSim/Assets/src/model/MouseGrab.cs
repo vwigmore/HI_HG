@@ -54,7 +54,7 @@
             }
             else
             {
-                GrabbedObject.GetComponent<Collider>().enabled = true;
+                GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
                 GrabbedObject = null;
                 highlighted = null;
             }

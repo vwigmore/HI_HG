@@ -1,5 +1,6 @@
 ﻿namespace Assets.src.model
 {
+    using System.Collections;
     using UnityEngine;
 
     /// <summary>
@@ -28,12 +29,12 @@
         /// Previously selected GameObject.
         /// Used to restore their colors when they're not selected.
         /// </summary>
-        protected GameObject prevHighlighted;
+        protected ArrayList prevHighlighted;
 
         /// <summary>
         /// Previously highlighted GameObject's color.
         /// </summary>
-        protected Color prevHighlightedColor;
+        protected ArrayList prevHighlightedColor;
 
         /// <summary>
         /// Object currently selected.
@@ -63,8 +64,8 @@
         {
             this.grabber = grabber;
             this.player = GameObject.FindGameObjectWithTag("Player");
-            this.prevHighlightedColor = Color.clear;
-            this.prevHighlighted = null;
+            this.prevHighlightedColor = new ArrayList();
+            this.prevHighlighted = new ArrayList();
             this.highlighted = null;
             this.highlightColor = highlightColor;
 
@@ -128,13 +129,8 @@
             {
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
                 GrabbedObject.transform.position = newpos;
-                GrabbedObject.GetComponent<Collider>().enabled = false;
+                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 lastPos = grabber.transform.position;
-
-                //Vector3 move = grabber.transform.position * Time.deltaTime * 5f;
-                //Vector3 newpos = grabber.transform.position + move;
-                //GrabbedObject.GetComponent<Collider>().enabled = false;
-                //GrabbedObject.transform.position = newpos;
             }
         }
 
@@ -153,11 +149,11 @@
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
         {
-            this.ClearHighlights();
+            ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
-                this.prevHighlighted = obj;
-                this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
+                this.prevHighlighted.Add(obj);
+                this.prevHighlightedColor.Add(obj.GetComponent<Renderer>().material.color);
                 this.highlighted = obj;
                 obj.GetComponent<Renderer>().material.color = this.highlightColor;
             }
@@ -172,9 +168,12 @@
         /// </summary>
         public void ClearHighlights()
         {
-            if (this.prevHighlighted != null)
+            for (int i = 0; i < prevHighlighted.Count; i++)
             {
-                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
+                GameObject prev = (GameObject)prevHighlighted[i];
+                prev.GetComponent<Renderer>().material.color = (Color)prevHighlightedColor[i];
+                prevHighlighted.RemoveAt(i);
+                prevHighlightedColor.Remove(i);
             }
         }
 

@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float vAxis;
     private float hAxis;
 
-    private GameObject hip, leftFoot, rightFoot;
+    private GameObject head, hip, leftFoot, rightFoot;
     private float lastDeltaHeight, initialDeltaHeight;
 
     private GameObject model;
@@ -78,9 +78,12 @@ public class PlayerController : MonoBehaviour
         playerHeight = pc.height;
         crouchHeight = playerHeight / 2;
 
-        hip = GameObject.Find("hip_center");
-        leftFoot = GameObject.Find("left_foot");
-        rightFoot = GameObject.Find("right_foot");
+        head = GameObject.Find("03_Head");
+        hip = GameObject.Find("30_Hip_Left");
+        leftFoot = GameObject.Find("33_Foot_Left");
+        rightFoot = GameObject.Find("43_Foot_Right");
+
+        UpdateCamPos();
 
         initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
         lastDeltaHeight = initialDeltaHeight;
@@ -98,7 +101,14 @@ public class PlayerController : MonoBehaviour
 #endif
         /* Update movement of player*/
         UpdateMove();
-        UpdateCrouch();
+    }
+
+    /// <summary>
+    /// Updates the cam position.
+    /// </summary>
+    private void UpdateCamPos()
+    {
+        ///
     }
 
     /// <summary>
