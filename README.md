@@ -27,7 +27,7 @@ t.n.nguyen@student.tudelft.nl 4287118
 * [Kinect Toolkit v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40276)
 * [Kinect Wrapper Package for Unity3D (direct link)](http://wiki.etc.cmu.edu/unity3d/images/a/ac/Kinect1.7UnityPackage.new.zip)
 
-# Code Tools (Visual Studio Extensions and Cloud Build)
+# Code Tools (Visual Studio Extensions)
 * [StyleCop](https://visualstudiogallery.msdn.microsoft.com/cac2a05b-6eb6-4fa2-95b9-1f8d011e6cae)
 * [NUnit Visual Studio Test Adapter](http://visualstudiogallery.msdn.microsoft.com/6ab922d0-21c0-4f06-ab5f-4ecd1fe7175d)
 * [Visual Studio Spell Checker](http://visualstudiogallery.msdn.microsoft.com/a23de100-31a1-405c-b4b7-d6be40c3dfff)
@@ -35,6 +35,9 @@ t.n.nguyen@student.tudelft.nl 4287118
 * [CodeMaid](http://www.codemaid.net/)
 * [Unity Cloud (Might need Unity Account and invite first)] (https://build.cloud.unity3d.com/orgs/msimidzioski/projects/hi_hg/) 
 
+# Unity Cloud Build
+* Most recent builds:
+![Unity builds 27/5/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds27-5.jpg)
 
 # Running the project
 (Draft version)
