@@ -14,7 +14,6 @@ public class ItemHolderTest
     private ItemHolder itemH;
 
     #endregion Fields
-
     #region Methods
 
     [SetUp]
