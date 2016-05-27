@@ -157,7 +157,7 @@
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
                 this.prevHighlighted = obj;
-                this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
+                this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
                 this.highlighted = obj;
                 if (Manager.HighlightOn)
                 {
