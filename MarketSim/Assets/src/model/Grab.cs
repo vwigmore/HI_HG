@@ -97,7 +97,7 @@
         /// <value>
         /// The grabbed object.
         /// </value>
-        protected GameObject GrabbedObject { get; set; }
+        public GameObject GrabbedObject { get; set; }
 
         #endregion Properties
 
