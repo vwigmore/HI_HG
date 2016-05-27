@@ -6,7 +6,7 @@
     /// <summary>
     /// Controls the grab function
     /// </summary>
-    internal abstract class Grab
+    public abstract class Grab
     {
         #region Fields
 
@@ -29,17 +29,12 @@
         /// Previously selected GameObject.
         /// Used to restore their colors when they're not selected.
         /// </summary>
-        protected ArrayList prevHighlighted;
+        protected GameObject prevHighlighted;
 
         /// <summary>
         /// Previously highlighted GameObject's color.
         /// </summary>
-        protected ArrayList prevHighlightedColor;
-
-        /// <summary>
-        /// Object currently selected.
-        /// </summary>
-        protected GameObject highlighted;
+        protected Color prevHighlightedColor;
 
         /// <summary>
         /// Color used to highlight selected objects.
@@ -50,6 +45,11 @@
         /// Last position of the grabbed object.
         /// </summary>
         protected Vector3 lastPos;
+
+        /// <summary>
+        /// Object currently selected.
+        /// </summary>
+        public GameObject highlighted { get; protected set; }
 
         #endregion Fields
 
@@ -64,11 +64,10 @@
         {
             this.grabber = grabber;
             this.player = GameObject.FindGameObjectWithTag("Player");
-            this.prevHighlightedColor = new ArrayList();
-            this.prevHighlighted = new ArrayList();
+            this.prevHighlightedColor = Color.clear;
+            this.prevHighlighted = null;
             this.highlighted = null;
             this.highlightColor = highlightColor;
-
             this.GrabbedObject = null;
 
             this.basket = new ItemHolder(GameObject.FindGameObjectWithTag("basket"), 2, 3);
@@ -78,6 +77,14 @@
         #endregion Constructors
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the grabbed object.
+        /// </summary>
+        /// <value>
+        /// The grabbed object.
+        /// </value>
+        public GameObject GrabbedObject { get; set; }
 
         /// <summary>
         /// The GameObject that the grabbed item will follow.
@@ -91,14 +98,6 @@
         /// The grabber.
         /// </value>
         protected GameObject Grabber { get; set; }
-
-        /// <summary>
-        /// Gets or sets the grabbed object.
-        /// </summary>
-        /// <value>
-        /// The grabbed object.
-        /// </value>
-        protected GameObject GrabbedObject { get; set; }
 
         #endregion Properties
 
@@ -153,10 +152,16 @@
         {
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
-                this.prevHighlighted.Add(obj);
-                this.prevHighlightedColor.Add(obj.GetComponent<Renderer>().material.color);
+                //                this.prevHighlighted.Add(obj);
+                //                this.prevHighlightedColor.Add(obj.GetComponent<Renderer>().material.color);
+
+                this.prevHighlighted = obj;
+                this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
                 this.highlighted = obj;
-                obj.GetComponent<Renderer>().material.color = this.highlightColor;
+                if (Manager.HighlightOn)
+                {
+                    obj.GetComponent<Renderer>().material.color = this.highlightColor;
+                }
             }
             else
             {
@@ -170,12 +175,9 @@
         /// </summary>
         public void ClearHighlights()
         {
-            for (int i = 0; i < prevHighlighted.Count; i++)
+            if (this.prevHighlighted != null)
             {
-                GameObject prev = (GameObject)prevHighlighted[i];
-                prev.GetComponent<Renderer>().material.color = (Color)prevHighlightedColor[i];
-                prevHighlighted.RemoveAt(i);
-                prevHighlightedColor.RemoveAt(i);
+                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
             }
         }
 

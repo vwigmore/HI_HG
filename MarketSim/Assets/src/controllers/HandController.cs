@@ -12,6 +12,9 @@ public class HandController : MonoBehaviour
     /// </summary>
     public GLOVE_HAND glove_hand;
 
+    /// <summary>
+    /// The root transform
+    /// </summary>
     public Transform RootTransform;
 
     /// <summary>
@@ -19,6 +22,9 @@ public class HandController : MonoBehaviour
     /// </summary>
     public Glove glove;
 
+    /// <summary>
+    /// The time factor
+    /// </summary>
     private const float timeFactor = 10.0f;
 
     /// <summary>
@@ -31,22 +37,44 @@ public class HandController : MonoBehaviour
     /// </summary>
     private GameObject hand;
 
+    /// <summary>
+    /// The hand model
+    /// </summary>
     private GameObject handModel;
 
+    /// <summary>
+    /// The manus grab
+    /// </summary>
     private ManusGrab manusGrab;
+
+    /// <summary>
+    /// The sphere collider
+    /// </summary>
     private SphereCollider sphereCollider;
 
+    /// <summary>
+    /// The game transforms
+    /// </summary>
     private Transform[][] gameTransforms;
+
+    /// <summary>
+    /// The model transforms
+    /// </summary>
     private Transform[][] modelTransforms;
+
+    /// <summary>
+    /// The animation clip
+    /// </summary>
     private AnimationClip animationClip;
 
-    private int initCalibrateCount = 0;
-    private Gesture lastCalibrateGesture = Gesture.none;
-    private float calibrateTimer = 0f;
-    private bool startCalibrateTimer = false;
-
+    /// <summary>
+    /// the gestures of hand
+    /// </summary>
     private enum Gesture { none, grab, open, point, thumb, pinky };
 
+    /// <summary>
+    /// the rotation of the player
+    /// </summary>
     private enum Rotation { none, right, left };
 
     #endregion Fields
@@ -73,6 +101,9 @@ public class HandController : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Updates the hand.
+    /// </summary>
     private void UpdateHand()
     {
         Quaternion q = glove.Quaternion;
@@ -143,12 +174,20 @@ public class HandController : MonoBehaviour
         Debug.Log(this.glove + "\t" + this.glove_hand);
     }
 
+    /// <summary>
+    /// Called when [trigger enter].
+    /// </summary>
+    /// <param name="collision">The collision.</param>
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collideObj = collision.gameObject;
         manusGrab.HighlightSelectedObject(collideObj);
     }
 
+    /// <summary>
+    /// Called when [trigger exit].
+    /// </summary>
+    /// <param name="collision">The collision.</param>
     private void OnTriggerExit(Collider collision)
     {
         manusGrab.ClearHighlights();
@@ -164,28 +203,33 @@ public class HandController : MonoBehaviour
 
         Gesture gesture = GetGesture();
 
-        if (!manusGrab.IsGrabbing())
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
-            if (gesture == Gesture.grab)
-                manusGrab.GrabHighlightedObject();
-        }
-        else
-        {
-            if (gesture == Gesture.open)
-                manusGrab.DropObject();
-        }
+            Rotation rotation = getRotation();
 
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-        {
-            if (gesture == Gesture.thumb)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-            if (gesture == Gesture.point)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-            if (gesture == Gesture.pinky)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
-        }
+            if (!manusGrab.IsGrabbing())
+            {
+                if (gesture == Gesture.grab)
+                    manusGrab.GrabHighlightedObject();
+            }
+            else
+            {
+                if (gesture == Gesture.open)
+                    manusGrab.DropObject();
+            }
 
-        this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
+            if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+            {
+                if (gesture == Gesture.thumb)
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+                if (gesture == Gesture.point)
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+                if (gesture == Gesture.pinky)
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+            }
+
+            this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
+        }
     }
 
     /// <summary>
@@ -217,6 +261,10 @@ public class HandController : MonoBehaviour
         return Gesture.none;
     }
 
+    /// <summary>
+    /// Gets the rotation.
+    /// </summary>
+    /// <returns></returns>
     private Rotation getRotation()
     {
         return Rotation.none;

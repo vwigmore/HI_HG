@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.src.model
 {
-    internal class ItemHolder
+    public class ItemHolder
     {
         #region Fields
 
@@ -29,11 +29,6 @@ namespace Assets.src.model
         /// Columns of grid.
         /// </summary>
         public int cols;
-
-        /// <summary>
-        /// Offsets for each cell.
-        /// </summary>
-        protected Vector3[] offsets;
 
         /// <summary>
         /// X coordinate of start position.
@@ -59,6 +54,11 @@ namespace Assets.src.model
         /// Height of a cell
         /// </summary>
         private float cellHeight;
+
+        /// <summary>
+        /// Offsets for each cell.
+        /// </summary>
+        public Vector3[] offsets { get; private set; }
 
         #endregion Fields
 

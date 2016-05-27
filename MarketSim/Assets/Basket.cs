@@ -9,32 +9,36 @@ public class Basket : MonoBehaviour
 {
     #region Fields
 
-
     /// <summary>
     /// The basket
     /// </summary>
-    protected GameObject basket;
+    private GameObject basket;
+
     /// <summary>
     /// The handle
     /// </summary>
-    protected GameObject handle;
+    private GameObject handle;
+
     /// <summary>
     /// The handle model
     /// </summary>
-    protected GameObject handleModel;
+    private GameObject handleModel;
+
     /// <summary>
     /// The basket model
     /// </summary>
-    protected GameObject basketModel;
+    private GameObject basketModel;
 
     #endregion Fields
 
     #region Methods
+
     // Use this for initialization
-    /// <summary>
+
+    /// <summary> 
     /// Starts this instance
     /// </summary>
-    void Start()
+    public void Start()
     {
         this.basketModel = GameObject.Find("single_basket_no_handle");
         this.handleModel = GameObject.Find("single_basket_handle");
@@ -44,12 +48,12 @@ public class Basket : MonoBehaviour
     /// <summary>
     /// Update position of basket and handle
     /// </summary>
-    void Update()
+    public void Update()
     {
         Vector3 newPos = basketModel.transform.position;
-        float height = handleModel.GetComponent<MeshCollider>().bounds.size.y;
+        float height = this.handleModel.GetComponent<MeshCollider>().bounds.size.y;
         newPos.y += height;
-        handleModel.transform.position = newPos;
+        this.handleModel.transform.position = newPos;
         
     }
     #endregion Methods 

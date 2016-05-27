@@ -10,7 +10,7 @@
     /// Implements specific grab functions for the Mouse.
     /// </summary>
     /// <seealso cref="Assets.src.model.Grab" />
-    internal class MouseGrab : Grab
+    public class MouseGrab : Grab
     {
         #region Fields
 
@@ -33,6 +33,7 @@
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
+           
         }
 
         #endregion Constructors
@@ -44,6 +45,9 @@
         /// </summary>
         public override void DropObject()
         {
+            if (GrabbedObject == null)
+                return;
+
             if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
                 Vector3 newpos = basket.holder.transform.position;
