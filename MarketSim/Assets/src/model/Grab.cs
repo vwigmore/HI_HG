@@ -159,7 +159,10 @@
                 this.prevHighlighted = obj;
                 this.prevHighlightedColor = obj.GetComponent<Renderer>().material.color;
                 this.highlighted = obj;
-                obj.GetComponent<Renderer>().material.color = this.highlightColor;
+                if (Manager.HighlightOn)
+                {
+                    obj.GetComponent<Renderer>().material.color = this.highlightColor;
+                }
             }
             else
             {
