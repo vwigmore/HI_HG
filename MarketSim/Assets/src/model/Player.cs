@@ -80,7 +80,7 @@ public class Player
     /// <summary>
     /// The model
     /// </summary>
-    private GameObject model;
+    public GameObject model;
 
 
     #endregion Fields
