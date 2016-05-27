@@ -20,12 +20,12 @@ public class PlayerTest
     /// <summary>
     /// Coordinates for vector position2
     /// </summary>
-    private readonly float x2 = -0.2f, y2 = 0.0f, z2 = -17.1f;
+    private readonly float x2 = -0.1f, y2 = 0.0f, z2 = -17.1f;
 
     /// <summary>
     /// Coordinates for vector position3
     /// </summary>
-    private readonly float x3 = 0.1f, y3 = 0.0f, z3 = -17.1f;
+    private readonly float x3 = 0.0f, y3 = 0.0f, z3 = -17.1f;
 
     /// <summary>
     /// Coordinates for vector capVector1
@@ -36,6 +36,11 @@ public class PlayerTest
     /// Coordinates for vector capVector2
     /// </summary>
     private readonly float x5 = 10.0f, y5 = 4.0f, z5 = 8.0f;
+
+    /// <summary>
+    /// Coordinates for vector newPos
+    /// </summary>
+    private readonly float x6 = -0.07f, y6 = 1.0f, z6 = -17.37f;
 
     /// <summary>
     /// Character controller for the player
@@ -117,7 +122,17 @@ public class PlayerTest
     {
         Vector3 position1 = new Vector3(x1, y1, z1);
         player.UpdateCrouch();
-        Assert.AreEqual(player.model.transform.position.ToString(), position1.ToString());
+        Vector3 pos1 = player.leftFoot.transform.position;
+
+        position1[0] = Mathf.Round(position1[0]);
+        position1[1] = Mathf.Round(position1[1]);
+        position1[2] = Mathf.Round(position1[2]);
+
+        pos1[0] = Mathf.Round(pos1[0]);
+        pos1[1] = Mathf.Round(pos1[1]);
+        pos1[2] = Mathf.Round(pos1[2]);
+        
+        Assert.True(pos1.Equals(position1));
     }
 
     /// <summary>
@@ -128,7 +143,17 @@ public class PlayerTest
     {
         Vector3 position2 = new Vector3(x2, y2, z2);
         player.UpdateCrouch();
-        Assert.AreEqual(player.leftFoot.transform.position.ToString(), position2.ToString());
+        Vector3 pos2 = player.leftFoot.transform.position;
+
+        position2[0] = Mathf.Round(position2[0]);
+        position2[1] = Mathf.Round(position2[1]);
+        position2[2] = Mathf.Round(position2[2]);
+
+        pos2[0] = Mathf.Round(pos2[0]);
+        pos2[1] = Mathf.Round(pos2[1]);
+        pos2[2] = Mathf.Round(pos2[2]);
+        
+        Assert.True(pos2.Equals(position2));
     }
 
     /// <summary>
@@ -139,7 +164,16 @@ public class PlayerTest
     {
         Vector3 position3 = new Vector3(x3, y3, z3);
         player.UpdateCrouch();
-        Assert.AreEqual(player.rightFoot.transform.position.ToString(), position3.ToString());
+        Vector3 pos3 = player.rightFoot.transform.position;
+        position3[0] = Mathf.Round(position3[0]);
+        position3[1] = Mathf.Round(position3[1]);
+        position3[2] = Mathf.Round(position3[2]);
+
+        pos3[0] = Mathf.Round(pos3[0]);
+        pos3[1] = Mathf.Round(pos3[1]);
+        pos3[2] = Mathf.Round(pos3[2]);
+        
+        Assert.True(pos3.Equals(position3));
     }
 
     /// <summary>
@@ -151,7 +185,7 @@ public class PlayerTest
         Vector3 capVector1 = new Vector3(x4, y4, z4);
         Vector3 vec1 = new Vector3(1, 2, 3);
         player.capVector(vec1, 3, 6);
-        Assert.AreEqual(vec1.ToString(), capVector1.ToString());
+        Assert.True(vec1.Equals(capVector1));
     }
 
     /// <summary>
@@ -164,7 +198,6 @@ public class PlayerTest
         Vector3 vec2 = new Vector3(10, 4, 8);
         player.capVector(vec2, 4, 8);
 
-        //  Assert.AreEqual(vec2.ToString(), capVector2.ToString());
         Assert.True(vec2.Equals(capVector2));
     }
 
@@ -174,9 +207,10 @@ public class PlayerTest
     [Test]
     public void UpdateMovementTest()
     {
-        Vector3 newPos = new Vector3(x1, y1, z1);
+        Vector3 newPos = new Vector3(x6, y6, z6);
         player.updateMovement();
-        Assert.AreEqual(player.pc.transform.position.ToString(), newPos.ToString());
+        Vector3 playerVector1 = player.pc.transform.position;
+        Assert.IsTrue(playerVector1.Equals(newPos));
     }
 
     /// <summary>
@@ -185,9 +219,11 @@ public class PlayerTest
     [Test]
     public void UpdateRotationTest()
     {
-        Vector3 newPos = new Vector3(x1, y1, z1);
+
+        Vector3 newPos = new Vector3(x6, y6, z6);
         player.updateRotation();
-        Assert.AreEqual(player.pc.transform.position.ToString(), newPos.ToString());
+        Vector3 playerVector2 = player.pc.transform.position;
+        Assert.IsTrue(playerVector2.Equals(newPos));       
     }
 }
 
