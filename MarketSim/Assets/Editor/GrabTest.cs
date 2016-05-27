@@ -6,20 +6,37 @@ using UnityEngine;
 
 namespace Assets.Editor
 {
+    /// <summary>
+    /// Test for the Grab
+    /// </summary>
     [TestFixture]
     public abstract class GrabTest
     {
         #region Fields
 
+        /// <summary>
+        /// The grab object
+        /// </summary>
         private Grab grab;
+
+        /// <summary>
+        /// The item to pick up
+        /// </summary>
         private GameObject pickUpItem;
 
         #endregion Fields
 
         #region Methods
 
+        /// <summary>
+        /// Passes the grab.
+        /// </summary>
+        /// <returns></returns>
         public abstract Grab PassGrab();
 
+        /// <summary>
+        /// Sets this instance up.
+        /// </summary>
         [SetUp]
         public void Setup()
         {
@@ -37,6 +54,9 @@ namespace Assets.Editor
             Debug.Log("color: " + this.pickUpItem.GetComponent<MeshRenderer>().sharedMaterial.color);
         }
 
+        /// <summary>
+        /// Tears down instance.
+        /// </summary>
         [TearDown]
         public void TearDown()
         {
@@ -44,12 +64,18 @@ namespace Assets.Editor
             this.pickUpItem = null;
         }
 
+        /// <summary>
+        /// Tests the constructor not null.
+        /// </summary>
         [Test]
         public void TestConstructorNotNull()
         {
             Assert.IsNotNull(this.grab);
         }
 
+        /// <summary>
+        /// Tests if the highlighted object is picked up.
+        /// </summary>
         [Test]
         public void TestHighlightSelectedObject()
         {

@@ -29,6 +29,11 @@ namespace Assets.Editor
         /// </summary>
         private ItemHolder h;
 
+        /// <summary>
+        /// The basket 
+        /// </summary>
+        GameObject basket;
+
         #endregion Fields
 
         #region Methods
@@ -39,13 +44,24 @@ namespace Assets.Editor
         [SetUp]
         public new void Setup()
         {
-            GameObject basket = new GameObject("basket");
+            basket = new GameObject("basket");
             basket.AddComponent<Rigidbody>();
             basket.AddComponent<BoxCollider>();
             h = new ItemHolder(basket, 2, 4);
             mouseGrab = (MouseGrab)PassGrab();
         }
 
+        /// <summary>
+        /// TearDown method.
+        /// </summary>
+        [TearDown]
+        public new void TearDown()
+        {
+            mouseGrab = null;
+            h = null;
+            basket = null;
+
+        }
         /// <summary>
         /// Pass Grab test 
         /// </summary>
