@@ -67,6 +67,8 @@ public class HandController : MonoBehaviour
     /// </summary>
     private AnimationClip animationClip;
 
+    private enum FingersBent { zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5 }
+
     /// <summary>
     /// the gestures of hand
     /// </summary>
@@ -110,10 +112,10 @@ public class HandController : MonoBehaviour
         float[] fingers = glove.Fingers;
         RootTransform.localRotation = q;
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < (int)FingersBent.five; i++)
         {
             animationClip.SampleAnimation(hand, fingers[i] * timeFactor);
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < (int)FingersBent.four; j++)
             {
                 gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
@@ -154,11 +156,11 @@ public class HandController : MonoBehaviour
         // Associate the game transforms with the skeletal model.
         gameTransforms = new Transform[5][];
         modelTransforms = new Transform[5][];
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < (int)FingersBent.five; i++)
         {
             gameTransforms[i] = new Transform[4];
             modelTransforms[i] = new Transform[4];
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < (int)FingersBent.four; j++)
             {
                 gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
@@ -239,7 +241,7 @@ public class HandController : MonoBehaviour
     private Gesture GetGesture()
     {
         int fingersBent = 0;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < (int)FingersBent.five; i++)
         {
             if (this.glove.Fingers[i] >= 0.4f)
             {
@@ -247,17 +249,16 @@ public class HandController : MonoBehaviour
             }
         }
 
-        if (fingersBent == 5)
+        if (fingersBent == (int)FingersBent.five)
             return Gesture.grab;
-        else if (fingersBent == 4 && glove.Fingers[0] < 0.4f)
+        else if (fingersBent == (int)FingersBent.four && glove.Fingers[0] < 0.4f)
             return Gesture.thumb;
-        else if (fingersBent == 4 && glove.Fingers[4] < 0.4f)
+        else if (fingersBent == (int)FingersBent.four && glove.Fingers[4] < 0.4f)
             return Gesture.pinky;
-        else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == 3)
+        else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == (int)FingersBent.three)
             return Gesture.point;
-        else if (fingersBent == 0)
+        else if (fingersBent == (int)FingersBent.zero)
             return Gesture.open;
-
         return Gesture.none;
     }
 

@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
     private float mouseAxisX;
 
     private float vAxis;
+
+    /// <summary>
+    /// The h axis
+    /// </summary>
     private float hAxis;
 
     private GameObject head, hip, leftFoot, rightFoot;
