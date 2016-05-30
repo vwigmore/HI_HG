@@ -131,7 +131,7 @@
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    newpos.y -= y;
+                    newpos.y -= 2*y;
                     GrabbedObject.transform.position = newpos;
                 }
 
