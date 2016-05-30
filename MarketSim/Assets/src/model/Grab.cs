@@ -126,11 +126,19 @@
         {
             if (IsGrabbing())
             {
-                Vector3 newpos = grabber.transform.position + grabber.transform.forward;
+                Vector3 newpos = grabber.transform.position + grabber.transform.forward ;
+
+                if (GrabbedObject.tag.Equals("basket"))
+                {
+                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
+                    newpos.y -= y;
+                    GrabbedObject.transform.position = newpos;
+                }
+
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
-                    GrabbedObject.GetComponent<Collider>());
+                GrabbedObject.GetComponent<Collider>());
                 lastPos = grabber.transform.position;
             }
         }
