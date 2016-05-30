@@ -40,8 +40,8 @@ public class PlayerTest
     /// <summary>
     /// Coordinates for vector newPos
     /// </summary>
-    private readonly float x6 = -0.07f, y6 = 1.0f, z6 = -17.37f;
-
+    private readonly float x6 = -4.2f, y6 = 1.0f, z6 = -12.8f;
+  
     /// <summary>
     /// Character controller for the player
     /// </summary>
@@ -210,6 +210,15 @@ public class PlayerTest
         Vector3 newPos = new Vector3(x6, y6, z6);
         player.updateMovement();
         Vector3 playerVector1 = player.pc.transform.position;
+
+        playerVector1[0] = Mathf.Round(playerVector1[0]);
+        playerVector1[1] = Mathf.Round(playerVector1[1]);
+        playerVector1[2] = Mathf.Round(playerVector1[2]);
+
+        newPos[0] = Mathf.Round(newPos[0]);
+        newPos[1] = Mathf.Round(newPos[1]);
+        newPos[2] = Mathf.Round(newPos[2]);
+   
         Assert.IsTrue(playerVector1.Equals(newPos));
     }
 
@@ -223,6 +232,15 @@ public class PlayerTest
         Vector3 newPos = new Vector3(x6, y6, z6);
         player.updateRotation();
         Vector3 playerVector2 = player.pc.transform.position;
+
+        playerVector2[0] = Mathf.Round(playerVector2[0]);
+        playerVector2[1] = Mathf.Round(playerVector2[1]);
+        playerVector2[2] = Mathf.Round(playerVector2[2]);
+
+        newPos[0] = Mathf.Round(newPos[0]);
+        newPos[1] = Mathf.Round(newPos[1]);
+        newPos[2] = Mathf.Round(newPos[2]);
+   
         Assert.IsTrue(playerVector2.Equals(newPos));       
     }
 }
