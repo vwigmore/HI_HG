@@ -41,28 +41,31 @@ public class LeftHand : Hand
         this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 
+    /// <summary>
+    /// Updates the gestures.
+    /// </summary>
     public override void UpdateGestures()
     {
-        Gesture gesture = GetGesture();
+        Gestures gesture = GetGesture();
 
         if (!manusGrab.IsGrabbing())
         {
-            if (gesture == Gesture.grab)
+            if (gesture == Gestures.Grab)
                 manusGrab.GrabHighlightedObject();
         }
         else
         {
-            if (gesture == Gesture.open)
+            if (gesture == Gestures.Open)
                 manusGrab.DropObject();
         }
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
-            if (gesture == Gesture.thumb)
+            if (gesture == Gestures.Thumb)
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-            if (gesture == Gesture.point)
+            if (gesture == Gestures.Point)
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-            if (gesture == Gesture.pinky)
+            if (gesture == Gestures.Pinky)
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
         }
 

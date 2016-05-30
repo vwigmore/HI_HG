@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Abstract hand class, implementable by left/righthand controller
 /// </summary>
-public abstract class Hand
+public abstract class Hand : IHand
 {
     #region Fields
 
@@ -130,11 +130,6 @@ public abstract class Hand
     /// </summary>
     public enum FingersBent { zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5 }
 
-    /// <summary>
-    /// the gestures of hand
-    /// </summary>
-    public enum Gesture { none, grab, open, point, thumb, pinky };
-
     #endregion Enums
 
     #region Methods
@@ -165,15 +160,15 @@ public abstract class Hand
 
     public virtual void UpdateGestures()
     {
-        Gesture gesture = GetGesture();
+        Gestures gesture = GetGesture();
         if (!manusGrab.IsGrabbing())
         {
-            if (gesture == Gesture.grab)
+            if (gesture == Gestures.Grab)
                 manusGrab.GrabHighlightedObject();
         }
         else
         {
-            if (gesture == Gesture.open)
+            if (gesture == Gestures.Open)
                 manusGrab.DropObject();
         }
 
@@ -184,7 +179,7 @@ public abstract class Hand
     /// Returns which gesture the hand is making.
     /// </summary>
     /// <returns>Gesture the hand is making</returns>
-    public Gesture GetGesture()
+    public Gestures GetGesture()
     {
         int fingersBent = 0;
         for (int i = 0; i < (int)FingersBent.five; i++)
@@ -196,16 +191,16 @@ public abstract class Hand
         }
 
         if (fingersBent == (int)FingersBent.five)
-            return Gesture.grab;
+            return Gestures.Grab;
         else if (fingersBent == (int)FingersBent.four && glove.Fingers[0] < 0.4f)
-            return Gesture.thumb;
+            return Gestures.Thumb;
         else if (fingersBent == (int)FingersBent.four && glove.Fingers[4] < 0.4f)
-            return Gesture.pinky;
+            return Gestures.Pinky;
         else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == (int)FingersBent.three)
-            return Gesture.point;
+            return Gestures.Point;
         else if (fingersBent == (int)FingersBent.zero)
-            return Gesture.open;
-        return Gesture.none;
+            return Gestures.Open;
+        return Gestures.None;
     }
 
     /// <summary>
@@ -232,6 +227,25 @@ public abstract class Hand
     }
 
     /// <summary>
+    /// Initializes the transforms.
+    /// </summary>
+    public void InitTransforms()
+    {
+        gameTransforms = new Transform[(int)FingersBent.five][];
+        modelTransforms = new Transform[(int)FingersBent.five][];
+        for (int i = 0; i < (int)FingersBent.five; i++)
+        {
+            gameTransforms[i] = new Transform[(int)FingersBent.four];
+            modelTransforms[i] = new Transform[(int)FingersBent.four];
+            for (int j = 0; j < (int)FingersBent.four; j++)
+            {
+                gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
+                modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
+            }
+        };
+    }
+
+    /// <summary>
     /// Finds a deep child in a transform
     /// </summary>
     /// <param name="aParent">Transform to be searched</param>
@@ -249,25 +263,6 @@ public abstract class Hand
                 return result;
         }
         return null;
-    }
-
-    /// <summary>
-    /// Initializes the transforms.
-    /// </summary>
-    private void InitTransforms()
-    {
-        gameTransforms = new Transform[(int)FingersBent.five][];
-        modelTransforms = new Transform[(int)FingersBent.five][];
-        for (int i = 0; i < (int)FingersBent.five; i++)
-        {
-            gameTransforms[i] = new Transform[(int)FingersBent.four];
-            modelTransforms[i] = new Transform[(int)FingersBent.four];
-            for (int j = 0; j < (int)FingersBent.four; j++)
-            {
-                gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
-                modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
-            }
-        };
     }
 
     /// <summary>
