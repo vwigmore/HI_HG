@@ -40,6 +40,14 @@
             if (IsGrabbing())
             {
                 Vector3 newpos = grabber.transform.position;
+
+                if (GrabbedObject.tag.Equals("basket"))
+                {
+                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
+                    newpos.y -= 2 * y;
+                    GrabbedObject.transform.position = newpos;
+                }
+
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.transform.rotation = trans.rotation;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
