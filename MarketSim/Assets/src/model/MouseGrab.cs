@@ -18,7 +18,15 @@
         /// The ray cast hit
         /// </summary>
         private RaycastHit hit;
-        private  float force = 3000000;
+
+        /// <summary>
+        /// The moving force of the object
+        /// </summary>
+        private float force = 50000;
+
+        /// <summary>
+        /// The initial position of the object
+        /// </summary>
         private Vector3 pos;
         #endregion Fields
 
@@ -63,7 +71,8 @@
             else
             {
                 float length = (pos.y - GrabbedObject.transform.position.y);
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(( GrabbedObject.transform.position - pos) * force*length* Time.smoothDeltaTime);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(( GrabbedObject.transform.position - pos) *force* Time.smoothDeltaTime);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(Vector3.forward*force*Time.deltaTime,ForceMode.Force);
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
                 GrabbedObject = null;
                 highlighted = null;
