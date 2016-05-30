@@ -18,7 +18,8 @@
         /// The ray cast hit
         /// </summary>
         private RaycastHit hit;
-
+        private  float force = 20000;
+        private Vector3 pos;
         #endregion Fields
 
         #region Constructors
@@ -45,6 +46,8 @@
         /// </summary>
         public override void DropObject()
         {
+            pos = GrabbedObject.transform.position;
+
             if (GrabbedObject == null)
                 return;
 
@@ -54,10 +57,13 @@
                 newpos.y = newpos.y + 0.4f;
 
                 if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(GrabbedObject);
+                    basket.items.Add(GrabbedObject);     
             }
+           
             else
             {
+              //  pos = basket.holder.transform.position;
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(( GrabbedObject.transform.position - pos) * force * Time.smoothDeltaTime);
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
                 GrabbedObject = null;
                 highlighted = null;
