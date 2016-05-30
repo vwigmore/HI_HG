@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
-/// 
+/// Class player manages all player functions.
 /// </summary>
 public class Player
 {
@@ -12,30 +12,47 @@ public class Player
     /// The mouse sensitivity
     /// </summary>
     public float mouseSensitivity = 3.0f;
+
     /// <summary>
     /// The move speed
     /// </summary>
     public float moveSpeed = 3.0f;
+
     /// <summary>
     /// The jump speed
     /// </summary>
     public float jumpSpeed = 5.0f;
+
     /// <summary>
     /// The gravity
     /// </summary>
     public float gravity = 20f;
+
     /// <summary>
     /// Character controller for the player
     /// </summary>
     public CharacterController pc;
+
+    /// <summary>
+    /// The hip
+    /// </summary>
+    public GameObject hip, leftFoot, rightFoot;
+
+    /// <summary>
+    /// The model
+    /// </summary>
+    public GameObject model;
+
     /// <summary>
     /// The move direction
     /// </summary>
     private Vector3 moveDirection;
+
     /// <summary>
     /// The player height
     /// </summary>
     private float playerHeight;
+
     /// <summary>
     /// The crouch height
     /// </summary>
@@ -45,6 +62,7 @@ public class Player
     /// The cam_vert_rot
     /// </summary>
     private float cam_vert_rot = 0;
+
     /// <summary>
     /// The cam_cap
     /// </summary>
@@ -54,6 +72,7 @@ public class Player
     /// The mouse axis y
     /// </summary>
     private float mouseAxisY;
+
     /// <summary>
     /// The mouse axis x
     /// </summary>
@@ -63,29 +82,21 @@ public class Player
     /// The v axis
     /// </summary>
     private float vAxis;
+
     /// <summary>
     /// The h axis
     /// </summary>
     private float hAxis;
 
     /// <summary>
-    /// The hip
-    /// </summary>
-    public GameObject hip, leftFoot, rightFoot;
-    /// <summary>
     /// The last delta height
     /// </summary>
     private float lastDeltaHeight, initialDeltaHeight;
 
-    /// <summary>
-    /// The model
-    /// </summary>
-    public GameObject model;
-
-
     #endregion Fields
 
     #region Constructors
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Player"/> class.
     /// </summary>
@@ -102,6 +113,7 @@ public class Player
         this.leftFoot = leftFoot;
         this.rightFoot = rightFoot;
     }
+
     #endregion Constructors
 
     #region Methods
@@ -160,7 +172,6 @@ public class Player
         return vec;
     }
 
-
     /// <summary>
     /// Updates the movement.
     /// </summary>
@@ -174,12 +185,15 @@ public class Player
             // movement vector, consists of axes to move to.
             this.moveDirection = new Vector3(hAxis, 0, vAxis);
 
+            if (Input.GetButton("Jump"))
+                moveDirection.y = jumpSpeed;
+
             // Transforms direction from local space to world space.
             this.moveDirection = pc.transform.TransformDirection(moveDirection);
 
             // Multiplies vector with speed (axes are between -1 and 1, not much).
             this.moveDirection *= moveSpeed;
-           
+
             // Capping move speed: moveDirection hypotenuse
             capVector(moveDirection, moveSpeed, -moveSpeed);
         }
@@ -190,5 +204,6 @@ public class Player
 
         pc.Move(moveDirection * Time.deltaTime);
     }
+
     #endregion Methods
 }
