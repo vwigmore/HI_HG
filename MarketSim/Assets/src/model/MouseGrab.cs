@@ -27,7 +27,10 @@
         /// <summary>
         /// The initial position of the object
         /// </summary>
-        private Vector3 pos;
+        private Vector3 Initialpos;
+        private Vector3 speed = new Vector3 (0,20,25);
+        private float dirSpeed = 15f;
+        private Boolean moved = false;
         #endregion Fields
 
         #region Constructors
@@ -54,7 +57,7 @@
         /// </summary>
         public override void DropObject()
         {
-            pos = GrabbedObject.transform.position;
+          //  pos = GrabbedObject.transform.position;
 
             if (GrabbedObject == null)
                 return;
@@ -63,16 +66,20 @@
             {
                 Vector3 newpos = basket.holder.transform.position;
                 newpos.y = newpos.y + 0.4f;
+                moved = true;
 
                 if (basket.items.Count < basket.rows * basket.cols)
                     basket.items.Add(GrabbedObject);     
             }
            
-            else
+            else if(IsGrabbing())
             {
-                float length = (pos.y - GrabbedObject.transform.position.y);
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(( GrabbedObject.transform.position - pos) *force* Time.smoothDeltaTime);
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(Vector3.forward*force*Time.deltaTime,ForceMode.Force);
+               
+                Vector3 targetPos = Input.mousePosition;
+                Vector3 direction = targetPos - GrabbedObject.transform.position;
+                direction.Normalize();
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction*1000f,ForceMode.Force);
+                moved = false;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
                 GrabbedObject = null;
                 highlighted = null;
