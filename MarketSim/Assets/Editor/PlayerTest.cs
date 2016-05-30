@@ -82,10 +82,10 @@ public class PlayerTest
     [SetUp]
     public void Setup()
     {
-        model = GameObject.Find("playermodel");
-        hip = GameObject.Find("hip_center");
-        leftFoot = GameObject.Find("left_foot");
-        rightFoot = GameObject.Find("right_foot");
+        model = GameObject.Find("KinectPointMan");
+        hip = GameObject.Find("_Hip_Center");
+        leftFoot = GameObject.Find("_Foot_Left");
+        rightFoot = GameObject.Find("_Foot_Right");
 
         pc = model.transform.parent.gameObject.GetComponent<CharacterController>();
         player = new Player(pc, model, hip, leftFoot, rightFoot);
