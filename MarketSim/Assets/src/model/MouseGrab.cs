@@ -18,7 +18,7 @@
         /// The ray cast hit
         /// </summary>
         private RaycastHit hit;
-        private  float force = 20000;
+        private  float force = 3000000;
         private Vector3 pos;
         #endregion Fields
 
@@ -62,8 +62,8 @@
            
             else
             {
-              //  pos = basket.holder.transform.position;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(( GrabbedObject.transform.position - pos) * force * Time.smoothDeltaTime);
+                float length = (pos.y - GrabbedObject.transform.position.y);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(( GrabbedObject.transform.position - pos) * force*length* Time.smoothDeltaTime);
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
                 GrabbedObject = null;
                 highlighted = null;
