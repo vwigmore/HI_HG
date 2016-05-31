@@ -20,17 +20,11 @@
         private RaycastHit hit;
 
         /// <summary>
-        /// The moving force of the object
-        /// </summary>
-        private float force = 50000;
-
-        /// <summary>
         /// The initial position of the object
         /// </summary>
-        private Vector3 Initialpos;
-        private Vector3 speed = new Vector3 (0,20,25);
-        private float dirSpeed = 15f;
+        private Vector3 pos;
         private Boolean moved = false;
+        private Vector3 vel;
         #endregion Fields
 
         #region Constructors
@@ -57,7 +51,7 @@
         /// </summary>
         public override void DropObject()
         {
-          //  pos = GrabbedObject.transform.position;
+          
 
             if (GrabbedObject == null)
                 return;
@@ -72,15 +66,14 @@
                     basket.items.Add(GrabbedObject);     
             }
            
-            else if(IsGrabbing())
+            else 
             {
-               
-                Vector3 targetPos = Input.mousePosition;
-                Vector3 direction = targetPos - GrabbedObject.transform.position;
-                direction.Normalize();
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction*1000f,ForceMode.Force);
-                moved = false;
+                pos = GrabbedObject.transform.position;
+                Vector3 targetPos = GrabbedObject.transform.forward;
+                Vector3 direction = targetPos - pos;
+                direction.Normalize(); //moved = false;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 100, ForceMode.Force);
                 GrabbedObject = null;
                 highlighted = null;
             }
