@@ -31,10 +31,17 @@
 
         #region Methods
 
+        /// <summary>
+        /// Updates the grabbed object.
+        /// </summary>
         public override void UpdateGrabbedObject()
         {
         }
 
+        /// <summary>
+        /// Updates the grabbed object.
+        /// </summary>
+        /// <param name="trans">The trans.</param>
         public void UpdateGrabbedObject(Transform trans)
         {
             if (IsGrabbing())
@@ -54,6 +61,9 @@
             }
         }
 
+        /// <summary>
+        /// Drop currently grabbed object.
+        /// </summary>
         public override void DropObject()
         {
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
