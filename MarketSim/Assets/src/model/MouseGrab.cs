@@ -22,9 +22,8 @@
         /// <summary>
         /// The initial position of the object
         /// </summary>
-        private Vector3 pos;
-        private Boolean moved = false;
-        private Vector3 vel;
+        private Vector3 lastPos;
+
         #endregion Fields
 
         #region Constructors
@@ -39,7 +38,6 @@
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
-           
         }
 
         #endregion Constructors
@@ -47,12 +45,21 @@
         #region Methods
 
         /// <summary>
+        /// Updates the grabbed object.
+        /// Also stores previous position of object.
+        /// </summary>
+        public override void UpdateGrabbedObject()
+        {
+            if (IsGrabbing())
+                lastPos = GrabbedObject.transform.position;
+            base.UpdateGrabbedObject();
+        }
+
+        /// <summary>
         /// Drop currently grabbed object.
         /// </summary>
         public override void DropObject()
         {
-          
-
             if (GrabbedObject == null)
                 return;
 
@@ -60,20 +67,16 @@
             {
                 Vector3 newpos = basket.holder.transform.position;
                 newpos.y = newpos.y + 0.4f;
-                moved = true;
 
                 if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(GrabbedObject);     
+                    basket.items.Add(GrabbedObject);
             }
-           
-            else 
+            else
             {
-                pos = GrabbedObject.transform.position;
-                Vector3 targetPos = GrabbedObject.transform.forward;
-                Vector3 direction = targetPos - pos;
-                direction.Normalize(); //moved = false;
+                Vector3 targetPos = GrabbedObject.transform.position;
+                Vector3 direction = targetPos - lastPos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 100, ForceMode.Force);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * 500, ForceMode.Force);
                 GrabbedObject = null;
                 highlighted = null;
             }
