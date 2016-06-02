@@ -15,6 +15,11 @@
         #region Fields
 
         /// <summary>
+        /// The throw force
+        /// </summary>
+        private readonly float throwForce = 150;
+
+        /// <summary>
         /// The ray cast hit
         /// </summary>
         private RaycastHit hit;
@@ -53,7 +58,6 @@
             if (IsGrabbing())
                 prevPos = GrabbedObject.transform.position;
             base.UpdateGrabbedObject();
-            
         }
 
         /// <summary>
@@ -77,7 +81,7 @@
                 Vector3 targetPos = GrabbedObject.transform.position;
                 Vector3 direction = targetPos - prevPos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction*10, ForceMode.Force);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
                 GrabbedObject = null;
                 highlighted = null;
             }
