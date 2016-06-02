@@ -15,9 +15,19 @@
         #region Fields
 
         /// <summary>
+        /// The throw force
+        /// </summary>
+        private readonly float throwForce = 150;
+
+        /// <summary>
         /// The ray cast hit
         /// </summary>
         private RaycastHit hit;
+
+        /// <summary>
+        /// The initial position of the object
+        /// </summary>
+        private Vector3 prevPos;
 
         #endregion Fields
 
@@ -33,12 +43,22 @@
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
-           
         }
 
         #endregion Constructors
 
         #region Methods
+
+        /// <summary>
+        /// Updates the grabbed object.
+        /// Also stores previous position of object.
+        /// </summary>
+        public override void UpdateGrabbedObject()
+        {
+            if (IsGrabbing())
+                prevPos = GrabbedObject.transform.position;
+            base.UpdateGrabbedObject();
+        }
 
         /// <summary>
         /// Sets the Ray cast hit.

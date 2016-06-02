@@ -13,6 +13,20 @@
     /// <seealso cref="Assets.src.model.Grab" />
     public class ManusGrab : Grab
     {
+        #region Fields
+
+        /// <summary>
+        /// The throw force
+        /// </summary>
+        private readonly float throwForce = 500;
+
+        /// <summary>
+        /// The last position
+        /// </summary>
+        private Vector3 lastPos;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -46,6 +60,7 @@
         {
             if (IsGrabbing())
             {
+                lastPos = GrabbedObject.transform.position;
                 Vector3 newpos = grabber.transform.position;
 
                 if (GrabbedObject.tag.Equals("basket"))
@@ -62,6 +77,7 @@
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
+
         #endregion Methods
     }
 }

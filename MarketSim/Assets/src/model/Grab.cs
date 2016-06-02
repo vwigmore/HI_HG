@@ -182,6 +182,7 @@
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
         {
+            ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
                 //                this.prevHighlighted.Add(obj);
@@ -197,7 +198,6 @@
             }
             else
             {
-                ClearHighlights();
                 this.highlighted = null;
             }
         }
