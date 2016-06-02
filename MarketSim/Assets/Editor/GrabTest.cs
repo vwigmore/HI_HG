@@ -1,7 +1,5 @@
 ﻿using Assets.src.model;
 using NUnit.Framework;
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Editor

@@ -1,7 +1,4 @@
-﻿using Assets.src.model;
-using NUnit.Framework;
-using System.Collections;
-using UnityEditor;
+﻿using NUnit.Framework;
 using UnityEngine;
 
 /// <summary>
@@ -16,7 +13,7 @@ public class PlayerTest
     /// Coordinates for vector position1
     /// </summary>
     private readonly float x1 = -4.0f, y1 = 0.0f, z1 = -13.0f;
-   
+
     /// <summary>
     /// Coordinates for vector capVector1
     /// </summary>
@@ -31,7 +28,7 @@ public class PlayerTest
     /// Coordinates for vector newPos
     /// </summary>
     private readonly float x4 = -4.2f, y4 = 1.0f, z4 = -12.8f;
-  
+
     /// <summary>
     /// Character controller for the player
     /// </summary>
@@ -209,7 +206,7 @@ public class PlayerTest
         newPos[0] = Mathf.Round(newPos[0]);
         newPos[1] = Mathf.Round(newPos[1]);
         newPos[2] = Mathf.Round(newPos[2]);
-   
+
         Assert.IsTrue(playerVector1.Equals(newPos));
     }
 
@@ -219,7 +216,6 @@ public class PlayerTest
     [Test]
     public void UpdateRotationTest()
     {
-
         Vector3 newPos = new Vector3(x4, y4, z4);
         player.updateRotation();
         Vector3 playerVector2 = player.pc.transform.position;
@@ -231,9 +227,9 @@ public class PlayerTest
         newPos[0] = Mathf.Round(newPos[0]);
         newPos[1] = Mathf.Round(newPos[1]);
         newPos[2] = Mathf.Round(newPos[2]);
-   
-        Assert.IsTrue(playerVector2.Equals(newPos));       
+
+        Assert.IsTrue(playerVector2.Equals(newPos));
     }
 }
 
-    #endregion Methods
+#endregion Methods
