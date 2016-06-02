@@ -133,6 +133,11 @@
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
                     newpos.y -= y;
                     GrabbedObject.transform.position = newpos;
+                    GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    GrabbedObject.GetComponent<Collider>());
+                    lastPos = grabber.transform.position;
+                  
                 }
 
                 GrabbedObject.transform.position = newpos;

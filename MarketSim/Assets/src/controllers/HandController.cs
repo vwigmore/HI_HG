@@ -205,33 +205,31 @@ public class HandController : MonoBehaviour
 
         Gesture gesture = GetGesture();
 
+        Rotation rotation = getRotation();
+
+        if (!manusGrab.IsGrabbing())
+        {
+            if (gesture == Gesture.grab)
+                manusGrab.GrabHighlightedObject();
+        }
+        else
+        {
+            if (gesture == Gesture.open)
+                manusGrab.DropObject();
+        }
+
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
-            Rotation rotation = getRotation();
-
-            if (!manusGrab.IsGrabbing())
-            {
-                if (gesture == Gesture.grab)
-                    manusGrab.GrabHighlightedObject();
-            }
-            else
-            {
-                if (gesture == Gesture.open)
-                    manusGrab.DropObject();
-            }
-
-            if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-            {
-                if (gesture == Gesture.thumb)
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-                if (gesture == Gesture.point)
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-                if (gesture == Gesture.pinky)
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
-            }
-
-            this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
+            if (gesture == Gesture.thumb)
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+            if (gesture == Gesture.point)
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+            if (gesture == Gesture.pinky)
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
         }
+
+        this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
+
     }
 
     /// <summary>
