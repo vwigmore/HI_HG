@@ -62,23 +62,20 @@
             {
                 lastPos = GrabbedObject.transform.position;
                 Vector3 newpos = grabber.transform.position;
+
+                if (GrabbedObject.tag.Equals("basket"))
+                {
+                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
+                    GrabbedObject.transform.position = newpos;
+                    GrabbedObject.transform.rotation = trans.rotation;
+                    GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                }
+
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.transform.rotation = trans.rotation;
+
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
-        }
-
-        /// <summary>
-        /// Drop currently grabbed object.
-        /// </summary>
-        public override void DropObject()
-        {
-            Vector3 targetPos = GrabbedObject.transform.position;
-            Vector3 direction = targetPos - lastPos;
-            GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-            GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
-            GrabbedObject = null;
-            highlighted = null;
         }
 
         #endregion Methods

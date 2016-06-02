@@ -61,33 +61,6 @@
         }
 
         /// <summary>
-        /// Drop currently grabbed object.
-        /// </summary>
-        public override void DropObject()
-        {
-            if (GrabbedObject == null)
-                return;
-
-            if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
-            {
-                Vector3 newpos = basket.holder.transform.position;
-                newpos.y = newpos.y + 0.4f;
-
-                if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(GrabbedObject);
-            }
-            else
-            {
-                Vector3 targetPos = GrabbedObject.transform.position;
-                Vector3 direction = targetPos - prevPos;
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
-                GrabbedObject = null;
-                highlighted = null;
-            }
-        }
-
-        /// <summary>
         /// Sets the Ray cast hit.
         /// </summary>
         /// <param name="hit">The Ray cast hit.</param>
