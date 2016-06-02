@@ -66,26 +66,36 @@ public class HandController : MonoBehaviour
         hand.UpdatePosition();
         hand.UpdateHand();
         hand.UpdateGestures();
+
+        // hand.UpdateSticky();
     }
 
     /// <summary>
     /// Called when [trigger enter].
     /// </summary>
     /// <param name="collision">The collision.</param>
+    //  private void OnTriggerEnter(Collider collision)
+    // {
+    //    GameObject collideObj = collision.gameObject;
+    //   hand.GetManusGrab().HighlightSelectedObject(collideObj);
+    // }
+
     private void OnTriggerEnter(Collider collision)
     {
-        GameObject collideObj = collision.gameObject;
-        hand.GetManusGrab().HighlightSelectedObject(collideObj);
+        GameObject collisionObj = collision.gameObject;
+
+        // hand.Sticky(collisionObj);
+        hand.GetManusGrab().HighlightSelectedObject(collisionObj);
     }
 
     /// <summary>
     /// Called when [trigger exit].
     /// </summary>
     /// <param name="collision">The collision.</param>
-    private void OnTriggerExit(Collider collision)
-    {
-        hand.GetManusGrab().ClearHighlights();
-    }
+    //private void OnTriggerExit(Collider collision)
+    //{
+    //    hand.GetManusGrab().ClearHighlights();
+    //}
 
     #endregion Methods
 }

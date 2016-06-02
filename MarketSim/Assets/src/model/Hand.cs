@@ -58,12 +58,12 @@ public abstract class Hand : IHand
     /// <summary>
     /// The sphere collider radius
     /// </summary>
-    private const float SphereColliderRadius = 0.1f;
+    private const float SphereColliderRadius = 0.035f;
 
     /// <summary>
     /// The base hand collider size
     /// </summary>
-    private Vector3 BaseHandColliderSize = new Vector3(0.05f, 0.02f, 0.08f);
+    private Vector3 BaseHandColliderSize = new Vector3(0.09f, 0.02f, 0.10f);
 
     /// <summary>
     /// Game object hand.
@@ -134,6 +134,8 @@ public abstract class Hand : IHand
 
     #region Methods
 
+    //private GameObject sticky;
+
     /// <summary>
     /// Update the position of the hand according to the arm.
     /// </summary>
@@ -144,16 +146,19 @@ public abstract class Hand : IHand
     /// </summary>
     public void UpdateHand()
     {
-        Quaternion q = glove.Quaternion;
-        float[] fingers = glove.Fingers;
-        RootTransform.localRotation = q;
-
-        for (int i = 0; i < (int)FingersBent.five; i++)
+        if (GetGesture() != Gestures.Grab)
         {
-            animationClip.SampleAnimation(hand, fingers[i] * timeFactor);
-            for (int j = 0; j < (int)FingersBent.four; j++)
+            Quaternion q = glove.Quaternion;
+            float[] fingers = glove.Fingers;
+            RootTransform.localRotation = q;
+
+            for (int i = 0; i < (int)FingersBent.five; i++)
             {
-                gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
+                animationClip.SampleAnimation(hand, fingers[i] * timeFactor);
+                for (int j = 0; j < (int)FingersBent.four; j++)
+                {
+                    gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
+                }
             }
         }
     }
@@ -209,17 +214,56 @@ public abstract class Hand : IHand
     public void CreateColliders()
     {
         /// Collider used for highlighting and grabbing items.
-        this.sphereCollider = this.handModel.AddComponent<SphereCollider>();
-        this.sphereCollider.radius = SphereColliderRadius;
-        this.sphereCollider.transform.position = handModel.transform.position;
-        this.sphereCollider.isTrigger = true;
+        //  this.sphereCollider = this.handModel.AddComponent<SphereCollider>();
+        // this.sphereCollider.radius = SphereColliderRadius;
+        //this.sphereCollider.transform.position = handModel.transform.position;
+
+        //this.sphereCollider.isTrigger = true;
 
         /// Collider for the base of the hand
         BoxCollider bc2 = new BoxCollider();
         bc2 = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
         bc2.size = BaseHandColliderSize;
         Vector3 pos2 = bc2.center;
+
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
+        {
+            pos2.x -= .05f;
+            pos2.y -= .01f;
+            pos2.z += .03f;
+        }
+        else
+        {
+            pos2.x -= .05f;
+            pos2.y -= .01f;
+            pos2.z -= .03f;
+        }
+
+        bc2.center = pos2;
+
+        bc2.isTrigger = true;
     }
+
+    //   public void Sticky(GameObject sticks)
+    //  {
+    //     Debug.Log("entering sticky: " + sticks.ToString());
+    //    if (sticky == null && sticks.tag.Equals("pickup"))
+    //   {
+    //      sticky = sticks;
+
+    //      Debug.Log("now sticky");
+    //  }
+    // }
+
+    //public void UpdateSticky()
+    //{
+    //    if (sticky != null)
+    //   {
+    //     Vector3 newpos = gameTransforms[0][0].parent.gameObject.transform.position;
+    //   sticky.transform.position = newpos;
+    //      sticky.transform.rotation = gameTransforms[0][0].parent.gameObject.transform.rotation;
+    // }
+    //}
 
     public ManusGrab GetManusGrab()
     {
