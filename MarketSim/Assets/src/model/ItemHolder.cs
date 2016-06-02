@@ -112,12 +112,13 @@ namespace Assets.src.model
             {
                 GameObject o = (GameObject)this.items[i];
                 Vector3 newpos = this.holder.transform.position;
-               // Quaternion newrot = this.holder.transform.rotation;
+                Quaternion newrot = this.holder.transform.rotation;
                 newpos += this.offsets[i];
                 newpos.y -= 0.65f;
                 o.GetComponent<Collider>().enabled = false;
                 o.transform.position = newpos;
-               // o.transform.rotation = newrot;
+
+                o.transform.localRotation = newrot;
             }
         }
 
