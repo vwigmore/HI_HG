@@ -229,6 +229,7 @@ public class HandController : MonoBehaviour
         }
 
         this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
+        this.manusGrab.basket.UpdateList();
 
     }
 

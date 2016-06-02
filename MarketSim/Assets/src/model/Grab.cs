@@ -117,7 +117,26 @@
         /// <summary>
         /// Drop currently grabbed object.
         /// </summary>
-        public abstract void DropObject();
+        public virtual void DropObject()
+        {
+            if (GrabbedObject == null)
+                return;
+
+            if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
+            {
+                Vector3 newpos = basket.holder.transform.position;
+                newpos.y -= newpos.y;
+
+                if (basket.items.Count < basket.rows * basket.cols)
+                    basket.items.Add(GrabbedObject);
+            }
+            else
+            {
+                GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+                GrabbedObject = null;
+                highlighted = null;
+            }
+        }
 
         /// <summary>
         /// Updates the grabbed object.
@@ -213,6 +232,8 @@
         {
             return Vector3.Distance(this.Grabber.transform.position, pos) <= this.proxDist;
         }
+
+
 
         #endregion Methods
     }

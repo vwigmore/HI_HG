@@ -62,17 +62,6 @@
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
-
-        /// <summary>
-        /// Drop currently grabbed object.
-        /// </summary>
-        public override void DropObject()
-        {
-            GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-            GrabbedObject = null;
-            highlighted = null;
-        }
-
         #endregion Methods
     }
 }
