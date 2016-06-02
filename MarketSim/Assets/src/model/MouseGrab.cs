@@ -22,7 +22,7 @@
         /// <summary>
         /// The initial position of the object
         /// </summary>
-        private Vector3 lastPos;
+        private Vector3 prevPos;
 
         #endregion Fields
 
@@ -51,7 +51,6 @@
         public override void UpdateGrabbedObject()
         {
             if (IsGrabbing())
-                lastPos = GrabbedObject.transform.position;
             base.UpdateGrabbedObject();
         }
 
@@ -74,9 +73,9 @@
             else
             {
                 Vector3 targetPos = GrabbedObject.transform.position;
-                Vector3 direction = targetPos - lastPos;
+                Vector3 direction = targetPos - prevPos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * 500, ForceMode.Force);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction*5, ForceMode.Force);
                 GrabbedObject = null;
                 highlighted = null;
             }
