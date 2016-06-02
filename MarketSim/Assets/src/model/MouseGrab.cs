@@ -51,7 +51,9 @@
         public override void UpdateGrabbedObject()
         {
             if (IsGrabbing())
+                prevPos = GrabbedObject.transform.position;
             base.UpdateGrabbedObject();
+            
         }
 
         /// <summary>
@@ -75,7 +77,7 @@
                 Vector3 targetPos = GrabbedObject.transform.position;
                 Vector3 direction = targetPos - prevPos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction*5, ForceMode.Force);
+                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction*10, ForceMode.Force);
                 GrabbedObject = null;
                 highlighted = null;
             }
