@@ -13,6 +13,20 @@
     /// <seealso cref="Assets.src.model.Grab" />
     public class ManusGrab : Grab
     {
+        #region Fields
+
+        /// <summary>
+        /// The throw force
+        /// </summary>
+        private readonly float throwForce = 500;
+
+        /// <summary>
+        /// The last position
+        /// </summary>
+        private Vector3 lastPos;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -31,14 +45,22 @@
 
         #region Methods
 
+        /// <summary>
+        /// Updates the grabbed object.
+        /// </summary>
         public override void UpdateGrabbedObject()
         {
         }
 
+        /// <summary>
+        /// Updates the grabbed object.
+        /// </summary>
+        /// <param name="trans">The trans.</param>
         public void UpdateGrabbedObject(Transform trans)
         {
             if (IsGrabbing())
             {
+                lastPos = GrabbedObject.transform.position;
                 Vector3 newpos = grabber.transform.position;
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.transform.rotation = trans.rotation;
@@ -46,9 +68,15 @@
             }
         }
 
+        /// <summary>
+        /// Drop currently grabbed object.
+        /// </summary>
         public override void DropObject()
         {
+            Vector3 targetPos = GrabbedObject.transform.position;
+            Vector3 direction = targetPos - lastPos;
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+            GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
             GrabbedObject = null;
             highlighted = null;
         }
