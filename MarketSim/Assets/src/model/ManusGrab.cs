@@ -51,7 +51,6 @@
         /// <param name="trans">The trans.</param>
         public void UpdateGrabbedObject(float offset, Transform trans)
         {
-            Debug.Log(trans.rotation.eulerAngles);
             if (IsGrabbing())
             {
                 SetPrevPosition(GrabbedObject.transform.position);

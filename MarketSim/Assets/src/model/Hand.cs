@@ -158,6 +158,9 @@ public abstract class Hand : IHand
         }
     }
 
+    /// <summary>
+    /// Updates the gestures.
+    /// </summary>
     public abstract void UpdateGestures();
 
     /// <summary>
