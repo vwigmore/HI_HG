@@ -48,8 +48,6 @@ namespace Assets.Editor
             mat.color = Color.green;
             this.pickUpItem.AddComponent<MeshRenderer>();
             this.pickUpItem.GetComponent<MeshRenderer>().material = mat;
-
-            Debug.Log("color: " + this.pickUpItem.GetComponent<MeshRenderer>().sharedMaterial.color);
         }
 
         /// <summary>
