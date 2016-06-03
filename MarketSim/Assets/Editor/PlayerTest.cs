@@ -82,6 +82,7 @@ public class PlayerTest
 
         Vector3 pos2 = player.leftFoot.transform.position;
         Vector3 pos3 = player.rightFoot.transform.position;
+        Vector3 initialPcPosition = player.pc.transform.position;
     }
 
     /// <summary>
@@ -136,8 +137,9 @@ public class PlayerTest
     {
               
         player.UpdateCrouch();
-        Assert.IsTrue(player.leftFoot.transform.position.x < pos2.x);
-  
+       // Assert.IsTrue(player.leftFoot.transform.position.x < pos2.x);
+        Assert.IsTrue(player.leftFoot.transform.position.z < pos2.z);
+
     }
 
     /// <summary>
@@ -148,6 +150,7 @@ public class PlayerTest
     {
       
         player.UpdateCrouch();
+        Assert.IsTrue(player.rightFoot.transform.position.z < pos3.z);
         Assert.IsTrue(player.rightFoot.transform.position.x < pos3.x);
     }
 
@@ -182,19 +185,11 @@ public class PlayerTest
     [Test]
     public void UpdateMovementTest()
     {
-        Vector3 newPos = new Vector3(x4, y4, z4);
+       
         player.updateMovement();
-        Vector3 playerVector1 = player.pc.transform.position;
-
-        playerVector1[0] = Mathf.Round(playerVector1[0]);
-        playerVector1[1] = Mathf.Round(playerVector1[1]);
-        playerVector1[2] = Mathf.Round(playerVector1[2]);
-
-        newPos[0] = Mathf.Round(newPos[0]);
-        newPos[1] = Mathf.Round(newPos[1]);
-        newPos[2] = Mathf.Round(newPos[2]);
-
-        Assert.IsTrue(playerVector1.Equals(newPos));
+     
+        Assert.IsTrue(player.pc.transform.position.z < pos3.z);
+        Assert.IsTrue(player.pc.transform.position.x < pos3.x);
     }
 
     /// <summary>
@@ -203,19 +198,11 @@ public class PlayerTest
     [Test]
     public void UpdateRotationTest()
     {
-        Vector3 newPos = new Vector3(x4, y4, z4);
+        
         player.updateRotation();
-        Vector3 playerVector2 = player.pc.transform.position;
-
-        playerVector2[0] = Mathf.Round(playerVector2[0]);
-        playerVector2[1] = Mathf.Round(playerVector2[1]);
-        playerVector2[2] = Mathf.Round(playerVector2[2]);
-
-        newPos[0] = Mathf.Round(newPos[0]);
-        newPos[1] = Mathf.Round(newPos[1]);
-        newPos[2] = Mathf.Round(newPos[2]);
-
-        Assert.IsTrue(playerVector2.Equals(newPos));
+     
+        Assert.IsTrue(player.pc.transform.position.z < pos3.z);
+        Assert.IsTrue(player.pc.transform.position.x < pos3.x);
     }
 }
 
