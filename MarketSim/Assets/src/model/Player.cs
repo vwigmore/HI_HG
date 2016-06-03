@@ -151,7 +151,8 @@ public class Player
 
         cam_vert_rot = Mathf.Min(Mathf.Max(-cam_cap, cam_vert_rot), cam_cap);
 
-        Camera.main.transform.localRotation = Quaternion.Euler(cam_vert_rot, 0, 0);
+        if (Manager.MKBOnly)
+            Camera.main.transform.localRotation = Quaternion.Euler(cam_vert_rot, 0, 0);
 
         mouseAxisX = Input.GetAxis("Mouse X");
         Vector3 rotAngles = new Vector3(0, mouseAxisX * mouseSensitivity, 0);

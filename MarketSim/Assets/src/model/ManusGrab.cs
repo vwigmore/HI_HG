@@ -48,21 +48,13 @@
         /// <summary>
         /// Updates the grabbed object.
         /// </summary>
-        public override void UpdateGrabbedObject()
-        {
-        }
-
-        /// <summary>
-        /// Updates the grabbed object.
-        /// </summary>
         /// <param name="trans">The trans.</param>
-        public void UpdateGrabbedObject(Transform trans)
+        public void UpdateGrabbedObject(float offset, Transform trans)
         {
             if (IsGrabbing())
             {
-                lastPos = GrabbedObject.transform.position;
+                SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position;
-
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
@@ -71,7 +63,10 @@
                     GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 }
 
+                newpos.z += offset;
+
                 GrabbedObject.transform.position = newpos;
+
                 GrabbedObject.transform.rotation = trans.rotation;
 
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;

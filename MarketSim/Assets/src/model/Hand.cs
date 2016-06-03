@@ -58,7 +58,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// The sphere collider radius
     /// </summary>
-    private const float SphereColliderRadius = 0.1f;
+    private const float SphereColliderRadius = 0.05f;
 
     /// <summary>
     /// The base hand collider size
@@ -158,23 +158,10 @@ public abstract class Hand : IHand
         }
     }
 
-    public virtual void UpdateGestures()
-    {
-        Gestures gesture = GetGesture();
-        if (!manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Grab)
-                manusGrab.GrabHighlightedObject();
-        }
-        else
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
-
-        this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
-        this.manusGrab.basket.UpdateList();
-    }
+    /// <summary>
+    /// Updates the gestures.
+    /// </summary>
+    public abstract void UpdateGestures();
 
     /// <summary>
     /// Returns which gesture the hand is making.
@@ -199,7 +186,7 @@ public abstract class Hand : IHand
             return Gestures.Pinky;
         else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == (int)FingersBent.three)
             return Gestures.Point;
-        else if (fingersBent == (int)FingersBent.zero)
+        else if (fingersBent <= (int)FingersBent.one)
             return Gestures.Open;
         return Gestures.None;
     }
