@@ -23,7 +23,7 @@
         /// <summary>
         /// The last position
         /// </summary>
-        private Vector3 lastPos;
+        private new Vector3 lastPos;
 
         #endregion Fields
 
