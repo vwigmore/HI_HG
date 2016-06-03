@@ -59,6 +59,9 @@ public class PlayerTest
     /// </summary>
     private Player player;
 
+    Vector3 pos2;
+    Vector3 pos3;
+
     #endregion Fields
 
     #region Methods
@@ -76,6 +79,9 @@ public class PlayerTest
 
         pc = model.transform.parent.gameObject.GetComponent<CharacterController>();
         player = new Player(pc, model, hip, leftFoot, rightFoot);
+
+        Vector3 pos2 = player.leftFoot.transform.position;
+        Vector3 pos3 = player.rightFoot.transform.position;
     }
 
     /// <summary>
@@ -128,19 +134,10 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestLeftFoot()
     {
-        Vector3 position2 = new Vector3(x1, y1, z1);
+              
         player.UpdateCrouch();
-        Vector3 pos2 = player.leftFoot.transform.position;
-
-        position2[0] = Mathf.Round(position2[0]);
-        position2[1] = Mathf.Round(position2[1]);
-        position2[2] = Mathf.Round(position2[2]);
-
-        pos2[0] = Mathf.Round(pos2[0]);
-        pos2[1] = Mathf.Round(pos2[1]);
-        pos2[2] = Mathf.Round(pos2[2]);
-
-        Assert.True(pos2.Equals(position2));
+        Assert.IsTrue(player.leftFoot.transform.position.x < pos2.x);
+  
     }
 
     /// <summary>
@@ -149,19 +146,9 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestrightFoot()
     {
-        Vector3 position3 = new Vector3(x1, y1, z1);
+      
         player.UpdateCrouch();
-        Vector3 pos3 = player.rightFoot.transform.position;
-
-        position3[0] = Mathf.Round(position3[0]);
-        position3[1] = Mathf.Round(position3[1]);
-        position3[2] = Mathf.Round(position3[2]);
-
-        pos3[0] = Mathf.Round(pos3[0]);
-        pos3[1] = Mathf.Round(pos3[1]);
-        pos3[2] = Mathf.Round(pos3[2]);
-
-        Assert.True(pos3.Equals(position3));
+        Assert.IsTrue(player.rightFoot.transform.position.x < pos3.x);
     }
 
     /// <summary>
