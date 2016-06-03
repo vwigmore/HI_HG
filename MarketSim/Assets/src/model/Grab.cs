@@ -18,12 +18,12 @@
         /// <summary>
         /// The throw force
         /// </summary>
-        protected readonly float throwForce = 50;
+        protected readonly float throwForce = 1500;
 
         /// <summary>
         /// An object in proximity has to be within this distance.
         /// </summary>
-        protected float proxDist = 4.0f;
+        protected float proxDist = 1.0f;
 
         /// <summary>
         /// GameObject player.
@@ -49,7 +49,12 @@
         /// <summary>
         /// Last position of the grabbed object.
         /// </summary>
-        protected Vector3 lastPos;
+        protected Vector3 prevPos;
+
+        /// <summary>
+        /// The previous rotation.
+        /// </summary>
+        protected Vector3 prevRot;
 
         /// <summary>
         /// Object currently selected.
@@ -138,7 +143,7 @@
             else
             {
                 Vector3 targetPos = GrabbedObject.transform.position;
-                Vector3 direction = targetPos - lastPos;
+                Vector3 direction = targetPos - GetPrevPosition();
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
                 GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
                 GrabbedObject = null;
@@ -153,6 +158,7 @@
         {
             if (IsGrabbing())
             {
+                SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
 
                 if (GrabbedObject.tag.Equals("basket"))
@@ -163,10 +169,9 @@
                     GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                     Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     GrabbedObject.GetComponent<Collider>());
-                    lastPos = grabber.transform.position;
+                    SetPrevPosition(grabber.transform.position);
                 }
-                lastPos = grabber.transform.position;
-                GrabbedObject.transform.position = newpos;
+                GrabbedObject.transform.position = newpos * Time.deltaTime;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                 GrabbedObject.GetComponent<Collider>());
@@ -191,9 +196,6 @@
             ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
             {
-                //                this.prevHighlighted.Add(obj);
-                //                this.prevHighlightedColor.Add(obj.GetComponent<Renderer>().material.color);
-
                 this.prevHighlighted = obj;
                 this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
                 this.highlighted = obj;
@@ -237,6 +239,42 @@
         public bool InProximity(Vector3 pos)
         {
             return Vector3.Distance(this.Grabber.transform.position, pos) <= this.proxDist;
+        }
+
+        /// <summary>
+        /// Sets the previous position.
+        /// </summary>
+        /// <param name="pos">The position.</param>
+        public void SetPrevPosition(Vector3 pos)
+        {
+            this.prevPos = pos;
+        }
+
+        /// <summary>
+        /// Gets the previous position.
+        /// </summary>
+        /// <returns>The previous position</returns>
+        public Vector3 GetPrevPosition()
+        {
+            return this.prevPos;
+        }
+
+        /// <summary>
+        /// Sets the previous rotation.
+        /// </summary>
+        /// <param name="rot">The rotation.</param>
+        public void SetPrevRotation(Vector3 rot)
+        {
+            this.prevRot = rot;
+        }
+
+        /// <summary>
+        /// Gets the previous rotation.
+        /// </summary>
+        /// <returns>The previous rotation</returns>
+        public Vector3 GetPrevRotation()
+        {
+            return this.prevRot;
         }
 
         #endregion Methods

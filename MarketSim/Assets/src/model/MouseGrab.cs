@@ -17,7 +17,7 @@
         /// <summary>
         /// The throw force
         /// </summary>
-        private readonly float throwForce = 150;
+        private readonly float throwForce = 500;
 
         /// <summary>
         /// The ray cast hit
