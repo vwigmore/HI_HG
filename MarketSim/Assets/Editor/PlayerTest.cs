@@ -114,19 +114,13 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestModel()
     {
-        Vector3 position1 = new Vector3(x1, y1, z1);
+ 
         player.UpdateCrouch();
-        Vector3 pos1 = player.leftFoot.transform.position;
 
-        position1[0] = Mathf.Round(position1[0]);
-        position1[1] = Mathf.Round(position1[1]);
-        position1[2] = Mathf.Round(position1[2]);
-
-        pos1[0] = Mathf.Round(pos1[0]);
-        pos1[1] = Mathf.Round(pos1[1]);
-        pos1[2] = Mathf.Round(pos1[2]);
-
-        Assert.True(pos1.Equals(position1));
+        Assert.IsTrue(player.pc.transform.position.z < pos3.z);
+        Assert.IsTrue(player.pc.transform.position.x < pos3.x);
+        Assert.IsTrue(player.pc.transform.position.z < pos2.z);
+        Assert.IsTrue(player.pc.transform.position.x < pos2.x);
     }
 
     /// <summary>
@@ -137,8 +131,9 @@ public class PlayerTest
     {
               
         player.UpdateCrouch();
-       // Assert.IsTrue(player.leftFoot.transform.position.x < pos2.x);
+   
         Assert.IsTrue(player.leftFoot.transform.position.z < pos2.z);
+        Assert.IsTrue(player.leftFoot.transform.position.x < pos3.x);
 
     }
 
@@ -185,11 +180,13 @@ public class PlayerTest
     [Test]
     public void UpdateMovementTest()
     {
-       
+
         player.updateMovement();
-     
+
         Assert.IsTrue(player.pc.transform.position.z < pos3.z);
         Assert.IsTrue(player.pc.transform.position.x < pos3.x);
+        Assert.IsTrue(player.pc.transform.position.z < pos2.z);
+        Assert.IsTrue(player.pc.transform.position.x < pos2.x);
     }
 
     /// <summary>
@@ -198,11 +195,13 @@ public class PlayerTest
     [Test]
     public void UpdateRotationTest()
     {
-        
+
         player.updateRotation();
-     
+  
         Assert.IsTrue(player.pc.transform.position.z < pos3.z);
         Assert.IsTrue(player.pc.transform.position.x < pos3.x);
+        Assert.IsTrue(player.pc.transform.position.z < pos2.z);
+        Assert.IsTrue(player.pc.transform.position.x < pos2.x);
     }
 }
 
