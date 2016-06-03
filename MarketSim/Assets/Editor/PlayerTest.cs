@@ -10,26 +10,6 @@ public class PlayerTest
     #region Fields
 
     /// <summary>
-    /// Coordinates for vector position1
-    /// </summary>
-    private readonly float x1 = -4.0f, y1 = 0.0f, z1 = -13.0f;
-
-    /// <summary>
-    /// Coordinates for vector capVector1
-    /// </summary>
-    private readonly float x2 = 1.0f, y2 = 2.0f, z2 = 3.0f;
-
-    /// <summary>
-    /// Coordinates for vector capVector2
-    /// </summary>
-    private readonly float x3 = 10.0f, y3 = 4.0f, z3 = 8.0f;
-
-    /// <summary>
-    /// Coordinates for vector newPos
-    /// </summary>
-    private readonly float x4 = -4.2f, y4 = 1.0f, z4 = -12.8f;
-
-    /// <summary>
     /// Character controller for the player
     /// </summary>
     private CharacterController pc;
@@ -62,12 +42,12 @@ public class PlayerTest
     /// <summary>
     /// The position of the left foot
     /// </summary>
-    private Vector3 pos2;
+    private Vector3 posLeft;
 
     /// <summary>
-    /// The position of the rig
+    /// The position of the rigt foot
     /// </summary>
-    private Vector3 pos3;
+    private Vector3 posRight;
 
     /// <summary>
     /// The initial pc position
@@ -92,8 +72,8 @@ public class PlayerTest
         pc = model.transform.parent.gameObject.GetComponent<CharacterController>();
         player = new Player(pc, model, hip, leftFoot, rightFoot);
 
-        Vector3 pos2 = leftFoot.transform.position;
-        Vector3 pos3 = rightFoot.transform.position;
+        Vector3 posLeft = leftFoot.transform.position;
+        Vector3 posRight = rightFoot.transform.position;
         Vector3 initialPcPosition = pc.transform.position;
     }
 
@@ -142,8 +122,8 @@ public class PlayerTest
     
         player.UpdateCrouch();
    
-        Assert.AreNotEqual(player.leftFoot.transform.position.z, pos2.z);
-        Assert.AreNotEqual(player.leftFoot.transform.position.x, pos2.x);
+        Assert.AreNotEqual(player.leftFoot.transform.position.z, posLeft.z);
+        Assert.AreNotEqual(player.leftFoot.transform.position.x, posLeft.x);
 
     }
 
@@ -155,8 +135,8 @@ public class PlayerTest
     {
       
         player.UpdateCrouch();
-        Assert.AreNotEqual(player.rightFoot.transform.position.z, pos3.z);
-        Assert.AreNotEqual(player.rightFoot.transform.position.x, pos3.x);
+        Assert.AreNotEqual(player.rightFoot.transform.position.z, posRight.z);
+        Assert.AreNotEqual(player.rightFoot.transform.position.x, posRight.x);
     }
 
     /// <summary>
@@ -165,23 +145,10 @@ public class PlayerTest
     [Test]
     public void capVectorTest1()
     {
-        Vector3 capVector1 = new Vector3(x2, y2, z2);
         Vector3 vec1 = new Vector3(1, 2, 3);
+        Vector3 expected = new Vector3(1, 2, 3);
         player.capVector(vec1, 3, 6);
-        Assert.True(vec1.Equals(capVector1));
-    }
-
-    /// <summary>
-    /// Test for the CapVector method
-    /// </summary>
-    [Test]
-    public void capVectorTest2()
-    {
-        Vector3 capVector2 = new Vector3(x3, y3, z3);
-        Vector3 vec2 = new Vector3(10, 4, 8);
-        player.capVector(vec2, 4, 8);
-
-        Assert.True(vec2.Equals(capVector2));
+        Assert.True(vec1.Equals(expected));
     }
 
     /// <summary>
