@@ -59,8 +59,20 @@ public class PlayerTest
     /// </summary>
     private Player player;
 
-    Vector3 pos2;
-    Vector3 pos3;
+    /// <summary>
+    /// The position of the left foot
+    /// </summary>
+    private Vector3 pos2;
+
+    /// <summary>
+    /// The position of the rig
+    /// </summary>
+    private Vector3 pos3;
+
+    /// <summary>
+    /// The initial pc position
+    /// </summary>
+    private Vector3 initialPcPosition;
 
     #endregion Fields
 
@@ -80,9 +92,9 @@ public class PlayerTest
         pc = model.transform.parent.gameObject.GetComponent<CharacterController>();
         player = new Player(pc, model, hip, leftFoot, rightFoot);
 
-        Vector3 pos2 = player.leftFoot.transform.position;
-        Vector3 pos3 = player.rightFoot.transform.position;
-        Vector3 initialPcPosition = player.pc.transform.position;
+        Vector3 pos2 = leftFoot.transform.position;
+        Vector3 pos3 = rightFoot.transform.position;
+        Vector3 initialPcPosition = pc.transform.position;
     }
 
     /// <summary>
@@ -117,10 +129,8 @@ public class PlayerTest
  
         player.UpdateCrouch();
 
-        Assert.IsTrue(player.pc.transform.position.z < pos3.z);
-        Assert.IsTrue(player.pc.transform.position.x < pos3.x);
-        Assert.IsTrue(player.pc.transform.position.z < pos2.z);
-        Assert.IsTrue(player.pc.transform.position.x < pos2.x);
+        Assert.AreNotEqual(player.pc.transform.position.x,initialPcPosition.x);
+      
     }
 
     /// <summary>
@@ -129,11 +139,11 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestLeftFoot()
     {
-              
+    
         player.UpdateCrouch();
    
-        Assert.IsTrue(player.leftFoot.transform.position.z < pos2.z);
-        Assert.IsTrue(player.leftFoot.transform.position.x < pos3.x);
+        Assert.AreNotEqual(player.leftFoot.transform.position.z, pos2.z);
+        Assert.AreNotEqual(player.leftFoot.transform.position.x, pos2.x);
 
     }
 
@@ -145,8 +155,8 @@ public class PlayerTest
     {
       
         player.UpdateCrouch();
-        Assert.IsTrue(player.rightFoot.transform.position.z < pos3.z);
-        Assert.IsTrue(player.rightFoot.transform.position.x < pos3.x);
+        Assert.AreNotEqual(player.rightFoot.transform.position.z, pos3.z);
+        Assert.AreNotEqual(player.rightFoot.transform.position.x, pos3.x);
     }
 
     /// <summary>
@@ -183,10 +193,9 @@ public class PlayerTest
 
         player.updateMovement();
 
-        Assert.IsTrue(player.pc.transform.position.z < pos3.z);
-        Assert.IsTrue(player.pc.transform.position.x < pos3.x);
-        Assert.IsTrue(player.pc.transform.position.z < pos2.z);
-        Assert.IsTrue(player.pc.transform.position.x < pos2.x);
+        Assert.AreNotEqual(player.pc.transform.position.z, initialPcPosition.z);
+        Assert.AreNotEqual(player.pc.transform.position.x, initialPcPosition.x);
+
     }
 
     /// <summary>
@@ -198,10 +207,8 @@ public class PlayerTest
 
         player.updateRotation();
   
-        Assert.IsTrue(player.pc.transform.position.z < pos3.z);
-        Assert.IsTrue(player.pc.transform.position.x < pos3.x);
-        Assert.IsTrue(player.pc.transform.position.z < pos2.z);
-        Assert.IsTrue(player.pc.transform.position.x < pos2.x);
+        Assert.AreNotEqual(player.pc.transform.position.z, initialPcPosition.z);
+        Assert.AreNotEqual(player.pc.transform.position.x, initialPcPosition.x);
     }
 }
 
