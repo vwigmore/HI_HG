@@ -70,7 +70,7 @@ public class Manager : MonoBehaviour
     {
         Instance = this;
         Manager.highlightOn = true;
-        Manager.gestureMovementOn = true;
+        Manager.gestureMovementOn = false;
     }
 
     #endregion Methods
