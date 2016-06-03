@@ -74,17 +74,9 @@ public class HandController : MonoBehaviour
     /// <param name="collision">The collision.</param>
     private void OnTriggerEnter(Collider collision)
     {
-        GameObject collideObj = collision.gameObject;
-        hand.GetManusGrab().HighlightSelectedObject(collideObj);
-    }
+        GameObject collisionObj = collision.gameObject;
 
-    /// <summary>
-    /// Called when [trigger exit].
-    /// </summary>
-    /// <param name="collision">The collision.</param>
-    private void OnTriggerExit(Collider collision)
-    {
-        hand.GetManusGrab().ClearHighlights();
+        hand.GetManusGrab().HighlightSelectedObject(collisionObj);
     }
 
     #endregion Methods

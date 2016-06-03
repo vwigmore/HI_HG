@@ -64,6 +64,12 @@ namespace Assets.src.model
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemHolder"/> class.
+        /// </summary>
+        /// <param name="hd">The GameObject holding items.</param>
+        /// <param name="r">The number of rows.</param>
+        /// <param name="c">The number of columns.</param>
         public ItemHolder(GameObject hd, int r, int c)
         {
             this.holder = hd;
