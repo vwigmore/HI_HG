@@ -36,7 +36,7 @@ t.n.nguyen@student.tudelft.nl 4287118
 
 # Unity Cloud Build
 * Most recent builds:
-![Unity builds 27/5/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds27-5.jpg)
+![Unity builds 27/5/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds3-6.jpg)
 * [Unity Cloud (Might need Unity Account and invite first)] (https://build.cloud.unity3d.com/orgs/msimidzioski/projects/hi_hg/) 
 
 # Running the project
