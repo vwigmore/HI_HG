@@ -36,7 +36,7 @@ public class LeftHand : Hand
         this.handModel.transform.position = newpos;
         Vector3 newrot = this.root.transform.rotation.eulerAngles;
 
-        newrot.y += 90;
+        newrot.y -= 180;
 
         this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
@@ -69,7 +69,8 @@ public class LeftHand : Hand
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
         }
 
-        this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
+        this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
+        this.manusGrab.basket.UpdateList();
     }
 
     #endregion Methods

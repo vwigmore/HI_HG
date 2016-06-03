@@ -19,6 +19,11 @@ public class Manager : MonoBehaviour
     /// </summary>
     private static bool gestureMovementOn;
 
+    /// <summary>
+    /// The mouse keyboard only configuration.
+    /// </summary>
+    private static bool mKbOnly;
+
     #endregion Fields
 
     #region Properties
@@ -59,6 +64,14 @@ public class Manager : MonoBehaviour
         }
     }
 
+    public static bool MKBOnly
+    {
+        get
+        {
+            return Manager.mKbOnly;
+        }
+    }
+
     #endregion Properties
 
     #region Methods
@@ -69,8 +82,9 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Manager.highlightOn = true;
-        Manager.gestureMovementOn = true;
+        Manager.highlightOn = false;
+        Manager.gestureMovementOn = false;
+        Manager.mKbOnly = false;
     }
 
     #endregion Methods

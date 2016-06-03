@@ -27,6 +27,24 @@ public class RightHand : Hand
 
     #region Methods
 
+    public override void UpdateGestures()
+    {
+        Gestures gesture = GetGesture();
+        if (!manusGrab.IsGrabbing())
+        {
+            if (gesture == Gestures.Grab)
+                manusGrab.GrabHighlightedObject();
+        }
+        else
+        {
+            if (gesture == Gestures.Open)
+                manusGrab.DropObject();
+        }
+
+        this.manusGrab.UpdateGrabbedObject(0.1f, gameTransforms[0][0].parent.gameObject.transform);
+        this.manusGrab.basket.UpdateList();
+    }
+
     /// <summary>
     /// Update the position of the hand according to the arm.
     /// </summary>
@@ -35,8 +53,7 @@ public class RightHand : Hand
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
         Vector3 newrot = this.root.transform.rotation.eulerAngles;
-        newrot.y -= 180;
-
+        newrot.y -= 90;
         this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 

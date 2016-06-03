@@ -13,6 +13,20 @@
     /// <seealso cref="Assets.src.model.Grab" />
     public class ManusGrab : Grab
     {
+        #region Fields
+
+        /// <summary>
+        /// The throw force
+        /// </summary>
+        private readonly float throwForce = 500;
+
+        /// <summary>
+        /// The last position
+        /// </summary>
+        private new Vector3 lastPos;
+
+        #endregion Fields
+
         #region Constructors
 
         /// <summary>
@@ -34,33 +48,29 @@
         /// <summary>
         /// Updates the grabbed object.
         /// </summary>
-        public override void UpdateGrabbedObject()
-        {
-        }
-
-        /// <summary>
-        /// Updates the grabbed object.
-        /// </summary>
         /// <param name="trans">The trans.</param>
-        public void UpdateGrabbedObject(Transform trans)
+        public void UpdateGrabbedObject(float offset, Transform trans)
         {
             if (IsGrabbing())
             {
+                SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position;
+                if (GrabbedObject.tag.Equals("basket"))
+                {
+                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
+                    GrabbedObject.transform.position = newpos;
+                    GrabbedObject.transform.rotation = trans.rotation;
+                    GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                }
+
+                newpos.z += offset;
+
                 GrabbedObject.transform.position = newpos;
+
                 GrabbedObject.transform.rotation = trans.rotation;
+
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
-        }
-
-        /// <summary>
-        /// Drop currently grabbed object.
-        /// </summary>
-        public override void DropObject()
-        {
-            GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-            GrabbedObject = null;
-            highlighted = null;
         }
 
         #endregion Methods

@@ -17,7 +17,7 @@ public class MouseGrabController : MonoBehaviour
     /// <summary>
     /// The camera
     /// </summary>
-    private Camera camera;
+    private new Camera camera;
 
     #endregion Fields
 

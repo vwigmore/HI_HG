@@ -1,9 +1,5 @@
 ﻿namespace Assets.src.model
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using UnityEngine;
 
     /// <summary>
@@ -15,9 +11,19 @@
         #region Fields
 
         /// <summary>
+        /// The throw force
+        /// </summary>
+        private readonly float throwForce = 500;
+
+        /// <summary>
         /// The ray cast hit
         /// </summary>
         private RaycastHit hit;
+
+        /// <summary>
+        /// The initial position of the object
+        /// </summary>
+        private Vector3 prevPos;
 
         #endregion Fields
 
@@ -33,7 +39,6 @@
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
-           
         }
 
         #endregion Constructors
@@ -41,27 +46,14 @@
         #region Methods
 
         /// <summary>
-        /// Drop currently grabbed object.
+        /// Updates the grabbed object.
+        /// Also stores previous position of object.
         /// </summary>
-        public override void DropObject()
+        public override void UpdateGrabbedObject()
         {
-            if (GrabbedObject == null)
-                return;
-
-            if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
-            {
-                Vector3 newpos = basket.holder.transform.position;
-                newpos.y = newpos.y + 0.4f;
-
-                if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(GrabbedObject);
-            }
-            else
-            {
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject = null;
-                highlighted = null;
-            }
+            if (IsGrabbing())
+                prevPos = GrabbedObject.transform.position;
+            base.UpdateGrabbedObject();
         }
 
         /// <summary>

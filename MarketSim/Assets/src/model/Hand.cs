@@ -163,22 +163,10 @@ public abstract class Hand : IHand
         }
     }
 
-    public virtual void UpdateGestures()
-    {
-        Gestures gesture = GetGesture();
-        if (!manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Grab)
-                manusGrab.GrabHighlightedObject();
-        }
-        else
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
-
-        this.manusGrab.UpdateGrabbedObject(gameTransforms[0][0].parent.gameObject.transform);
-    }
+    /// <summary>
+    /// Updates the gestures.
+    /// </summary>
+    public abstract void UpdateGestures();
 
     /// <summary>
     /// Returns which gesture the hand is making.
@@ -203,7 +191,7 @@ public abstract class Hand : IHand
             return Gestures.Pinky;
         else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == (int)FingersBent.three)
             return Gestures.Point;
-        else if (fingersBent == (int)FingersBent.zero)
+        else if (fingersBent <= (int)FingersBent.one)
             return Gestures.Open;
         return Gestures.None;
     }
@@ -213,14 +201,6 @@ public abstract class Hand : IHand
     /// </summary>
     public void CreateColliders()
     {
-        /// Collider used for highlighting and grabbing items.
-        //  this.sphereCollider = this.handModel.AddComponent<SphereCollider>();
-        // this.sphereCollider.radius = SphereColliderRadius;
-        //this.sphereCollider.transform.position = handModel.transform.position;
-
-        //this.sphereCollider.isTrigger = true;
-
-        /// Collider for the base of the hand
         BoxCollider bc2 = new BoxCollider();
         bc2 = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
         bc2.size = BaseHandColliderSize;
@@ -244,27 +224,10 @@ public abstract class Hand : IHand
         bc2.isTrigger = true;
     }
 
-    //   public void Sticky(GameObject sticks)
-    //  {
-    //     Debug.Log("entering sticky: " + sticks.ToString());
-    //    if (sticky == null && sticks.tag.Equals("pickup"))
-    //   {
-    //      sticky = sticks;
-
-    //      Debug.Log("now sticky");
-    //  }
-    // }
-
-    //public void UpdateSticky()
-    //{
-    //    if (sticky != null)
-    //   {
-    //     Vector3 newpos = gameTransforms[0][0].parent.gameObject.transform.position;
-    //   sticky.transform.position = newpos;
-    //      sticky.transform.rotation = gameTransforms[0][0].parent.gameObject.transform.rotation;
-    // }
-    //}
-
+    /// <summary>
+    /// Returns the ManusGrabs.
+    /// </summary>
+    /// <returns>ManusGrab</returns>
     public ManusGrab GetManusGrab()
     {
         return this.manusGrab;
