@@ -38,6 +38,12 @@ namespace Assets.src.model
         void UpdateGestures();
 
         /// <summary>
+        /// Returns the ManusGrabs.
+        /// </summary>
+        /// <returns></returns>
+        ManusGrab GetManusGrab();
+
+        /// <summary>
         /// Gets the gesture.
         /// </summary>
         /// <returns></returns>
