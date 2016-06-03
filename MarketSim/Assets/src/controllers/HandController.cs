@@ -20,7 +20,7 @@ public class HandController : MonoBehaviour
     /// <summary>
     /// The hand
     /// </summary>
-    private Hand hand;
+    private IHand hand;
 
     #endregion Fields
 
