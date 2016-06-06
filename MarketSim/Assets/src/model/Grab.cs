@@ -23,7 +23,7 @@
         /// <summary>
         /// An object in proximity has to be within this distance.
         /// </summary>
-        protected float proxDist = 1.0f;
+        protected float proxDist = 2.0f;
 
         /// <summary>
         /// GameObject player.
@@ -120,6 +120,7 @@
         {
             if (this.highlighted != null)
             {
+                Debug.Log("grabbing: "+ highlighted);
                 this.GrabbedObject = this.highlighted;
             }
         }
@@ -134,7 +135,7 @@
 
             if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
-                Vector3 newpos = basket.holder.transform.position;
+                Vector3 newpos = basket.holder.transform.position ;
                 newpos.y -= newpos.y;
 
                 if (basket.items.Count < basket.rows * basket.cols)
@@ -160,6 +161,7 @@
             {
                 SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
+                Quaternion rotation = GrabbedObject.transform.rotation;
 
                 if (GrabbedObject.tag.Equals("basket"))
                 {
@@ -171,7 +173,9 @@
                     GrabbedObject.GetComponent<Collider>());
                     SetPrevPosition(grabber.transform.position);
                 }
-                GrabbedObject.transform.position = newpos * Time.deltaTime;
+
+                GrabbedObject.transform.position = newpos;
+                GrabbedObject.transform.rotation = grabber.transform.rotation;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                 GrabbedObject.GetComponent<Collider>());
