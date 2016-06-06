@@ -128,22 +128,43 @@ public class Player
         Vector3 crouchDir = this.model.transform.position;
         if (deltaHeight > lastDeltaHeight)
         {
-            if (minFootY + (deltaHeight - lastDeltaHeight) <= 0)
-                crouchDir.y += deltaHeight - lastDeltaHeight;
+            CrouchDirectionSmallerThanNull(minFootY,deltaHeight,crouchDir);
         }
         else if (deltaHeight < lastDeltaHeight)
         {
-            if (minFootY - (lastDeltaHeight - deltaHeight) >= 0)
-                crouchDir.y -= lastDeltaHeight - deltaHeight;
+            CrouchDirectionGreaterThanNull(minFootY, deltaHeight, crouchDir);
         }
-
         this.model.transform.position = crouchDir;
         lastDeltaHeight = deltaHeight;
     }
 
     /// <summary>
+    /// Crouches the direction smaller than null.
+    /// </summary>
+    /// <param name="min">The minimum.</param>
+    /// <param name="height">The height.</param>
+    /// <param name="direction">The direction.</param>
+    public void CrouchDirectionSmallerThanNull(float min, float height, Vector3 direction)
+    {
+        if (min + (height - lastDeltaHeight) <= 0)
+            direction.y += height - lastDeltaHeight;
+    }
+
+    /// <summary>
+    /// Crouches the direction greater than null.
+    /// </summary>
+    /// <param name="min">The minimum.</param>
+    /// <param name="height">The height.</param>
+    /// <param name="direction">The direction.</param>
+    public void CrouchDirectionGreaterThanNull(float min, float height, Vector3 direction)
+    {
+        if (min - (lastDeltaHeight - height) >= 0)
+            direction.y -= lastDeltaHeight - height;
+    }
+    /// <summary>
     /// Updates the rotation.
     /// </summary>
+    /// 
     public void updateRotation()
     {
         mouseAxisY = Input.GetAxis("Mouse Y");
