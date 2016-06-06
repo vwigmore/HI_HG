@@ -1,5 +1,6 @@
 ﻿namespace Assets.src.model
 {
+    using System;
     using System.Collections;
     using UnityEngine;
 
@@ -134,20 +135,11 @@
 
             if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
-                Vector3 newpos = basket.holder.transform.position;
-                newpos.y -= newpos.y;
-
-                if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(GrabbedObject);
+                Helper();
             }
             else
             {
-                Vector3 targetPos = GrabbedObject.transform.position;
-                Vector3 direction = targetPos - GetPrevPosition();
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-                GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
-                GrabbedObject = null;
-                highlighted = null;
+                ObjectForce();
             }
         }
 
@@ -221,6 +213,31 @@
             }
         }
 
+
+        /// <summary>
+        /// heper method for dropObject.
+        /// </summary>
+        public void Helper()
+        {
+                Vector3 newpos = basket.holder.transform.position;
+                newpos.y -= newpos.y;
+
+                if (basket.items.Count < basket.rows * basket.cols)
+                    basket.items.Add(GrabbedObject);
+        }
+
+        /// <summary>
+        /// Add force to object when throwing.
+        /// </summary>
+        public void ObjectForce()
+        {
+            Vector3 targetPos = GrabbedObject.transform.position;
+            Vector3 direction = targetPos - GetPrevPosition();
+            GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+            GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
+            GrabbedObject = null;
+            highlighted = null;
+        }
         /// <summary>
         /// Returns whether an object is in range of the grabber.
         /// </summary>
