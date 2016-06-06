@@ -204,20 +204,7 @@ public class Player
 
         if (pc.isGrounded)
         {
-            // movement vector, consists of axes to move to.
-            this.moveDirection = new Vector3(hAxis, 0, vAxis);
-
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-
-            // Transforms direction from local space to world space.
-            this.moveDirection = pc.transform.TransformDirection(moveDirection);
-
-            // Multiplies vector with speed (axes are between -1 and 1, not much).
-            this.moveDirection *= moveSpeed;
-
-            // Capping move speed: moveDirection hypotenuse
-            capVector(moveDirection, moveSpeed, -moveSpeed);
+            updateMovementHelp();
         }
         else
         {
@@ -227,5 +214,25 @@ public class Player
         pc.Move(moveDirection * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Helper method for updateMovement
+    /// </summary>
+    public void updateMovementHelp()
+    {
+        // movement vector, consists of axes to move to.
+        this.moveDirection = new Vector3(hAxis, 0, vAxis);
+
+        if (Input.GetButton("Jump"))
+            moveDirection.y = jumpSpeed;
+
+        // Transforms direction from local space to world space.
+        this.moveDirection = pc.transform.TransformDirection(moveDirection);
+
+        // Multiplies vector with speed (axes are between -1 and 1, not much).
+        this.moveDirection *= moveSpeed;
+
+        // Capping move speed: moveDirection hypotenuse
+        capVector(moveDirection, moveSpeed, -moveSpeed);
+    }
     #endregion Methods
 }
