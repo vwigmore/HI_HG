@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: b0d2e6e1f60b54948a68bbecf9dcc127
+timeCreated: 1462794195
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Finger_00
+    100004: Finger_01
+    100006: Finger_02
+    100008: Finger_03
+    100010: Finger_03_end
+    100012: Finger_10
+    100014: Finger_11
+    100016: Finger_12
+    100018: Finger_13
+    100020: Finger_13_end
+    100022: Finger_20
+    100024: Finger_21
+    100026: Finger_22
+    100028: Finger_23
+    100030: Finger_23_end
+    100032: Finger_30
+    100034: Finger_31
+    100036: Finger_32
+    100038: Finger_33
+    100040: Finger_33_end
+    100042: Finger_40
+    100044: Finger_41
+    100046: Finger_42
+    100048: Finger_43
+    100050: Finger_43_end
+    100052: head
+    100054: head_end
+    100056: hip_center
+    100058: left_ankle
+    100060: left_collar
+    100062: left_elbow
+    100064: left_foot
+    100066: left_foot_end
+    100068: left_hip
+    100070: left_knee
+    100072: left_shoulder
+    100074: left_thigh
+    100076: left_wrist
+    100078: mesh
+    100080: neck
+    100082: right_ankle
+    100084: right_collar
+    100086: right_elbow
+    100088: right_fingers
+    100090: right_fingers_end
+    100092: right_foot
+    100094: right_foot_end
+    100096: right_hand
+    100098: right_hip
+    100100: right_knee
+    100102: right_shoulder
+    100104: right_thigh
+    100106: right_wrist
+    100108: root_joint
+    100110: skeleton
+    100112: spine
+    100114: Wrist
+    100116: Armature
+    100118: Leapmotion_Basehand_Rig_Left
+    100120: Manus_Handv2_Left
+    100122: Forearm_00
+    100124: Forearm_01
+    100126: left_fingers
+    100128: left_fingers_end
+    100130: left_hand
+    100132: Forearm_01_end
+    400000: //RootNode
+    400002: Finger_00
+    400004: Finger_01
+    400006: Finger_02
+    400008: Finger_03
+    400010: Finger_03_end
+    400012: Finger_10
+    400014: Finger_11
+    400016: Finger_12
+    400018: Finger_13
+    400020: Finger_13_end
+    400022: Finger_20
+    400024: Finger_21
+    400026: Finger_22
+    400028: Finger_23
+    400030: Finger_23_end
+    400032: Finger_30
+    400034: Finger_31
+    400036: Finger_32
+    400038: Finger_33
+    400040: Finger_33_end
+    400042: Finger_40
+    400044: Finger_41
+    400046: Finger_42
+    400048: Finger_43
+    400050: Finger_43_end
+    400052: head
+    400054: head_end
+    400056: hip_center
+    400058: left_ankle
+    400060: left_collar
+    400062: left_elbow
+    400064: left_foot
+    400066: left_foot_end
+    400068: left_hip
+    400070: left_knee
+    400072: left_shoulder
+    400074: left_thigh
+    400076: left_wrist
+    400078: mesh
+    400080: neck
+    400082: right_ankle
+    400084: right_collar
+    400086: right_elbow
+    400088: right_fingers
+    400090: right_fingers_end
+    400092: right_foot
+    400094: right_foot_end
+    400096: right_hand
+    400098: right_hip
+    400100: right_knee
+    400102: right_shoulder
+    400104: right_thigh
+    400106: right_wrist
+    400108: root_joint
+    400110: skeleton
+    400112: spine
+    400114: Wrist
+    400116: Armature
+    400118: Leapmotion_Basehand_Rig_Left
+    400120: Manus_Handv2_Left
+    400122: Forearm_00
+    400124: Forearm_01
+    400126: left_fingers
+    400128: left_fingers_end
+    400130: left_hand
+    400132: Forearm_01_end
+    4300000: mesh
+    4300002: Manus_Handv2_Left
+    7400000: skeleton|skeleton|Take 001|BaseLayer
+    7400002: Armature|skeleton|Take 001|BaseLayer
+    7400004: Leapmotion_Basehand_Rig_Left|skeleton|Take 001|BaseLayer
+    7400006: skeleton|Armature|Take 001|BaseLayer
+    7400008: skeleton|Armature|Take 001|BaseLayer.001
+    7400010: skeleton|skeleton|Take 001|BaseLayer.001
+    7400012: Armature|Armature|Take 001|BaseLayer
+    7400014: Armature|Armature|Take 001|BaseLayer.001
+    7400016: Armature|skeleton|Take 001|BaseLayer.001
+    9500000: //RootNode
+    13700000: mesh
+    13700002: Manus_Handv2_Left
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
