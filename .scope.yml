@@ -1,3 +1,5 @@
 component_depth: 4
 languages:
 - csharp
+exclude:
+- .*/MarketSim/Assets/3rd_party/.*
