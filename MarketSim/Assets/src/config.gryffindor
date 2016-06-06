@@ -1,0 +1,19 @@
+# CONFIGURATION FILE
+
+#                   __        _  _               
+#|_| _     _  _    /__ __ \/_|__|_ o __  _| _  __
+#| |(_)|_|_> (/_   \_| |  /  |  |  | | |(_|(_) | 
+
+# Lines starting with # are ignored.
+# <attr> = <val>
+# not case sensitive
+
+# Decides whether an object will be highlighted
+HIGHLIGHTON = true
+
+# Controlling the player character controller with the left glove
+GESTUREMOVEMENTON = FALSE
+
+# Controlling the simulation without VR hardware
+MKBONLY = true
+
