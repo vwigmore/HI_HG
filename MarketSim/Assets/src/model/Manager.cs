@@ -82,9 +82,9 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Manager.highlightOn = false;
-        Manager.gestureMovementOn = false;
-        Manager.mKbOnly = false;
+        Manager.highlightOn = true;
+        Manager.gestureMovementOn = true;
+        Manager.mKbOnly = true;
     }
 
     #endregion Methods
