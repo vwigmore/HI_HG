@@ -135,7 +135,7 @@
 
             if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
-                Helper();
+                DropObjectHelp();
             }
             else
             {
@@ -153,20 +153,30 @@
                 SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
 
-                if (GrabbedObject.tag.Equals("basket"))
-                {
-                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    newpos.y -= y;
-                    GrabbedObject.transform.position = newpos;
-                    GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
-                    Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
-                    GrabbedObject.GetComponent<Collider>());
-                    SetPrevPosition(grabber.transform.position);
-                }
-                GrabbedObject.transform.position = newpos * Time.deltaTime;
+                UpdatedGrabbedObjectHelp(newpos);
+                GrabbedObject.transform.position = newpos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                 GrabbedObject.GetComponent<Collider>());
+            }
+        }
+
+        /// <summary>
+        /// Helper method for UpdatedGrabbedObjectHelp
+        /// </summary>
+        /// <param name="pos">The position.</param>
+        public void UpdatedGrabbedObjectHelp(Vector3 pos)
+        {
+       
+            if (GrabbedObject.tag.Equals("basket"))
+            {
+                float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
+                pos.y -= y;
+                GrabbedObject.transform.position = pos;
+                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                GrabbedObject.GetComponent<Collider>());
+                SetPrevPosition(grabber.transform.position);
             }
         }
 
@@ -226,7 +236,7 @@
         /// <summary>
         /// heper method for dropObject.
         /// </summary>
-        public void Helper()
+        public void DropObjectHelp()
         {
                 Vector3 newpos = basket.holder.transform.position;
                 newpos.y -= newpos.y;
