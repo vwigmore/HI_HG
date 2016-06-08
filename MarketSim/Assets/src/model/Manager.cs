@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -23,6 +24,21 @@ public class Manager : MonoBehaviour
     /// The mouse keyboard only configuration.
     /// </summary>
     private static bool mKbOnly;
+
+    /// <summary>
+    /// The throw force
+    /// </summary>
+    private static float throwForce;
+
+    /// <summary>
+    /// The proximity dist
+    /// </summary>
+    private static float proximityDist;
+
+    /// <summary>
+    /// The configuration location
+    /// </summary>
+    private readonly string configLocation = "Assets\\src\\config.gryffindor";
 
     #endregion Fields
 
@@ -64,11 +80,45 @@ public class Manager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether [MKB only].
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if [MKB only]; otherwise, <c>false</c>.
+    /// </value>
     public static bool MKBOnly
     {
         get
         {
             return Manager.mKbOnly;
+        }
+    }
+
+    /// <summary>
+    /// Gets the throw force.
+    /// </summary>
+    /// <value>
+    /// The throw force.
+    /// </value>
+    public static float ThrowForce
+    {
+        get
+        {
+            return Manager.throwForce;
+        }
+    }
+
+    /// <summary>
+    /// Gets the proximity dist.
+    /// </summary>
+    /// <value>
+    /// The proximity dist.
+    /// </value>
+    public static float ProximityDist
+    {
+        get
+        {
+            return Manager.proximityDist;
         }
     }
 
@@ -82,9 +132,66 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+<<<<<<< HEAD
         Manager.highlightOn = true;
         Manager.gestureMovementOn = true;
         Manager.mKbOnly = true;
+=======
+
+        /// Sets default values to prevent null values.
+        Manager.highlightOn = false;
+        Manager.gestureMovementOn = false;
+        Manager.mKbOnly = false;
+        Manager.throwForce = 1500f;
+        Manager.proximityDist = 2.0f;
+
+        readConfig();
+    }
+
+    /// <summary>
+    /// Reads the configuration.
+    /// </summary>
+    private void readConfig()
+    {
+        string[] lines = System.IO.File.ReadAllLines(@configLocation);
+        foreach (string line in lines)
+        {
+            string filtered = line.ToUpper().Replace(" ", string.Empty);
+            filtered = filtered.Replace("\t", string.Empty);
+            StringComparison comparison = StringComparison.InvariantCulture;
+            char[] delim = { '=' };
+            string[] split = filtered.Split(delim);
+
+            if (!filtered.StartsWith("#", comparison) && split.Length == 2)
+            {
+                switch (split[0])
+                {
+                    case "HIGHLIGHTON":
+                        Manager.highlightOn = (split[1] == "TRUE");
+                        break;
+
+                    case "GESTUREMOVEMENTON":
+                        Manager.gestureMovementOn = (split[1] == "TRUE");
+                        break;
+
+                    case "MKBONLY":
+                        Manager.mKbOnly = (split[1] == "TRUE");
+                        break;
+
+                    case "PROXDIST":
+                        Manager.proximityDist = float.Parse(split[1]);
+                        break;
+
+                    case "THROWFORCE":
+                        Manager.throwForce = float.Parse(split[1]);
+                        break;
+
+                    default: break;
+                }
+            }
+        }
+        Debug.Log("Config Loaded.");
+>>>>>>> master
     }
 
     #endregion Methods

@@ -19,12 +19,12 @@
         /// <summary>
         /// The throw force
         /// </summary>
-        protected readonly float throwForce = 1500;
+        protected readonly float throwForce = Manager.ThrowForce;
 
         /// <summary>
         /// An object in proximity has to be within this distance.
         /// </summary>
-        protected float proxDist = 1.0f;
+        protected float proxDist = Manager.ProximityDist;
 
         /// <summary>
         /// GameObject player.
@@ -154,6 +154,7 @@
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
 
                 UpdatedGrabbedObjectHelp(newpos);
+
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),

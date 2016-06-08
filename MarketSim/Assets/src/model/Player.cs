@@ -204,6 +204,7 @@ public class Player
 
         if (pc.isGrounded)
         {
+
             updateMovementHelp();
         }
         else
