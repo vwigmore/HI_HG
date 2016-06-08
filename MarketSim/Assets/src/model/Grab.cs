@@ -161,7 +161,7 @@
             {
                 SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
-                Quaternion rotation = GrabbedObject.transform.rotation;
+                //Quaternion rotation = GrabbedObject.transform.rotation;
 
                 if (GrabbedObject.tag.Equals("basket"))
                 {
@@ -175,7 +175,8 @@
                 }
 
                 GrabbedObject.transform.position = newpos;
-                GrabbedObject.transform.rotation = grabber.transform.rotation;
+               // GrabbedObject.transform.rotation = grabber.transform.rotation;
+                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                 GrabbedObject.GetComponent<Collider>());

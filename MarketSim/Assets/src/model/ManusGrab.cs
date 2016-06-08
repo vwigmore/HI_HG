@@ -66,9 +66,8 @@
                 newpos.z += offset;
 
                 GrabbedObject.transform.position = newpos;
-
-                GrabbedObject.transform.rotation = trans.rotation;
-
+               // GrabbedObject.transform.rotation = trans.rotation;
+                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
