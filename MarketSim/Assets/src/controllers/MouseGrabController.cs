@@ -42,11 +42,11 @@ public class MouseGrabController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            UpdateHelp(hit);
+            UpdateCastedRay(hit);
         }
         if (Input.GetMouseButtonDown(0))
         {
-            RayCastHitHelp(hit);
+            OnMouseEvent(hit);
         }
         mouseGrab.UpdateGrabbedObject();
         mouseGrab.basket.UpdateList();
@@ -56,7 +56,7 @@ public class MouseGrabController : MonoBehaviour
     /// Help method for RayCasting.
     /// </summary>
     /// <param name="hit">The hit.</param>
-    public void RayCastHitHelp(RaycastHit hit)
+    public void OnMouseEvent(RaycastHit hit)
     {
         if (!this.mouseGrab.IsGrabbing())
         {
@@ -73,7 +73,7 @@ public class MouseGrabController : MonoBehaviour
     /// Help method for update.
     /// </summary>
     /// <param name="h">The h.</param>
-    public void UpdateHelp(RaycastHit h)
+    public void UpdateCastedRay(RaycastHit h)
     {
         GameObject objectHit = h.transform.gameObject;
         Debug.DrawLine(this.camera.transform.position, h.point, Color.blue);
