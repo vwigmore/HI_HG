@@ -46,8 +46,9 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdateGestures()
     {
+        base.UpdateGestures();
+
         Gestures gesture = GetGesture();
-         UpdateGesturesHelp(gesture);
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
@@ -69,24 +70,6 @@ public class LeftHand : Hand
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
         if (g == Gestures.Pinky)
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
-    }
-
-    /// <summary>
-    /// Helper moethod for UpdateGestures.
-    /// </summary>
-    /// <param name="g">The g.</param>
-    public void UpdateGesturesHelp(Gestures g)
-    {
-        if (!manusGrab.IsGrabbing())
-        {
-            if (g == Gestures.Grab)
-                manusGrab.GrabHighlightedObject();
-        }
-        else
-        {
-            if (g == Gestures.Open)
-                manusGrab.DropObject();
-        }
     }
 
     #endregion Methods
