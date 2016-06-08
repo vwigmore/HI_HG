@@ -135,7 +135,7 @@
 
             if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
             {
-                DropObjectHelp();
+                DropInBasket();
             }
             else
             {
@@ -153,7 +153,7 @@
                 SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position + grabber.transform.forward;
 
-                UpdatedGrabbedObjectHelp(newpos);
+                UpdatedGrabbedBasket(newpos);
 
                 GrabbedObject.transform.position = newpos;
                 GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -166,7 +166,7 @@
         /// Helper method for UpdatedGrabbedObjectHelp
         /// </summary>
         /// <param name="pos">The position.</param>
-        public void UpdatedGrabbedObjectHelp(Vector3 pos)
+        public void UpdatedGrabbedBasket(Vector3 pos)
         {
        
             if (GrabbedObject.tag.Equals("basket"))
@@ -237,7 +237,7 @@
         /// <summary>
         /// heper method for dropObject.
         /// </summary>
-        public void DropObjectHelp()
+        public void DropInBasket()
         {
                 Vector3 newpos = basket.holder.transform.position;
                 newpos.y -= newpos.y;

@@ -152,7 +152,7 @@ public abstract class Hand : IHand
             float[] fingers = glove.Fingers;
             RootTransform.localRotation = q;
 
-            UpdateHandHelp(fingers);
+            UpdateFingers(fingers);
         }
     }
 
@@ -160,7 +160,7 @@ public abstract class Hand : IHand
     /// Helper method.
     /// </summary>
     /// <param name="f">The f.</param>
-    public void UpdateHandHelp(float[] f)
+    public void UpdateFingers(float[] f)
     {
         for (int i = 0; i < (int)FingersBent.five; i++)
         {
