@@ -47,30 +47,46 @@ public class LeftHand : Hand
     public override void UpdateGestures()
     {
         Gestures gesture = GetGesture();
+         UpdateGesturesHelp(gesture);
 
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
+        {
+            GetGestures(gesture);
+        }
+        this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
+        this.manusGrab.basket.UpdateList();
+    }
+
+    /// <summary>
+    /// GetGestures method.
+    /// </summary>
+    /// <param name="g">The g.</param>
+    public void GetGestures(Gestures g)
+    {
+        if (g == Gestures.Thumb)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+        if (g == Gestures.Point)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+        if (g == Gestures.Pinky)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+    }
+
+    /// <summary>
+    /// Helper moethod for UpdateGestures.
+    /// </summary>
+    /// <param name="g">The g.</param>
+    public void UpdateGesturesHelp(Gestures g)
+    {
         if (!manusGrab.IsGrabbing())
         {
-            if (gesture == Gestures.Grab)
+            if (g == Gestures.Grab)
                 manusGrab.GrabHighlightedObject();
         }
         else
         {
-            if (gesture == Gestures.Open)
+            if (g == Gestures.Open)
                 manusGrab.DropObject();
         }
-
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
-        {
-            if (gesture == Gestures.Thumb)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-            if (gesture == Gestures.Point)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-            if (gesture == Gestures.Pinky)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
-        }
-
-        this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
-        this.manusGrab.basket.UpdateList();
     }
 
     #endregion Methods
