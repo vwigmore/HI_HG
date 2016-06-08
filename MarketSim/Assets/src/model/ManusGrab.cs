@@ -58,19 +58,23 @@
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    GrabbedObject.transform.position = newpos;
-                    GrabbedObject.transform.rotation = trans.rotation;
-                    GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    GrabbedObjectsPosition(newpos, trans);
                 }
-
                 newpos.z += offset;
-
-                GrabbedObject.transform.position = newpos;
-
-                GrabbedObject.transform.rotation = trans.rotation;
-
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                GrabbedObjectsPosition(newpos,trans);
             }
+        }
+
+        /// <summary>
+        /// Grabbeds the objects.
+        /// </summary>
+        /// <param name="newpos">The newpos.</param>
+        /// <param name="trans">The trans.</param>
+        public void GrabbedObjectsPosition(Vector3 newpos, Transform trans)
+        {
+            GrabbedObject.transform.position = newpos;
+            GrabbedObject.transform.rotation = trans.rotation;
+            GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
         }
 
         #endregion Methods
