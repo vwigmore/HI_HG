@@ -186,8 +186,8 @@ public class Player
             // movement vector, consists of axes to move to.
             this.moveDirection = new Vector3(hAxis, 0, vAxis);
 
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
+            //if (Input.GetButton("Jump"))
+            //    moveDirection.y = jumpSpeed;
 
             // Transforms direction from local space to world space.
             this.moveDirection = pc.transform.TransformDirection(moveDirection);

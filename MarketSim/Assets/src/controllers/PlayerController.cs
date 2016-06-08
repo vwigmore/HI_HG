@@ -86,8 +86,6 @@ public class PlayerController : MonoBehaviour
         leftFoot = GameObject.Find("33_Foot_Left");
         rightFoot = GameObject.Find("43_Foot_Right");
 
-        UpdateCamPos();
-
         player = new Player(pc, model, hip, leftFoot, rightFoot);
 
         initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
@@ -106,6 +104,8 @@ public class PlayerController : MonoBehaviour
 #endif
         /* Update movement of player*/
         UpdateMove();
+
+        UpdateCamPos();
     }
 
     /// <summary>
@@ -113,7 +113,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdateCamPos()
     {
-        ///
+        if (Manager.MKBOnly)
+        {
+            Vector3 newpos = Camera.main.transform.position;
+            newpos.y = 1.7f;
+            Camera.main.transform.position = newpos;
+        }
     }
 
     /// <summary>
