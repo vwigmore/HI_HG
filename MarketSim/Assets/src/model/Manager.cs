@@ -132,11 +132,10 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-<<<<<<< HEAD
+
         Manager.highlightOn = true;
         Manager.gestureMovementOn = true;
         Manager.mKbOnly = true;
-=======
 
         /// Sets default values to prevent null values.
         Manager.highlightOn = false;
@@ -191,7 +190,6 @@ public class Manager : MonoBehaviour
             }
         }
         Debug.Log("Config Loaded.");
->>>>>>> master
     }
 
     #endregion Methods

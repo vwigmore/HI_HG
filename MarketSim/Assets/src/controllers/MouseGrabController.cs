@@ -38,37 +38,49 @@ public class MouseGrabController : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-
         Ray ray = this.camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit))
         {
-            GameObject objectHit = hit.transform.gameObject;
-            Debug.DrawLine(this.camera.transform.position, hit.point, Color.blue);
-            if (objectHit != null)
-            {
-                // highlght the object that is detected 
-                this.mouseGrab.HighlightSelectedObject(objectHit);
-            }
+            UpdateHelp(hit);
         }
-
         if (Input.GetMouseButtonDown(0))
         {
-            if (!this.mouseGrab.IsGrabbing())
-            {
-                this.mouseGrab.GrabHighlightedObject();
-            }
-            else
-            {
-                this.mouseGrab.SetHit(hit);
-                this.mouseGrab.DropObject();
-            }
+            RayCastHitHelp(hit);
         }
-
         mouseGrab.UpdateGrabbedObject();
-
         mouseGrab.basket.UpdateList();
     }
 
+    /// <summary>
+    /// Help method for RayCasting.
+    /// </summary>
+    /// <param name="hit">The hit.</param>
+    public void RayCastHitHelp(RaycastHit hit)
+    {
+        if (!this.mouseGrab.IsGrabbing())
+        {
+            this.mouseGrab.GrabHighlightedObject();
+        }
+        else
+        {
+            this.mouseGrab.SetHit(hit);
+            this.mouseGrab.DropObject();
+        }
+    }
+
+    /// <summary>
+    /// Help method for update.
+    /// </summary>
+    /// <param name="h">The h.</param>
+    public void UpdateHelp(RaycastHit h)
+    {
+        GameObject objectHit = h.transform.gameObject;
+        Debug.DrawLine(this.camera.transform.position, h.point, Color.blue);
+        if (objectHit != null)
+        {
+            this.mouseGrab.HighlightSelectedObject(objectHit);
+        }
+    }
     #endregion Methods
 }

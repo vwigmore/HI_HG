@@ -77,17 +77,13 @@ public class PlayerController : MonoBehaviour
         pc = GetComponent<CharacterController>();
         model = GameObject.Find("KinectPointMan");
         moveDirection = Vector3.zero;
-
         playerHeight = pc.height;
         crouchHeight = playerHeight / 2;
-
         head = GameObject.Find("03_Head");
         hip = GameObject.Find("30_Hip_Left");
         leftFoot = GameObject.Find("33_Foot_Left");
         rightFoot = GameObject.Find("43_Foot_Right");
-
         player = new Player(pc, model, hip, leftFoot, rightFoot);
-
         initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
         lastDeltaHeight = initialDeltaHeight;
     }
