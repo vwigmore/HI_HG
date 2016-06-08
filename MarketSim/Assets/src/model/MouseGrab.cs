@@ -53,7 +53,6 @@
         {
             if (IsGrabbing())
                 prevPos = GrabbedObject.transform.position;
-            GrabbedObject.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
             base.UpdateGrabbedObject();
         }
 
