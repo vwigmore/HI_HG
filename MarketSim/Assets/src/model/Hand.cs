@@ -175,7 +175,20 @@ public abstract class Hand : IHand
     /// <summary>
     /// Updates the gestures.
     /// </summary>
-    public abstract void UpdateGestures();
+    public virtual void UpdateGestures()
+    {
+        Gestures gesture = GetGesture();
+        if (!manusGrab.IsGrabbing())
+        {
+            if (gesture == Gestures.Grab)
+                manusGrab.GrabHighlightedObject();
+        }
+        else
+        {
+            if (gesture == Gestures.Open)
+                manusGrab.DropObject();
+        }
+    }
 
     /// <summary>
     /// Returns which gesture the hand is making.
