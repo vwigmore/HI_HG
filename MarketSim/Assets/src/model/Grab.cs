@@ -100,7 +100,7 @@
         /// <summary>
         /// The GameObject that the grabbed item will follow.
         /// </summary>
-        protected GameObject grabber { set; get; }
+        protected GameObject grabber { get; set; }
 
         /// <summary>
         /// Gets or sets the grabber.
@@ -115,7 +115,7 @@
         #region Methods
 
         /// <summary>
-        /// Grab selected object.
+        /// Grab the highlighted object.
         /// </summary>
         public void GrabHighlightedObject()
         {
@@ -126,20 +126,22 @@
         }
 
         /// <summary>
-        /// Drop currently grabbed object.
+        /// Drop the currently grabbed object.
         /// </summary>
         public virtual void DropObject()
         {
-            if (GrabbedObject == null)
+            if (this.GrabbedObject == null)
                 return;
 
-            if (InProximity(basket.holder) && !GrabbedObject.tag.Equals("basket") && !basket.items.Contains(GrabbedObject))
+            if (this.InProximity(this.basket.holder)
+                && !this.GrabbedObject.tag.Equals("basket")
+                && !this.basket.items.Contains(this.GrabbedObject))
             {
-                DropInBasket();
+                this.DropInBasket();
             }
             else
             {
-                ObjectForce();
+                this.ObjectForce();
             }
         }
 
@@ -148,36 +150,37 @@
         /// </summary>
         public virtual void UpdateGrabbedObject()
         {
-            if (IsGrabbing())
+            if (this.IsGrabbing())
             {
-                SetPrevPosition(GrabbedObject.transform.position);
-                Vector3 newpos = grabber.transform.position + grabber.transform.forward;
+                this.SetPrevPosition(this.GrabbedObject.transform.position);
+                Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
 
-                UpdatedGrabbedBasket(newpos);
+                this.UpdateGrabbedBasket(newpos);
 
-                GrabbedObject.transform.position = newpos;
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
-                Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
-                GrabbedObject.GetComponent<Collider>());
+                this.GrabbedObject.transform.position = newpos;
+                this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    this.GrabbedObject.GetComponent<Collider>());
             }
         }
 
         /// <summary>
-        /// Helper method for UpdatedGrabbedObjectHelp
+        /// Updates the grabbed basket.
         /// </summary>
         /// <param name="pos">The position.</param>
-        public void UpdatedGrabbedBasket(Vector3 pos)
+        public void UpdateGrabbedBasket(Vector3 pos)
         {
-       
-            if (GrabbedObject.tag.Equals("basket"))
+            if (this.GrabbedObject.tag.Equals("basket"))
             {
                 float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
                 pos.y -= y;
-                GrabbedObject.transform.position = pos;
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
-                Physics.IgnoreCollision(GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
-                GrabbedObject.GetComponent<Collider>());
-                SetPrevPosition(grabber.transform.position);
+                this.GrabbedObject.transform.position = pos;
+                this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    this.GrabbedObject.GetComponent<Collider>());
+                this.SetPrevPosition(this.grabber.transform.position);
             }
         }
 
@@ -196,10 +199,10 @@
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
         {
-            ClearHighlights();
-            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && InProximity(obj))
+            this.ClearHighlights();
+            if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && this.InProximity(obj))
             {
-                HighightHelp(obj);
+                this.HighlightHelp(obj);
             }
             else
             {
@@ -211,7 +214,7 @@
         /// Helper method for HighlightSelectedObjects
         /// </summary>
         /// <param name="obj">The object.</param>
-        public void HighightHelp(GameObject obj)
+        public void HighlightHelp(GameObject obj)
         {
             this.prevHighlighted = obj;
             this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
@@ -233,17 +236,18 @@
             }
         }
 
-
         /// <summary>
-        /// heper method for dropObject.
+        /// Drops the grabbed object into the basket.
         /// </summary>
         public void DropInBasket()
         {
-                Vector3 newpos = basket.holder.transform.position;
-                newpos.y -= newpos.y;
+            Vector3 newpos = this.basket.holder.transform.position;
+            newpos.y -= newpos.y;
 
-                if (basket.items.Count < basket.rows * basket.cols)
-                    basket.items.Add(GrabbedObject);
+            if (this.basket.items.Count < this.basket.rows * this.basket.cols)
+            {
+                this.basket.items.Add(this.GrabbedObject);
+            }
         }
 
         /// <summary>
@@ -251,13 +255,14 @@
         /// </summary>
         public void ObjectForce()
         {
-            Vector3 targetPos = GrabbedObject.transform.position;
-            Vector3 direction = targetPos - GetPrevPosition();
-            GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-            GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * throwForce, ForceMode.Force);
-            GrabbedObject = null;
-            highlighted = null;
+            Vector3 targetPos = this.GrabbedObject.transform.position;
+            Vector3 direction = targetPos - this.GetPrevPosition();
+            this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
+            this.GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * this.throwForce, ForceMode.Force);
+            this.GrabbedObject = null;
+            this.highlighted = null;
         }
+
         /// <summary>
         /// Returns whether an object is in range of the grabber.
         /// </summary>
