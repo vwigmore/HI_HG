@@ -119,7 +119,7 @@ public class Player
     #region Methods
 
     /// <summary>
-    /// Updates the crouch.
+    /// Updates the player position when crouching
     /// </summary>
     public void UpdateCrouch()
     {
@@ -128,7 +128,7 @@ public class Player
         Vector3 crouchDir = this.model.transform.position;
         if (deltaHeight > lastDeltaHeight)
         {
-            CrouchDirectionSmallerThanNull(minFootY,deltaHeight,crouchDir);
+            CrouchDirectionSmallerThanNull(minFootY, deltaHeight, crouchDir);
         }
         else if (deltaHeight < lastDeltaHeight)
         {
@@ -139,9 +139,9 @@ public class Player
     }
 
     /// <summary>
-    /// Crouches the direction smaller than null.
+    /// Sets the player position to normal level when beneath
     /// </summary>
-    /// <param name="min">The minimum.</param>
+    /// <param name="min">The minimum level.</param>
     /// <param name="height">The height.</param>
     /// <param name="direction">The direction.</param>
     public void CrouchDirectionSmallerThanNull(float min, float height, Vector3 direction)
@@ -151,7 +151,7 @@ public class Player
     }
 
     /// <summary>
-    /// Crouches the direction greater than null.
+    /// Sets the player position to normal level when above.
     /// </summary>
     /// <param name="min">The minimum.</param>
     /// <param name="height">The height.</param>
@@ -161,10 +161,11 @@ public class Player
         if (min - (lastDeltaHeight - height) >= 0)
             direction.y -= lastDeltaHeight - height;
     }
+
     /// <summary>
     /// Updates the rotation.
     /// </summary>
-    /// 
+    ///
     public void updateRotation()
     {
         mouseAxisY = Input.GetAxis("Mouse Y");
@@ -204,7 +205,6 @@ public class Player
 
         if (pc.isGrounded)
         {
-
             updateMovementHelp();
         }
         else
@@ -235,5 +235,6 @@ public class Player
         // Capping move speed: moveDirection hypotenuse
         capVector(moveDirection, moveSpeed, -moveSpeed);
     }
+
     #endregion Methods
 }

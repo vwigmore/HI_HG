@@ -183,10 +183,9 @@ public class Manager : MonoBehaviour
 
     #region Methods
 
-    /// <summary>
-    /// configuration of filtered, split and delim.
+    /// Configuration of filtering, splitting and delimiting the configuration file.
     /// </summary>
-    /// <param name="line">The line.</param>
+    /// <param name="line">The line to configure.</param>
     public void ConfigInitialize(string line)
     {
         string filtered = line.ToUpper().Replace(" ", string.Empty);
@@ -196,15 +195,14 @@ public class Manager : MonoBehaviour
         string[] split = filtered.Split(delim);
         if (!filtered.StartsWith("#", comparison) && split.Length == 2)
         {
-            ApplyConfigs(split);
+            ApplyParams(split);
         }
     }
 
-    /// <summary>
-    /// Applies the configs.
+    /// Applies the parameters in the Manager.
     /// </summary>
-    /// <param name="split">The split.</param>
-    public void ApplyConfigs(String[] split)
+    /// <param name="split">The configuration in array form.</param>
+    public void ApplyParams(String[] split)
     {
         switch (split[0])
         {
@@ -248,12 +246,11 @@ public class Manager : MonoBehaviour
         Manager.enableVibration = true;
         Manager.vibrationForce = 0.1f;
         Manager.vibrationTime = 300;
-
         readConfig();
     }
 
     /// <summary>
-    /// Reads the configuration.
+    /// Reads the configuration file.
     /// </summary>
     private void readConfig()
     {
