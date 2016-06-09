@@ -73,7 +73,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// The base hand collider size
     /// </summary>
-    private Vector3 BaseHandColliderSize = new Vector3(0.09f, 0.02f, 0.10f);
+    private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.05f, 0.10f);
 
     /// <summary>
     /// Game object hand.
@@ -147,10 +147,6 @@ public abstract class Hand : IHand
         CreateColliders();
 
         hand.SetActive(true);
-
-        Debug.Log(Manager.EnableVibration);
-        Debug.Log(vibrationForce);
-        Debug.Log(vibrateTime);
     }
 
     #endregion Constructors
@@ -269,7 +265,7 @@ public abstract class Hand : IHand
         bc2.size = BaseHandColliderSize;
         Vector3 pos2 = bc2.center;
 
-        CreateCollidersHelp(pos2);
+        pos2 = TranslateHandBoundingBox(pos2);
 
         bc2.center = pos2;
         bc2.isTrigger = true;
@@ -279,20 +275,11 @@ public abstract class Hand : IHand
     /// Helper method.
     /// </summary>
     /// <param name="pos">The position.</param>
-    public void CreateCollidersHelp(Vector3 pos)
+    public Vector3 TranslateHandBoundingBox(Vector3 pos)
     {
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-        {
-            pos.x -= .05f;
-            pos.y -= .01f;
-            pos.z += .03f;
-        }
-        else
-        {
-            pos.x -= .05f;
-            pos.y -= .01f;
-            pos.z -= .03f;
-        }
+        pos.x -= .05f;
+        pos.y -= .01f;
+        return pos;
     }
 
     /// <summary>

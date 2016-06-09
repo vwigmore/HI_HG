@@ -63,7 +63,8 @@ public class HandController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        hand.UpdatePosition();
+        if (!Manager.MKBOnly)
+            hand.UpdatePosition();
         hand.UpdateHand();
         hand.UpdateGestures();
         hand.UpdateVibration();
@@ -81,6 +82,15 @@ public class HandController : MonoBehaviour
         hand.GetManusGrab().HighlightSelectedObject(collisionObj);
 
         hand.Touch(collisionObj);
+    }
+
+    /// <summary>
+    /// Called when [trigger exit].
+    /// </summary>
+    /// <param name="collision">The collision.</param>
+    private void OnTriggerExit(Collider collision)
+    {
+        hand.GetManusGrab().ClearHighlights();
     }
 
     #endregion Methods
