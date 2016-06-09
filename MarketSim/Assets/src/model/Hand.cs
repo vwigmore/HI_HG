@@ -61,6 +61,16 @@ public abstract class Hand : IHand
     private const float SphereColliderRadius = 0.035f;
 
     /// <summary>
+    /// The vibrate time
+    /// </summary>
+    private readonly float vibrateTime = 0.3f;
+
+    /// <summary>
+    /// The vibration power
+    /// </summary>
+    private readonly float vibrationPower = .1f;
+
+    /// <summary>
     /// The base hand collider size
     /// </summary>
     private Vector3 BaseHandColliderSize = new Vector3(0.09f, 0.02f, 0.10f);
@@ -90,6 +100,21 @@ public abstract class Hand : IHand
     /// </summary>
     private Color highlightColor;
 
+    /// <summary>
+    /// The timer
+    /// </summary>
+    private float timer;
+
+    /// <summary>
+    /// The last touched gameobject
+    /// </summary>
+    private GameObject lastTouched;
+
+    /// <summary>
+    /// Bool if the glove should be vibrated.
+    /// </summary>
+    private bool vibrateGlove;
+
     #endregion Fields
 
     #region Constructors
@@ -112,6 +137,9 @@ public abstract class Hand : IHand
         this.hand = hand;
         this.animationClip = animation;
         this.highlightColor = highlightColor;
+        this.timer = 0f;
+        this.vibrateGlove = false;
+        this.lastTouched = null;
 
         this.manusGrab = new ManusGrab(this.handModel, highlightColor);
 
@@ -250,6 +278,49 @@ public abstract class Hand : IHand
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
             }
         };
+    }
+
+    public void Touch(GameObject obj)
+    {
+        if (lastTouched == null || !lastTouched.Equals(obj))
+        {
+            Debug.Log(glove_hand + "\ttouch\t" + obj + "\t" + timer);
+            Vibrate();
+        }
+
+        lastTouched = obj;
+    }
+
+    public void ResetTimer()
+    {
+        timer = 0;
+    }
+
+    public void UpdateTimer()
+    {
+        timer += Time.deltaTime;
+    }
+
+    public void UpdateVibration()
+    {
+        if (timer <= vibrateTime && vibrateGlove)
+        {
+            glove.SetVibration(vibrationPower);
+        }
+        else
+        {
+            glove.SetVibration(0.0f);
+            ResetTimer();
+            vibrateGlove = false;
+        }
+    }
+
+    /// <summary>
+    /// Vibrates this glove.
+    /// </summary>
+    public void Vibrate()
+    {
+        vibrateGlove = true;
     }
 
     /// <summary>

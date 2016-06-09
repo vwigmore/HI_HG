@@ -31,7 +31,7 @@ public class HandController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        Glove glove = new Glove(glove_hand); ;
+        Glove glove = new Glove(glove_hand);
         GameObject handModel;
         GameObject root;
         GameObject handResource;
@@ -66,6 +66,8 @@ public class HandController : MonoBehaviour
         hand.UpdatePosition();
         hand.UpdateHand();
         hand.UpdateGestures();
+        hand.UpdateVibration();
+        hand.UpdateTimer();
     }
 
     /// <summary>
@@ -77,6 +79,8 @@ public class HandController : MonoBehaviour
         GameObject collisionObj = collision.gameObject;
 
         hand.GetManusGrab().HighlightSelectedObject(collisionObj);
+
+        hand.Touch(collisionObj);
     }
 
     #endregion Methods

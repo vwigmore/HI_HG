@@ -33,7 +33,9 @@ public class RightHand : Hand
         if (!manusGrab.IsGrabbing())
         {
             if (gesture == Gestures.Grab)
+            {
                 manusGrab.GrabHighlightedObject();
+            }
         }
         else
         {
@@ -50,11 +52,14 @@ public class RightHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-        Vector3 newpos = this.root.transform.position;
-        this.handModel.transform.position = newpos;
-        Vector3 newrot = this.root.transform.rotation.eulerAngles;
-        newrot.y -= 90;
-        this.handModel.transform.rotation = Quaternion.Euler(newrot);
+        if (Manager.MKBOnly)
+        {
+            Vector3 newpos = this.root.transform.position;
+            this.handModel.transform.position = newpos;
+            Vector3 newrot = this.root.transform.rotation.eulerAngles;
+            newrot.y -= 90;
+            this.handModel.transform.rotation = Quaternion.Euler(newrot);
+        }
     }
 
     #endregion Methods

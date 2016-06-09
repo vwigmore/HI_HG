@@ -32,13 +32,16 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-        Vector3 newpos = this.root.transform.position;
-        this.handModel.transform.position = newpos;
-        Vector3 newrot = this.root.transform.rotation.eulerAngles;
+        if (Manager.MKBOnly)
+        {
+            Vector3 newpos = this.root.transform.position;
+            this.handModel.transform.position = newpos;
+            Vector3 newrot = this.root.transform.rotation.eulerAngles;
 
-        newrot.y -= 180;
+            newrot.y -= 180;
 
-        this.handModel.transform.rotation = Quaternion.Euler(newrot);
+            this.handModel.transform.rotation = Quaternion.Euler(newrot);
+        }
     }
 
     /// <summary>
@@ -51,7 +54,9 @@ public class LeftHand : Hand
         if (!manusGrab.IsGrabbing())
         {
             if (gesture == Gestures.Grab)
+            {
                 manusGrab.GrabHighlightedObject();
+            }
         }
         else
         {
