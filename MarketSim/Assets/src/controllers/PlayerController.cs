@@ -14,22 +14,6 @@ public class PlayerController : MonoBehaviour
     #region Fields
 
     private CharacterController pc;
-    private Vector3 moveDirection;
-    private float playerHeight;
-    private float crouchHeight;
-
-    private float cam_vert_rot = 0;
-    private float cam_cap = 90;
-
-    private float mouseAxisY;
-    private float mouseAxisX;
-
-    private float vAxis;
-
-    /// <summary>
-    /// The h axis
-    /// </summary>
-    private float hAxis;
 
     private GameObject head, hip, leftFoot, rightFoot;
 
@@ -76,18 +60,11 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         pc = GetComponent<CharacterController>();
         model = GameObject.Find("KinectPointMan");
-        moveDirection = Vector3.zero;
-
-        playerHeight = pc.height;
-        crouchHeight = playerHeight / 2;
-
         head = GameObject.Find("03_Head");
         hip = GameObject.Find("30_Hip_Left");
         leftFoot = GameObject.Find("33_Foot_Left");
         rightFoot = GameObject.Find("43_Foot_Right");
-
         player = new Player(pc, model, hip, leftFoot, rightFoot);
-
         initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
         lastDeltaHeight = initialDeltaHeight;
     }

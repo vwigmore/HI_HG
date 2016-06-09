@@ -133,6 +133,10 @@ public class Manager : MonoBehaviour
     {
         Instance = this;
 
+        Manager.highlightOn = true;
+        Manager.gestureMovementOn = true;
+        Manager.mKbOnly = true;
+
         /// Sets default values to prevent null values.
         Manager.highlightOn = false;
         Manager.gestureMovementOn = false;
@@ -149,43 +153,50 @@ public class Manager : MonoBehaviour
     private void readConfig()
     {
         string[] lines = System.IO.File.ReadAllLines(@configLocation);
+
         foreach (string line in lines)
         {
-            string filtered = line.ToUpper().Replace(" ", string.Empty);
-            filtered = filtered.Replace("\t", string.Empty);
-            StringComparison comparison = StringComparison.InvariantCulture;
-            char[] delim = { '=' };
-            string[] split = filtered.Split(delim);
-
-            if (!filtered.StartsWith("#", comparison) && split.Length == 2)
-            {
-                switch (split[0])
-                {
-                    case "HIGHLIGHTON":
-                        Manager.highlightOn = (split[1] == "TRUE");
-                        break;
-
-                    case "GESTUREMOVEMENTON":
-                        Manager.gestureMovementOn = (split[1] == "TRUE");
-                        break;
-
-                    case "MKBONLY":
-                        Manager.mKbOnly = (split[1] == "TRUE");
-                        break;
-
-                    case "PROXDIST":
-                        Manager.proximityDist = float.Parse(split[1]);
-                        break;
-
-                    case "THROWFORCE":
-                        Manager.throwForce = float.Parse(split[1]);
-                        break;
-
-                    default: break;
-                }
-            }
+            ConfigInitialize(line);
         }
         Debug.Log("Config Loaded.");
+    }
+
+    /// <summary>
+    /// configuration of filtered, split and delim.
+    /// </summary>
+    /// <param name="line">The line.</param>
+    public void ConfigInitialize(string line)
+    {
+        string filtered = line.ToUpper().Replace(" ", string.Empty);
+        filtered = filtered.Replace("\t", string.Empty);
+        StringComparison comparison = StringComparison.InvariantCulture;
+        char[] delim = { '=' };
+        string[] split = filtered.Split(delim);
+        if (!filtered.StartsWith("#", comparison) && split.Length == 2)
+        {
+            ApplyConfigs(split);
+        }
+    }
+
+    /// <summary>
+    /// Applies the configs.
+    /// </summary>
+    /// <param name="split">The split.</param>
+    public void ApplyConfigs(String[] split)
+    {
+        switch (split[0])
+        {
+            case "HIGHLIGHTON":
+                Manager.highlightOn = (split[1] == "TRUE"); break;
+            case "GESTUREMOVEMENTON":
+                Manager.gestureMovementOn = (split[1] == "TRUE"); break;
+            case "MKBONLY":
+                Manager.mKbOnly = (split[1] == "TRUE"); break;
+            case "PROXDIST":
+                Manager.proximityDist = float.Parse(split[1]); break;
+            case "THROWFORCE":
+                Manager.throwForce = float.Parse(split[1]); break;
+        }
     }
 
     #endregion Methods

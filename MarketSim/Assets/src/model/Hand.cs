@@ -152,13 +152,22 @@ public abstract class Hand : IHand
             float[] fingers = glove.Fingers;
             RootTransform.localRotation = q;
 
-            for (int i = 0; i < (int)FingersBent.five; i++)
+            UpdateFingers(fingers);
+        }
+    }
+
+    /// <summary>
+    /// Helper method.
+    /// </summary>
+    /// <param name="f">The f.</param>
+    public void UpdateFingers(float[] f)
+    {
+        for (int i = 0; i < (int)FingersBent.five; i++)
+        {
+            animationClip.SampleAnimation(hand, f[i] * timeFactor);
+            for (int j = 0; j < (int)FingersBent.four; j++)
             {
-                animationClip.SampleAnimation(hand, fingers[i] * timeFactor);
-                for (int j = 0; j < (int)FingersBent.four; j++)
-                {
-                    gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
-                }
+                gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
         }
     }
@@ -166,7 +175,20 @@ public abstract class Hand : IHand
     /// <summary>
     /// Updates the gestures.
     /// </summary>
-    public abstract void UpdateGestures();
+    public virtual void UpdateGestures()
+    {
+        Gestures gesture = GetGesture();
+        if (!manusGrab.IsGrabbing())
+        {
+            if (gesture == Gestures.Grab)
+                manusGrab.GrabHighlightedObject();
+        }
+        else
+        {
+            if (gesture == Gestures.Open)
+                manusGrab.DropObject();
+        }
+    }
 
     /// <summary>
     /// Returns which gesture the hand is making.
@@ -182,7 +204,16 @@ public abstract class Hand : IHand
                 fingersBent++;
             }
         }
+        return GetGesturesHelp(fingersBent);
+    }
 
+    /// <summary>
+    /// Helper method.
+    /// </summary>
+    /// <param name="fingersBent">The fingers bent.</param>
+    /// <returns></returns>
+    public Gestures GetGesturesHelp(int fingersBent)
+    {
         if (fingersBent == (int)FingersBent.five)
             return Gestures.Grab;
         else if (fingersBent == (int)FingersBent.four && glove.Fingers[0] < 0.4f)
@@ -206,22 +237,30 @@ public abstract class Hand : IHand
         bc2.size = BaseHandColliderSize;
         Vector3 pos2 = bc2.center;
 
+        CreateCollidersHelp(pos2);
+
+        bc2.center = pos2;
+        bc2.isTrigger = true;
+    }
+
+    /// <summary>
+    /// Helper method.
+    /// </summary>
+    /// <param name="pos">The position.</param>
+    public void CreateCollidersHelp(Vector3 pos)
+    {
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
         {
-            pos2.x -= .05f;
-            pos2.y -= .01f;
-            pos2.z += .03f;
+            pos.x -= .05f;
+            pos.y -= .01f;
+            pos.z += .03f;
         }
         else
         {
-            pos2.x -= .05f;
-            pos2.y -= .01f;
-            pos2.z -= .03f;
+            pos.x -= .05f;
+            pos.y -= .01f;
+            pos.z -= .03f;
         }
-
-        bc2.center = pos2;
-
-        bc2.isTrigger = true;
     }
 
     /// <summary>
