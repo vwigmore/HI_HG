@@ -23,7 +23,7 @@
         /// <summary>
         /// The last position
         /// </summary>
-        private new Vector3 lastPos;
+        private Vector3 lastPos;
 
         #endregion Fields
 
@@ -58,18 +58,25 @@
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    GrabbedObject.transform.position = newpos;
-                    GrabbedObject.transform.rotation = trans.rotation;
-                    GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                    UpdateGrabbedObjectsPosition(newpos, trans);
                 }
-
                 newpos.z += offset;
 
-                GrabbedObject.transform.position = newpos;
-               // GrabbedObject.transform.rotation = trans.rotation;
-                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
-                GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                UpdateGrabbedObjectsPosition(newpos, trans);
             }
+        }
+
+        /// <summary>
+        /// Updates the grabbed objects position.
+        /// </summary>
+        /// <param name="newpos">The new position.</param>
+        /// <param name="trans">The transform.</param>
+        public void UpdateGrabbedObjectsPosition(Vector3 newpos, Transform trans)
+        {
+            GrabbedObject.transform.position = newpos;
+            GrabbedObject.transform.rotation = trans.rotation;
+            GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
+            GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
         }
 
         #endregion Methods

@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private float hAxis;
 
+
     /// <summary>
     /// The head
     /// </summary>
@@ -140,20 +141,11 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         pc = GetComponent<CharacterController>();
         model = GameObject.Find("KinectPointMan");
-        moveDirection = Vector3.zero;
-
-        playerHeight = pc.height;
-        crouchHeight = playerHeight / 2;
-
         head = GameObject.Find("03_Head");
         hip = GameObject.Find("30_Hip_Left");
         leftFoot = GameObject.Find("33_Foot_Left");
         rightFoot = GameObject.Find("43_Foot_Right");
-
-        UpdateCamPos();
-
         player = new Player(pc, model, hip, leftFoot, rightFoot);
-
         initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
         lastDeltaHeight = initialDeltaHeight;
     }
@@ -170,6 +162,8 @@ public class PlayerController : MonoBehaviour
 #endif
         /* Update movement of player*/
         UpdateMove();
+
+        UpdateCamPos();
     }
 
     /// <summary>
@@ -177,7 +171,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdateCamPos()
     {
-        ///
+        if (Manager.MKBOnly)
+        {
+            Vector3 newpos = Camera.main.transform.position;
+            newpos.y = 1.7f;
+            Camera.main.transform.position = newpos;
+        }
     }
 
     /// <summary>

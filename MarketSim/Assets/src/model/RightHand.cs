@@ -27,20 +27,12 @@ public class RightHand : Hand
 
     #region Methods
 
+    /// <summary>
+    /// Updates the gestures.
+    /// </summary>
     public override void UpdateGestures()
     {
-        Gestures gesture = GetGesture();
-        if (!manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Grab)
-                manusGrab.GrabHighlightedObject();
-        }
-        else
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
-
+        base.UpdateGestures();
         this.manusGrab.UpdateGrabbedObject(0.1f, gameTransforms[0][0].parent.gameObject.transform);
         this.manusGrab.basket.UpdateList();
     }

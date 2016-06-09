@@ -46,31 +46,30 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdateGestures()
     {
-        Gestures gesture = GetGesture();
+        base.UpdateGestures();
 
-        if (!manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Grab)
-                manusGrab.GrabHighlightedObject();
-        }
-        else
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
+        Gestures gesture = GetGesture();
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
-            if (gesture == Gestures.Thumb)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-            if (gesture == Gestures.Point)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-            if (gesture == Gestures.Pinky)
-                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+            MoveWithGesture(gesture);
         }
-
         this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
         this.manusGrab.basket.UpdateList();
+    }
+
+    /// <summary>
+    /// Moves according to the given gesture.
+    /// </summary>
+    /// <param name="g">The gesture.</param>
+    public void MoveWithGesture(Gestures g)
+    {
+        if (g == Gestures.Thumb)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+        if (g == Gestures.Point)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+        if (g == Gestures.Pinky)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
     }
 
     #endregion Methods

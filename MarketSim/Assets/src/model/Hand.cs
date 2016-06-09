@@ -61,9 +61,19 @@ public abstract class Hand : IHand
     private const float SphereColliderRadius = 0.035f;
 
     /// <summary>
+    /// The vibrate time
+    /// </summary>
+    private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
+
+    /// <summary>
+    /// The vibration power
+    /// </summary>
+    private readonly float vibrationForce = Manager.VibrationForce;
+
+    /// <summary>
     /// The base hand collider size
     /// </summary>
-    private Vector3 BaseHandColliderSize = new Vector3(0.09f, 0.02f, 0.10f);
+    private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.05f, 0.10f);
 
     /// <summary>
     /// Game object hand.
@@ -90,6 +100,21 @@ public abstract class Hand : IHand
     /// </summary>
     private Color highlightColor;
 
+    /// <summary>
+    /// The timer
+    /// </summary>
+    private float timer;
+
+    /// <summary>
+    /// The last touched gameobject
+    /// </summary>
+    private GameObject lastTouched;
+
+    /// <summary>
+    /// Bool if the glove should be vibrated.
+    /// </summary>
+    private bool vibrateGlove;
+
     #endregion Fields
 
     #region Constructors
@@ -112,6 +137,9 @@ public abstract class Hand : IHand
         this.hand = hand;
         this.animationClip = animation;
         this.highlightColor = highlightColor;
+        this.timer = 0f;
+        this.vibrateGlove = false;
+        this.lastTouched = null;
 
         this.manusGrab = new ManusGrab(this.handModel, highlightColor);
 
@@ -134,8 +162,6 @@ public abstract class Hand : IHand
 
     #region Methods
 
-    //private GameObject sticky;
-
     /// <summary>
     /// Update the position of the hand according to the arm.
     /// </summary>
@@ -152,13 +178,22 @@ public abstract class Hand : IHand
             float[] fingers = glove.Fingers;
             RootTransform.localRotation = q;
 
-            for (int i = 0; i < (int)FingersBent.five; i++)
+            UpdateFingers(fingers);
+        }
+    }
+
+    /// <summary>
+    /// Updates all fingers.
+    /// </summary>
+    /// <param name="f">Array of floats containing fingers.</param>
+    public void UpdateFingers(float[] f)
+    {
+        for (int i = 0; i < (int)FingersBent.five; i++)
+        {
+            animationClip.SampleAnimation(hand, f[i] * timeFactor);
+            for (int j = 0; j < (int)FingersBent.four; j++)
             {
-                animationClip.SampleAnimation(hand, fingers[i] * timeFactor);
-                for (int j = 0; j < (int)FingersBent.four; j++)
-                {
-                    gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
-                }
+                gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
         }
     }
@@ -166,7 +201,20 @@ public abstract class Hand : IHand
     /// <summary>
     /// Updates the gestures.
     /// </summary>
-    public abstract void UpdateGestures();
+    public virtual void UpdateGestures()
+    {
+        Gestures gesture = GetGesture();
+        if (!manusGrab.IsGrabbing())
+        {
+            if (gesture == Gestures.Grab)
+                manusGrab.GrabHighlightedObject();
+        }
+        else
+        {
+            if (gesture == Gestures.Open)
+                manusGrab.DropObject();
+        }
+    }
 
     /// <summary>
     /// Returns which gesture the hand is making.
@@ -182,7 +230,16 @@ public abstract class Hand : IHand
                 fingersBent++;
             }
         }
+        return GetGesturesHelp(fingersBent);
+    }
 
+    /// <summary>
+    /// Returns a gesture by checking the number of fingers bent.
+    /// </summary>
+    /// <param name="fingersBent">The number of fingers bent.</param>
+    /// <returns></returns>
+    public Gestures GetGesturesHelp(int fingersBent)
+    {
         if (fingersBent == (int)FingersBent.five)
             return Gestures.Grab;
         else if (fingersBent == (int)FingersBent.four && glove.Fingers[0] < 0.4f)
@@ -206,22 +263,21 @@ public abstract class Hand : IHand
         bc2.size = BaseHandColliderSize;
         Vector3 pos2 = bc2.center;
 
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-        {
-            pos2.x -= .05f;
-            pos2.y -= .01f;
-            pos2.z += .03f;
-        }
-        else
-        {
-            pos2.x -= .05f;
-            pos2.y -= .01f;
-            pos2.z -= .03f;
-        }
+        pos2 = TranslateHandBoundingBox(pos2);
 
         bc2.center = pos2;
-
         bc2.isTrigger = true;
+    }
+
+    /// <summary>
+    /// Helper method for creating a collider.
+    /// </summary>
+    /// <param name="pos">The position.</param>
+    public Vector3 TranslateHandBoundingBox(Vector3 pos)
+    {
+        pos.x -= .05f;
+        pos.y -= .01f;
+        return pos;
     }
 
     /// <summary>
@@ -250,6 +306,65 @@ public abstract class Hand : IHand
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
             }
         };
+    }
+
+    /// <summary>
+    /// Touches the specified object.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    public void Touch(GameObject obj)
+    {
+        if ((lastTouched == null || !lastTouched.Equals(obj))
+            && Manager.EnableVibration)
+        {
+            Vibrate();
+            lastTouched = obj;
+        }
+        else
+        {
+            lastTouched = null;
+        }
+    }
+
+    /// <summary>
+    /// Resets the timer.
+    /// </summary>
+    public void ResetTimer()
+    {
+        timer = 0;
+    }
+
+    /// <summary>
+    /// Updates the timer.
+    /// </summary>
+    public void UpdateTimer()
+    {
+        timer += Time.deltaTime;
+    }
+
+    /// <summary>
+    /// Updates the vibration of the glove.
+    /// </summary>
+    public void UpdateVibration()
+    {
+        if (timer <= vibrateTime && vibrateGlove)
+        {
+            glove.SetVibration(vibrationForce);
+        }
+        else
+        {
+            glove.SetVibration(0.0f);
+            ResetTimer();
+            vibrateGlove = false;
+        }
+    }
+
+    /// <summary>
+    /// Vibrates this glove.
+    /// </summary>
+    public void Vibrate()
+    {
+        vibrateGlove = true;
     }
 
     /// <summary>

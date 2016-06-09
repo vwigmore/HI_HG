@@ -119,7 +119,7 @@ public class Player
     #region Methods
 
     /// <summary>
-    /// Updates the crouch.
+    /// Updates the player position when crouching
     /// </summary>
     public void UpdateCrouch()
     {
@@ -128,22 +128,44 @@ public class Player
         Vector3 crouchDir = this.model.transform.position;
         if (deltaHeight > lastDeltaHeight)
         {
-            if (minFootY + (deltaHeight - lastDeltaHeight) <= 0)
-                crouchDir.y += deltaHeight - lastDeltaHeight;
+            CrouchDirectionSmallerThanNull(minFootY, deltaHeight, crouchDir);
         }
         else if (deltaHeight < lastDeltaHeight)
         {
-            if (minFootY - (lastDeltaHeight - deltaHeight) >= 0)
-                crouchDir.y -= lastDeltaHeight - deltaHeight;
+            CrouchDirectionGreaterThanNull(minFootY, deltaHeight, crouchDir);
         }
-
         this.model.transform.position = crouchDir;
         lastDeltaHeight = deltaHeight;
     }
 
     /// <summary>
+    /// Sets the player position to normal level when beneath
+    /// </summary>
+    /// <param name="min">The minimum level.</param>
+    /// <param name="height">The height.</param>
+    /// <param name="direction">The direction.</param>
+    public void CrouchDirectionSmallerThanNull(float min, float height, Vector3 direction)
+    {
+        if (min + (height - lastDeltaHeight) <= 0)
+            direction.y += height - lastDeltaHeight;
+    }
+
+    /// <summary>
+    /// Sets the player position to normal level when above.
+    /// </summary>
+    /// <param name="min">The minimum.</param>
+    /// <param name="height">The height.</param>
+    /// <param name="direction">The direction.</param>
+    public void CrouchDirectionGreaterThanNull(float min, float height, Vector3 direction)
+    {
+        if (min - (lastDeltaHeight - height) >= 0)
+            direction.y -= lastDeltaHeight - height;
+    }
+
+    /// <summary>
     /// Updates the rotation.
     /// </summary>
+    ///
     public void updateRotation()
     {
         mouseAxisY = Input.GetAxis("Mouse Y");
@@ -183,20 +205,7 @@ public class Player
 
         if (pc.isGrounded)
         {
-            // movement vector, consists of axes to move to.
-            this.moveDirection = new Vector3(hAxis, 0, vAxis);
-
-            if (Input.GetButton("Jump"))
-                moveDirection.y = jumpSpeed;
-
-            // Transforms direction from local space to world space.
-            this.moveDirection = pc.transform.TransformDirection(moveDirection);
-
-            // Multiplies vector with speed (axes are between -1 and 1, not much).
-            this.moveDirection *= moveSpeed;
-
-            // Capping move speed: moveDirection hypotenuse
-            capVector(moveDirection, moveSpeed, -moveSpeed);
+            updateMovementHelp();
         }
         else
         {
@@ -204,6 +213,27 @@ public class Player
         }
 
         pc.Move(moveDirection * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Helper method for updateMovement
+    /// </summary>
+    public void updateMovementHelp()
+    {
+        // movement vector, consists of axes to move to.
+        this.moveDirection = new Vector3(hAxis, 0, vAxis);
+
+        if (Input.GetButton("Jump"))
+            moveDirection.y = jumpSpeed;
+
+        // Transforms direction from local space to world space.
+        this.moveDirection = pc.transform.TransformDirection(moveDirection);
+
+        // Multiplies vector with speed (axes are between -1 and 1, not much).
+        this.moveDirection *= moveSpeed;
+
+        // Capping move speed: moveDirection hypotenuse
+        capVector(moveDirection, moveSpeed, -moveSpeed);
     }
 
     #endregion Methods
