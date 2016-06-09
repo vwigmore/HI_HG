@@ -25,6 +25,11 @@
         /// </summary>
         private Vector3 lastPos;
 
+        /// <summary>
+        /// The last rotation
+        /// </summary>
+        private Quaternion lastRotation;
+
         #endregion Fields
 
         #region Constructors
@@ -39,6 +44,7 @@
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
+            this.lastRotation = Quaternion.identity;
         }
 
         #endregion Constructors
@@ -58,11 +64,13 @@
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    UpdateGrabbedObjectsPosition(newpos, trans);
+                    UpdateGrabbedObjectsPosition(newpos);
+                    UpdateGrabbedObjectsRotation(trans);
                 }
                 newpos.z += offset;
 
-                UpdateGrabbedObjectsPosition(newpos, trans);
+                UpdateGrabbedObjectsPosition(newpos);
+                UpdateGrabbedObjectsRotation(trans);
             }
         }
 
@@ -71,12 +79,30 @@
         /// </summary>
         /// <param name="newpos">The new position.</param>
         /// <param name="trans">The transform.</param>
-        public void UpdateGrabbedObjectsPosition(Vector3 newpos, Transform trans)
+        public void UpdateGrabbedObjectsPosition(Vector3 newpos)
         {
             GrabbedObject.transform.position = newpos;
-            GrabbedObject.transform.rotation = trans.rotation;
-            GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
+            //GrabbedObject.transform.rotation = trans.rotation;
+
+            //Vector3 a = GrabbedObject.transform.rotation.eulerAngles.normalized;
+            //Vector3 b = grabber.transform.rotation.eulerAngles.normalized;
+           // double angle = Math.Acos(Vector3.Dot(a, b));
+            //Debug.Log(angle);
+
+           // GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+        }
+        public void UpdateGrabbedObjectsRotation(Transform trans)
+        {
+            Quaternion current = trans.rotation;
+            
+            if (!lastRotation.Equals(current))
+            {
+                Quaternion relative = Quaternion.Inverse(lastRotation) * trans.rotation;
+                Quaternion newRot = GrabbedObject.transform.rotation * relative;
+                GrabbedObject.transform.rotation = newRot;
+                lastRotation = current;
+            }
         }
 
         #endregion Methods
