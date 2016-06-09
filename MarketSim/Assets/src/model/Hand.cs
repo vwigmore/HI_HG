@@ -174,14 +174,11 @@ public abstract class Hand : IHand
     /// </summary>
     public void UpdateHand()
     {
-        if (GetGesture() != Gestures.Grab)
-        {
-            Quaternion q = glove.Quaternion;
-            float[] fingers = glove.Fingers;
-            RootTransform.localRotation = q;
+        Quaternion q = glove.Quaternion;
+        float[] fingers = glove.Fingers;
+        RootTransform.localRotation = q;
 
-            UpdateFingers(fingers);
-        }
+        UpdateFingers(fingers);
     }
 
     /// <summary>
