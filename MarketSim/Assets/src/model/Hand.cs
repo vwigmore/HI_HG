@@ -61,9 +61,19 @@ public abstract class Hand : IHand
     private const float SphereColliderRadius = 0.035f;
 
     /// <summary>
+    /// The vibrate time
+    /// </summary>
+    private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
+
+    /// <summary>
+    /// The vibration power
+    /// </summary>
+    private readonly float vibrationForce = Manager.VibrationForce;
+
+    /// <summary>
     /// The base hand collider size
     /// </summary>
-    private Vector3 BaseHandColliderSize = new Vector3(0.09f, 0.02f, 0.10f);
+    private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.05f, 0.10f);
 
     /// <summary>
     /// Game object hand.
@@ -90,6 +100,21 @@ public abstract class Hand : IHand
     /// </summary>
     private Color highlightColor;
 
+    /// <summary>
+    /// The timer
+    /// </summary>
+    private float timer;
+
+    /// <summary>
+    /// The last touched gameobject
+    /// </summary>
+    private GameObject lastTouched;
+
+    /// <summary>
+    /// Bool if the glove should be vibrated.
+    /// </summary>
+    private bool vibrateGlove;
+
     #endregion Fields
 
     #region Constructors
@@ -112,6 +137,9 @@ public abstract class Hand : IHand
         this.hand = hand;
         this.animationClip = animation;
         this.highlightColor = highlightColor;
+        this.timer = 0f;
+        this.vibrateGlove = false;
+        this.lastTouched = null;
 
         this.manusGrab = new ManusGrab(this.handModel, highlightColor);
 
@@ -235,7 +263,7 @@ public abstract class Hand : IHand
         bc2.size = BaseHandColliderSize;
         Vector3 pos2 = bc2.center;
 
-        CreateCollidersHelp(pos2);
+        pos2 = TranslateHandBoundingBox(pos2);
 
         bc2.center = pos2;
         bc2.isTrigger = true;
@@ -245,20 +273,11 @@ public abstract class Hand : IHand
     /// Helper method for creating a collider.
     /// </summary>
     /// <param name="pos">The position.</param>
-    public void CreateCollidersHelp(Vector3 pos)
+    public Vector3 TranslateHandBoundingBox(Vector3 pos)
     {
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-        {
-            pos.x -= .05f;
-            pos.y -= .01f;
-            pos.z += .03f;
-        }
-        else
-        {
-            pos.x -= .05f;
-            pos.y -= .01f;
-            pos.z -= .03f;
-        }
+        pos.x -= .05f;
+        pos.y -= .01f;
+        return pos;
     }
 
     /// <summary>
@@ -287,6 +306,65 @@ public abstract class Hand : IHand
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
             }
         };
+    }
+
+    /// <summary>
+    /// Touches the specified object.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    public void Touch(GameObject obj)
+    {
+        if ((lastTouched == null || !lastTouched.Equals(obj))
+            && Manager.EnableVibration)
+        {
+            Vibrate();
+            lastTouched = obj;
+        }
+        else
+        {
+            lastTouched = null;
+        }
+    }
+
+    /// <summary>
+    /// Resets the timer.
+    /// </summary>
+    public void ResetTimer()
+    {
+        timer = 0;
+    }
+
+    /// <summary>
+    /// Updates the timer.
+    /// </summary>
+    public void UpdateTimer()
+    {
+        timer += Time.deltaTime;
+    }
+
+    /// <summary>
+    /// Updates the vibration of the glove.
+    /// </summary>
+    public void UpdateVibration()
+    {
+        if (timer <= vibrateTime && vibrateGlove)
+        {
+            glove.SetVibration(vibrationForce);
+        }
+        else
+        {
+            glove.SetVibration(0.0f);
+            ResetTimer();
+            vibrateGlove = false;
+        }
+    }
+
+    /// <summary>
+    /// Vibrates this glove.
+    /// </summary>
+    public void Vibrate()
+    {
+        vibrateGlove = true;
     }
 
     /// <summary>

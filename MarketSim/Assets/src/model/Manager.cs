@@ -36,6 +36,21 @@ public class Manager : MonoBehaviour
     private static float proximityDist;
 
     /// <summary>
+    /// If true, haptic feedback is on.
+    /// </summary>
+    private static bool enableVibration;
+
+    /// <summary>
+    /// The vibration force between 0 and 1f.
+    /// </summary>
+    private static float vibrationForce;
+
+    /// <summary>
+    /// The vibration time in MILLISECONDS
+    /// </summary>
+    private static int vibrationTime;
+
+    /// <summary>
     /// The configuration location
     /// </summary>
     private readonly string configLocation = "Assets\\src\\config.gryffindor";
@@ -51,6 +66,48 @@ public class Manager : MonoBehaviour
     /// The Manager instance.
     /// </value>
     public static Manager Instance { get; private set; }
+
+    /// <summary>
+    /// Gets the vibration time.
+    /// </summary>
+    /// <value>
+    /// The vibration time.
+    /// </value>
+    public static int VibrationTime
+    {
+        get
+        {
+            return Manager.vibrationTime;
+        }
+    }
+
+    /// <summary>
+    /// Gets the vibration force.
+    /// </summary>
+    /// <value>
+    /// The vibration force.
+    /// </value>
+    public static float VibrationForce
+    {
+        get
+        {
+            return Manager.vibrationForce;
+        }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether [enable vibration].
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if [enable vibration]; otherwise, <c>false</c>.
+    /// </value>
+    public static bool EnableVibration
+    {
+        get
+        {
+            return Manager.enableVibration;
+        }
+    }
 
     /// <summary>
     /// Gets a value indicating whether to highlight or not.
@@ -126,7 +183,6 @@ public class Manager : MonoBehaviour
 
     #region Methods
 
-    /// <summary>
     /// Configuration of filtering, splitting and delimiting the configuration file.
     /// </summary>
     /// <param name="line">The line to configure.</param>
@@ -143,7 +199,6 @@ public class Manager : MonoBehaviour
         }
     }
 
-    /// <summary>
     /// Applies the parameters in the Manager.
     /// </summary>
     /// <param name="split">The configuration in array form.</param>
@@ -161,6 +216,13 @@ public class Manager : MonoBehaviour
                 Manager.proximityDist = float.Parse(split[1]); break;
             case "THROWFORCE":
                 Manager.throwForce = float.Parse(split[1]); break;
+            case "ENABLEVIBRATION":
+                Manager.enableVibration = (split[1] == "TRUE"); break;
+            case "VIBRATIONFORCE":
+                Manager.vibrationForce = float.Parse(split[1]); break;
+            case "VIBRATIONTIME":
+                Manager.vibrationTime = int.Parse(split[1]); break;
+            default: break;
         }
     }
 
@@ -181,7 +243,9 @@ public class Manager : MonoBehaviour
         Manager.mKbOnly = false;
         Manager.throwForce = 1500f;
         Manager.proximityDist = 2.0f;
-
+        Manager.enableVibration = true;
+        Manager.vibrationForce = 0.1f;
+        Manager.vibrationTime = 300;
         readConfig();
     }
 

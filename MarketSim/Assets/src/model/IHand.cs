@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.src.model
 {
@@ -48,6 +49,32 @@ namespace Assets.src.model
         /// </summary>
         /// <returns></returns>
         Gestures GetGesture();
+
+        /// <summary>
+        /// Vibrates this instance.
+        /// </summary>
+        void Vibrate();
+
+        /// <summary>
+        /// Updates the timer.
+        /// </summary>
+        void UpdateTimer();
+
+        /// <summary>
+        /// Resets the timer.
+        /// </summary>
+        void ResetTimer();
+
+        /// <summary>
+        /// Updates the vibration of the glove.
+        /// </summary>
+        void UpdateVibration();
+
+        /// <summary>
+        /// Touches the specified object.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        void Touch(GameObject obj);
 
         #endregion Methods
     }
