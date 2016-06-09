@@ -27,6 +27,9 @@ public class RightHand : Hand
 
     #region Methods
 
+    /// <summary>
+    /// Updates the gestures.
+    /// </summary>
     public override void UpdateGestures()
     {
         base.UpdateGestures();

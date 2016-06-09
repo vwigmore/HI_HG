@@ -319,27 +319,39 @@ public abstract class Hand : IHand
         };
     }
 
+    /// <summary>
+    /// Touches the specified object.
+    /// </summary>
+    /// <param name="obj">The object.</param>
     public void Touch(GameObject obj)
     {
         if (lastTouched == null || !lastTouched.Equals(obj))
         {
-            Debug.Log(glove_hand + "\ttouch\t" + obj + "\t" + timer);
             Vibrate();
         }
 
         lastTouched = obj;
     }
 
+    /// <summary>
+    /// Resets the timer.
+    /// </summary>
     public void ResetTimer()
     {
         timer = 0;
     }
 
+    /// <summary>
+    /// Updates the timer.
+    /// </summary>
     public void UpdateTimer()
     {
         timer += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Updates the vibration of the glove.
+    /// </summary>
     public void UpdateVibration()
     {
         if (timer <= vibrateTime && vibrateGlove)
