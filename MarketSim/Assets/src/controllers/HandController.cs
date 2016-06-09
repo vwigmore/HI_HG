@@ -1,6 +1,5 @@
 ﻿using Assets.src.model;
 using ManusMachina;
-using System.Collections;
 using UnityEngine;
 
 public class HandController : MonoBehaviour

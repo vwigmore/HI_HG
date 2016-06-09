@@ -10,7 +10,7 @@ namespace Assets.Editor
         #region Fields
 
         /// <summary>
-        /// The mouse grab
+        /// The mouse grab variable
         /// </summary>
         private MouseGrab mouseGrab;
 
@@ -20,7 +20,7 @@ namespace Assets.Editor
         private Color highlightColor = Color.cyan;
 
         /// <summary>
-        /// The highlighted
+        /// The highlighted object variable
         /// </summary>
         private GameObject highlighted;
 
@@ -30,16 +30,16 @@ namespace Assets.Editor
         private ItemHolder h;
 
         /// <summary>
-        /// The basket 
+        /// The basket
         /// </summary>
-        GameObject basket;
+        private GameObject basket;
 
         #endregion Fields
 
         #region Methods
 
         /// <summary>
-        /// Setups of all instances
+        /// setup for all instances
         /// </summary>
         [SetUp]
         public new void Setup()
@@ -60,10 +60,10 @@ namespace Assets.Editor
             mouseGrab = null;
             h = null;
             basket = null;
-
         }
+
         /// <summary>
-        /// Pass Grab test 
+        /// Pass Grab test
         /// </summary>
         /// <returns></returns>
         public override Grab PassGrab()

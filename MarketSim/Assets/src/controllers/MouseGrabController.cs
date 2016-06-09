@@ -1,5 +1,4 @@
 ﻿using Assets.src.model;
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -82,5 +81,6 @@ public class MouseGrabController : MonoBehaviour
             this.mouseGrab.HighlightSelectedObject(objectHit);
         }
     }
+
     #endregion Methods
 }

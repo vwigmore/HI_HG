@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 /**
  * Player Controller Script
@@ -13,40 +12,72 @@ public class PlayerController : MonoBehaviour
 {
     #region Fields
 
+    /// <summary>
+    /// The charactercontroller
+    /// </summary>
     private CharacterController pc;
 
+    /// <summary>
+    /// The parts of the body: head,hip,left foot and right foot
+    /// </summary>
     private GameObject head, hip, leftFoot, rightFoot;
 
+    /// <summary>
+    /// The heights: delta height and initial heigth
+    /// </summary>
     private float lastDeltaHeight, initialDeltaHeight;
 
+    /// <summary>
+    /// The model
+    /// </summary>
     private GameObject model;
 
+    /// <summary>
+    /// The player
+    /// </summary>
     private Player player;
 
     #endregion Fields
 
     #region Methods
 
+    /// <summary>
+    /// Allows the player to walk forward.
+    /// </summary>
     public void walkForward()
     {
         pc.Move(pc.transform.forward * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Allows the player to walk backward.
+    /// </summary>
     public void walkBackwards()
     {
         pc.Move(-pc.transform.forward * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Rotation to the right.
+    /// </summary>
     public void rotateRight()
     {
         pc.transform.Rotate(new Vector3(0, 50 * Time.deltaTime, 0));
     }
 
+    /// <summary>
+    /// Rotation to the left.
+    /// </summary>
     public void rotateLeft()
     {
         pc.transform.Rotate(new Vector3(0, -50 * Time.deltaTime, 0));
     }
 
+    /// <summary>
+    /// Ckecks if the user is in proximity of the object.
+    /// </summary>
+    /// <param name="obj">The object.</param>
+    /// <returns></returns>
     private bool inProximity(GameObject obj)
     {
         return (Vector3.Distance(pc.transform.position, obj.transform.position) <= 3f);

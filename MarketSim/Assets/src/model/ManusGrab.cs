@@ -1,10 +1,5 @@
 ﻿namespace Assets.src.model
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using UnityEngine;
 
     /// <summary>
@@ -18,7 +13,7 @@
         /// <summary>
         /// The throw force
         /// </summary>
-        private readonly float throwForce = 500;
+        private new readonly float  throwForce = 500;
 
         /// <summary>
         /// The last position
