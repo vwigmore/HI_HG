@@ -63,12 +63,12 @@ public abstract class Hand : IHand
     /// <summary>
     /// The vibrate time
     /// </summary>
-    private readonly float vibrateTime = 0.3f;
+    private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
 
     /// <summary>
     /// The vibration power
     /// </summary>
-    private readonly float vibrationPower = .1f;
+    private readonly float vibrationForce = Manager.VibrationForce;
 
     /// <summary>
     /// The base hand collider size
@@ -147,6 +147,10 @@ public abstract class Hand : IHand
         CreateColliders();
 
         hand.SetActive(true);
+
+        Debug.Log(Manager.EnableVibration);
+        Debug.Log(vibrationForce);
+        Debug.Log(vibrateTime);
     }
 
     #endregion Constructors
@@ -325,7 +329,8 @@ public abstract class Hand : IHand
     /// <param name="obj">The object.</param>
     public void Touch(GameObject obj)
     {
-        if (lastTouched == null || !lastTouched.Equals(obj))
+        if ((lastTouched == null || !lastTouched.Equals(obj))
+            && Manager.EnableVibration)
         {
             Vibrate();
         }
@@ -356,7 +361,7 @@ public abstract class Hand : IHand
     {
         if (timer <= vibrateTime && vibrateGlove)
         {
-            glove.SetVibration(vibrationPower);
+            glove.SetVibration(vibrationForce);
         }
         else
         {

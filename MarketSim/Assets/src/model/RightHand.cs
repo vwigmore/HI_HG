@@ -42,14 +42,11 @@ public class RightHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-        if (Manager.MKBOnly)
-        {
-            Vector3 newpos = this.root.transform.position;
-            this.handModel.transform.position = newpos;
-            Vector3 newrot = this.root.transform.rotation.eulerAngles;
-            newrot.y -= 90;
-            this.handModel.transform.rotation = Quaternion.Euler(newrot);
-        }
+        Vector3 newpos = this.root.transform.position;
+        this.handModel.transform.position = newpos;
+        Vector3 newrot = this.root.transform.rotation.eulerAngles;
+        newrot.y -= 90;
+        this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 
     #endregion Methods

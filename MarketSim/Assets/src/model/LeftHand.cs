@@ -32,16 +32,13 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-        if (Manager.MKBOnly)
-        {
-            Vector3 newpos = this.root.transform.position;
-            this.handModel.transform.position = newpos;
-            Vector3 newrot = this.root.transform.rotation.eulerAngles;
+        Vector3 newpos = this.root.transform.position;
+        this.handModel.transform.position = newpos;
+        Vector3 newrot = this.root.transform.rotation.eulerAngles;
 
-            newrot.y -= 180;
+        newrot.y -= 180;
 
-            this.handModel.transform.rotation = Quaternion.Euler(newrot);
-        }
+        this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 
     /// <summary>

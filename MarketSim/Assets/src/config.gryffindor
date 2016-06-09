@@ -25,8 +25,15 @@ MKBONLY 		= TRUE
 # 	Default: 2.0 (float)
 # THROWFORCE: force multiplied with throw vector decides how far objects are thrown
 #	Default: 500 (float)
+# ENABLEVIBRATION: enables haptic feedback
+# VIBRATIONFORCE: the force of the haptic feedback [0, 1]
+# VIBRATIONTIME: the time of the haptic feedback in ms.
 ###############################################
 
 PROXDIST 		= 2.0
 THROWFORCE		= 500
+
+ENABLEVIBRATION		= TRUE
+VIBRATIONFORCE		= 0.1
+VIBRATIONTIME		= 300
 
