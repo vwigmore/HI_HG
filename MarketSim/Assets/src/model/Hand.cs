@@ -320,9 +320,12 @@ public abstract class Hand : IHand
             && Manager.EnableVibration)
         {
             Vibrate();
+            lastTouched = obj;
         }
-
-        lastTouched = obj;
+        else
+        {
+            lastTouched = null;
+        }
     }
 
     /// <summary>
