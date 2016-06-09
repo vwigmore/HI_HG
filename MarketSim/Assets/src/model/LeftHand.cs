@@ -52,17 +52,17 @@ public class LeftHand : Hand
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
-            GetGestures(gesture);
+            MoveWithGesture(gesture);
         }
         this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
         this.manusGrab.basket.UpdateList();
     }
 
     /// <summary>
-    /// GetGestures method.
+    /// Moves according to the given gesture.
     /// </summary>
-    /// <param name="g">The g.</param>
-    public void GetGestures(Gestures g)
+    /// <param name="g">The gesture.</param>
+    public void MoveWithGesture(Gestures g)
     {
         if (g == Gestures.Thumb)
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();

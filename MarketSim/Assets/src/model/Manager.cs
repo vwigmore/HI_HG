@@ -127,6 +127,44 @@ public class Manager : MonoBehaviour
     #region Methods
 
     /// <summary>
+    /// Configuration of filtering, splitting and delimiting the configuration file.
+    /// </summary>
+    /// <param name="line">The line to configure.</param>
+    public void ConfigInitialize(string line)
+    {
+        string filtered = line.ToUpper().Replace(" ", string.Empty);
+        filtered = filtered.Replace("\t", string.Empty);
+        StringComparison comparison = StringComparison.InvariantCulture;
+        char[] delim = { '=' };
+        string[] split = filtered.Split(delim);
+        if (!filtered.StartsWith("#", comparison) && split.Length == 2)
+        {
+            ApplyParams(split);
+        }
+    }
+
+    /// <summary>
+    /// Applies the parameters in the Manager.
+    /// </summary>
+    /// <param name="split">The configuration in array form.</param>
+    public void ApplyParams(String[] split)
+    {
+        switch (split[0])
+        {
+            case "HIGHLIGHTON":
+                Manager.highlightOn = (split[1] == "TRUE"); break;
+            case "GESTUREMOVEMENTON":
+                Manager.gestureMovementOn = (split[1] == "TRUE"); break;
+            case "MKBONLY":
+                Manager.mKbOnly = (split[1] == "TRUE"); break;
+            case "PROXDIST":
+                Manager.proximityDist = float.Parse(split[1]); break;
+            case "THROWFORCE":
+                Manager.throwForce = float.Parse(split[1]); break;
+        }
+    }
+
+    /// <summary>
     ///  Initialize Manager instance and configuration.
     /// </summary>
     private void Awake()
@@ -148,7 +186,7 @@ public class Manager : MonoBehaviour
     }
 
     /// <summary>
-    /// Reads the configuration.
+    /// Reads the configuration file.
     /// </summary>
     private void readConfig()
     {
@@ -159,44 +197,6 @@ public class Manager : MonoBehaviour
             ConfigInitialize(line);
         }
         Debug.Log("Config Loaded.");
-    }
-
-    /// <summary>
-    /// configuration of filtered, split and delim.
-    /// </summary>
-    /// <param name="line">The line.</param>
-    public void ConfigInitialize(string line)
-    {
-        string filtered = line.ToUpper().Replace(" ", string.Empty);
-        filtered = filtered.Replace("\t", string.Empty);
-        StringComparison comparison = StringComparison.InvariantCulture;
-        char[] delim = { '=' };
-        string[] split = filtered.Split(delim);
-        if (!filtered.StartsWith("#", comparison) && split.Length == 2)
-        {
-            ApplyConfigs(split);
-        }
-    }
-
-    /// <summary>
-    /// Applies the configs.
-    /// </summary>
-    /// <param name="split">The split.</param>
-    public void ApplyConfigs(String[] split)
-    {
-        switch (split[0])
-        {
-            case "HIGHLIGHTON":
-                Manager.highlightOn = (split[1] == "TRUE"); break;
-            case "GESTUREMOVEMENTON":
-                Manager.gestureMovementOn = (split[1] == "TRUE"); break;
-            case "MKBONLY":
-                Manager.mKbOnly = (split[1] == "TRUE"); break;
-            case "PROXDIST":
-                Manager.proximityDist = float.Parse(split[1]); break;
-            case "THROWFORCE":
-                Manager.throwForce = float.Parse(split[1]); break;
-        }
     }
 
     #endregion Methods

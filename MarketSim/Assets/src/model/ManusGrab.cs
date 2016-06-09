@@ -58,19 +58,19 @@
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    GrabbedObjectsPosition(newpos, trans);
+                    UpdateGrabbedObjectsPosition(newpos, trans);
                 }
                 newpos.z += offset;
-                GrabbedObjectsPosition(newpos,trans);
+                UpdateGrabbedObjectsPosition(newpos, trans);
             }
         }
 
         /// <summary>
-        /// Grabbeds the objects.
+        /// Updates the grabbed objects position.
         /// </summary>
-        /// <param name="newpos">The newpos.</param>
-        /// <param name="trans">The trans.</param>
-        public void GrabbedObjectsPosition(Vector3 newpos, Transform trans)
+        /// <param name="newpos">The new position.</param>
+        /// <param name="trans">The transform.</param>
+        public void UpdateGrabbedObjectsPosition(Vector3 newpos, Transform trans)
         {
             GrabbedObject.transform.position = newpos;
             GrabbedObject.transform.rotation = trans.rotation;

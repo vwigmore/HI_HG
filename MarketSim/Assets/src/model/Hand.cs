@@ -134,8 +134,6 @@ public abstract class Hand : IHand
 
     #region Methods
 
-    //private GameObject sticky;
-
     /// <summary>
     /// Update the position of the hand according to the arm.
     /// </summary>
@@ -157,9 +155,9 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Helper method.
+    /// Updates all fingers.
     /// </summary>
-    /// <param name="f">The f.</param>
+    /// <param name="f">Array of floats containing fingers.</param>
     public void UpdateFingers(float[] f)
     {
         for (int i = 0; i < (int)FingersBent.five; i++)
@@ -208,9 +206,9 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Helper method.
+    /// Returns a gesture by checking the number of fingers bent.
     /// </summary>
-    /// <param name="fingersBent">The fingers bent.</param>
+    /// <param name="fingersBent">The number of fingers bent.</param>
     /// <returns></returns>
     public Gestures GetGesturesHelp(int fingersBent)
     {
@@ -244,7 +242,7 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Helper method.
+    /// Helper method for creating a collider.
     /// </summary>
     /// <param name="pos">The position.</param>
     public void CreateCollidersHelp(Vector3 pos)
