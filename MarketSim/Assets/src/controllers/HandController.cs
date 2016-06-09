@@ -7,9 +7,6 @@ public class HandController : MonoBehaviour
 {
     #region Fields
 
-    /// <summary>
-    /// The root transform
-    /// </summary>
     public Transform RootTransform;
 
     /// <summary>
@@ -31,31 +28,7 @@ public class HandController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        Glove glove = new Glove(glove_hand);
-        GameObject handModel;
-        GameObject root;
-        GameObject handResource;
-        AnimationClip animation;
-        Color hl;
-
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT)
-        {
-            handModel = GameObject.Find("Manus_Handv2_Left");
-            root = GameObject.Find("13_Hand_Left");
-            handResource = Resources.Load<GameObject>("Manus_Handv2_Left");
-            animation = Resources.Load<AnimationClip>("Manus_Handv2_Left");
-            hl = Color.green;
-            hand = new LeftHand(glove, RootTransform, handModel, root, handResource, animation, hl);
-        }
-        else
-        {
-            handModel = GameObject.Find("Manus_Handv2_Right");
-            root = GameObject.Find("23_Hand_Right");
-            handResource = Resources.Load<GameObject>("Manus_Handv2_Right");
-            animation = Resources.Load<AnimationClip>("Manus_Handv2_Right");
-            hl = Color.red;
-            hand = new RightHand(glove, RootTransform, handModel, root, handResource, animation, hl);
-        }
+        hand = HandFactory.createHand(glove_hand, RootTransform);
     }
 
     /// <summary>

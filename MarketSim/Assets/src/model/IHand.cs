@@ -9,7 +9,7 @@ namespace Assets.src.model
     /// <summary>
     /// Interface used for hands.
     /// </summary>
-    internal interface IHand
+    public interface IHand
     {
         #region Methods
 
