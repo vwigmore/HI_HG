@@ -51,7 +51,6 @@ public class HandController : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collisionObj = collision.gameObject;
-
         hand.GetManusGrab().HighlightSelectedObject(collisionObj);
 
         hand.Touch(collisionObj);

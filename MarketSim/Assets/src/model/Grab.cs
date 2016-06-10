@@ -26,6 +26,7 @@
         /// </summary>
         protected float proxDist = Manager.ProximityDist;
 
+
         /// <summary>
         /// GameObject player.
         /// </summary>
@@ -121,6 +122,7 @@
         {
             if (this.highlighted != null)
             {
+                Debug.Log("grabbing: "+ highlighted);
                 this.GrabbedObject = this.highlighted;
             }
         }
@@ -137,7 +139,9 @@
                 && !this.GrabbedObject.tag.Equals("basket")
                 && !this.basket.items.Contains(this.GrabbedObject))
             {
+
                 this.DropInBasket();
+
             }
             else
             {
@@ -152,12 +156,14 @@
         {
             if (this.IsGrabbing())
             {
+
                 this.SetPrevPosition(this.GrabbedObject.transform.position);
                 Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
 
                 this.UpdateGrabbedBasket(newpos);
 
                 this.GrabbedObject.transform.position = newpos;
+                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
@@ -181,6 +187,7 @@
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     this.GrabbedObject.GetComponent<Collider>());
                 this.SetPrevPosition(this.grabber.transform.position);
+
             }
         }
 
