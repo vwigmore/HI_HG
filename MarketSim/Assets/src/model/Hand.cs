@@ -45,6 +45,8 @@ public abstract class Hand : IHand
     /// </summary>
     protected Transform[][] gameTransforms;
 
+    protected BoxCollider baseCollider;
+
     /// <summary>
     /// The time factor
     /// </summary>
@@ -141,10 +143,10 @@ public abstract class Hand : IHand
         this.vibrateGlove = false;
         this.lastTouched = null;
 
-        this.manusGrab = new ManusGrab(this.handModel, highlightColor);
-
         InitTransforms();
         CreateColliders();
+
+        this.manusGrab = new ManusGrab(baseCollider.gameObject, highlightColor);
 
         hand.SetActive(true);
     }
@@ -204,7 +206,10 @@ public abstract class Hand : IHand
         if (!manusGrab.IsGrabbing())
         {
             if (gesture == Gestures.Grab)
+            {
                 manusGrab.GrabHighlightedObject();
+                manusGrab.SetPrevGrabberRot(baseCollider.transform.rotation);
+            }
         }
         else
         {
@@ -255,15 +260,33 @@ public abstract class Hand : IHand
     /// </summary>
     public void CreateColliders()
     {
-        BoxCollider bc2 = new BoxCollider();
-        bc2 = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
-        bc2.size = BaseHandColliderSize;
-        Vector3 pos2 = bc2.center;
-
+        InitializeBaseCollider();
+        InitializeRigidCollider();       
+    }
+    /// <summary>
+    /// Initializes the base collider.
+    /// </summary>
+    public void InitializeBaseCollider()
+    {
+        baseCollider = new BoxCollider();
+        baseCollider = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
+        baseCollider.size = BaseHandColliderSize;
+        Vector3 pos2 = baseCollider.center;
         pos2 = TranslateHandBoundingBox(pos2);
 
-        bc2.center = pos2;
-        bc2.isTrigger = true;
+        baseCollider.center = pos2;
+        baseCollider.isTrigger = true;
+    }
+
+    public void InitializeRigidCollider()
+    {
+        BoxCollider rigid = new BoxCollider();
+        rigid = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
+        Vector3 rigidsize = new Vector3(0.15f, 0.02f, 0.15f);
+        Vector3 rigidpos = rigid.center;
+        rigidpos.x -= .05f;
+        rigid.size = rigidsize;
+        rigid.center = rigidpos;
     }
 
     /// <summary>
@@ -273,7 +296,7 @@ public abstract class Hand : IHand
     public Vector3 TranslateHandBoundingBox(Vector3 pos)
     {
         pos.x -= .05f;
-        pos.y -= .01f;
+        pos.y -= .1f;
         return pos;
     }
 
@@ -301,6 +324,10 @@ public abstract class Hand : IHand
             {
                 gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
+
+                BoxCollider b = new BoxCollider();
+                b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
+                b.size = new Vector3(.03f, .03f, .03f);
             }
         };
     }

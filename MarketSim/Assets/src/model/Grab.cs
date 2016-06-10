@@ -56,7 +56,12 @@
         /// <summary>
         /// The previous rotation.
         /// </summary>
-        protected Vector3 prevRot;
+        protected Quaternion prevRot;
+
+        /// <summary>
+        /// The previous grabber rot
+        /// </summary>
+        protected Quaternion prevGrabberRot;
 
         /// <summary>
         /// Object currently selected.
@@ -124,6 +129,7 @@
             {
                 Debug.Log("grabbing: "+ highlighted);
                 this.GrabbedObject = this.highlighted;
+                SetPrevRotation(GrabbedObject.transform.rotation);
             }
         }
 
@@ -312,7 +318,7 @@
         /// Sets the previous rotation.
         /// </summary>
         /// <param name="rot">The rotation.</param>
-        public void SetPrevRotation(Vector3 rot)
+        public void SetPrevRotation(Quaternion rot)
         {
             this.prevRot = rot;
         }
@@ -321,9 +327,19 @@
         /// Gets the previous rotation.
         /// </summary>
         /// <returns>The previous rotation</returns>
-        public Vector3 GetPrevRotation()
+        public Quaternion GetPrevRotation()
         {
             return this.prevRot;
+        }
+
+        public void SetPrevGrabberRot(Quaternion rot)
+        {
+            this.prevGrabberRot = rot;
+        }
+
+        public Quaternion GetPrevGrabberRot()
+        {
+            return this.prevGrabberRot;
         }
 
         #endregion Methods

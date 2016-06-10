@@ -37,7 +37,9 @@ public class HandController : MonoBehaviour
     private void Update()
     {
         if (!Manager.MKBOnly)
+        {
             hand.UpdatePosition();
+        }
         hand.UpdateHand();
         hand.UpdateGestures();
         hand.UpdateVibration();

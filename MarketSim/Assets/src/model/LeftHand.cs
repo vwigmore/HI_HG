@@ -36,7 +36,7 @@ public class LeftHand : Hand
         this.handModel.transform.position = newpos;
         Vector3 newrot = this.root.transform.rotation.eulerAngles;
 
-        newrot.y -= 180;
+        newrot.y -= 90;
 
         this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }

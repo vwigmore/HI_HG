@@ -82,27 +82,19 @@
         public void UpdateGrabbedObjectsPosition(Vector3 newpos)
         {
             GrabbedObject.transform.position = newpos;
-            //GrabbedObject.transform.rotation = trans.rotation;
-
-            //Vector3 a = GrabbedObject.transform.rotation.eulerAngles.normalized;
-            //Vector3 b = grabber.transform.rotation.eulerAngles.normalized;
-           // double angle = Math.Acos(Vector3.Dot(a, b));
-            //Debug.Log(angle);
-
-           // GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
         }
+
+        /// <summary>
+        /// Updates the grabbed objects rotation.
+        /// </summary>
+        /// <param name="trans">The trans.</param>
         public void UpdateGrabbedObjectsRotation(Transform trans)
         {
             Quaternion current = trans.rotation;
-            
-            if (!lastRotation.Equals(current))
-            {
-                Quaternion relative = Quaternion.Inverse(lastRotation) * trans.rotation;
-                Quaternion newRot = GrabbedObject.transform.rotation * relative;
-                GrabbedObject.transform.rotation = newRot;
-                lastRotation = current;
-            }
+            Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
+            Quaternion newrot = offset * GetPrevRotation();
+            GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
         }
 
         #endregion Methods
