@@ -62,6 +62,7 @@
                 }
                 newpos.z += offset;
                 UpdateGrabbedObjectsPosition(newpos, trans);
+                UpdateGrabbedObjectsRotation(trans);
             }
         }
 
@@ -73,8 +74,15 @@
         public void UpdateGrabbedObjectsPosition(Vector3 newpos, Transform trans)
         {
             GrabbedObject.transform.position = newpos;
-            GrabbedObject.transform.rotation = trans.rotation;
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+        }
+
+        public void UpdateGrabbedObjectsRotation(Transform trans)
+        {
+            Quaternion current = trans.rotation;
+            Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
+            Quaternion newrot = offset * GetPrevRotation();
+            GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
         }
 
         #endregion Methods

@@ -42,7 +42,7 @@ public class HandFactory
         GameObject root = GameObject.Find("23_Hand_Right");
         GameObject handResource = Resources.Load<GameObject>("Manus_Handv2_Right");
         AnimationClip animation = Resources.Load<AnimationClip>("Manus_Handv2_Right");
-        return new RightHand(glove, rt, handModel, root, handResource, animation, Color.green);
+        return new RightHand(glove, rt, handModel, root, handResource, animation, Color.red);
     }
 
     #endregion Methods

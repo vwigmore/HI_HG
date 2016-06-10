@@ -16,7 +16,7 @@
 # MKBONLY: Controlling the simulation without VR hardware
 ###############################################
 
-HIGHLIGHTON		= TRUE
+HIGHLIGHTON		= false
 GESTUREMOVEMENTON 	= FALSE
 MKBONLY 		= TRUE
 
