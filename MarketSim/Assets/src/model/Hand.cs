@@ -260,16 +260,26 @@ public abstract class Hand : IHand
     /// </summary>
     public void CreateColliders()
     {
+        InitializeBaseCollider();
+        InitializeRigidCollider();       
+    }
+    /// <summary>
+    /// Initializes the base collider.
+    /// </summary>
+    public void InitializeBaseCollider()
+    {
         baseCollider = new BoxCollider();
         baseCollider = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
         baseCollider.size = BaseHandColliderSize;
         Vector3 pos2 = baseCollider.center;
-
         pos2 = TranslateHandBoundingBox(pos2);
 
         baseCollider.center = pos2;
         baseCollider.isTrigger = true;
+    }
 
+    public void InitializeRigidCollider()
+    {
         BoxCollider rigid = new BoxCollider();
         rigid = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
         Vector3 rigidsize = new Vector3(0.15f, 0.02f, 0.15f);
