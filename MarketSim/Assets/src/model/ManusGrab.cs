@@ -20,6 +20,11 @@
         /// </summary>
         private Vector3 lastPos;
 
+        /// <summary>
+        /// The last rotation
+        /// </summary>
+        private Quaternion lastRotation;
+
         #endregion Fields
 
         #region Constructors
@@ -34,6 +39,7 @@
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
+            this.lastRotation = Quaternion.identity;
         }
 
         #endregion Constructors
@@ -53,10 +59,13 @@
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    UpdateGrabbedObjectsPosition(newpos, trans);
+                    UpdateGrabbedObjectsPosition(newpos);
+                    UpdateGrabbedObjectsRotation(trans);
                 }
                 newpos.z += offset;
-                UpdateGrabbedObjectsPosition(newpos, trans);
+
+                UpdateGrabbedObjectsPosition(newpos);
+                UpdateGrabbedObjectsRotation(trans);
             }
         }
 
@@ -65,11 +74,22 @@
         /// </summary>
         /// <param name="newpos">The new position.</param>
         /// <param name="trans">The transform.</param>
-        public void UpdateGrabbedObjectsPosition(Vector3 newpos, Transform trans)
+        public void UpdateGrabbedObjectsPosition(Vector3 newpos)
         {
             GrabbedObject.transform.position = newpos;
-            GrabbedObject.transform.rotation = trans.rotation;
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+        }
+
+        /// <summary>
+        /// Updates the grabbed objects rotation.
+        /// </summary>
+        /// <param name="trans">The trans.</param>
+        public void UpdateGrabbedObjectsRotation(Transform trans)
+        {
+            Quaternion current = trans.rotation;
+            Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
+            Quaternion newrot = offset * GetPrevRotation();
+            GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
         }
 
         #endregion Methods

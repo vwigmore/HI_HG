@@ -24,6 +24,7 @@
         /// </summary>
         protected float proxDist = Manager.ProximityDist;
 
+
         /// <summary>
         /// GameObject player.
         /// </summary>
@@ -53,7 +54,12 @@
         /// <summary>
         /// The previous rotation.
         /// </summary>
-        protected Vector3 prevRot;
+        protected Quaternion prevRot;
+
+        /// <summary>
+        /// The previous grabber rot
+        /// </summary>
+        protected Quaternion prevGrabberRot;
 
         /// <summary>
         /// Object currently selected.
@@ -119,7 +125,9 @@
         {
             if (this.highlighted != null)
             {
+                Debug.Log("grabbing: "+ highlighted);
                 this.GrabbedObject = this.highlighted;
+                SetPrevRotation(GrabbedObject.transform.rotation);
             }
         }
 
@@ -135,7 +143,9 @@
                 && !this.GrabbedObject.tag.Equals("basket")
                 && !this.basket.items.Contains(this.GrabbedObject))
             {
+
                 this.DropInBasket();
+
             }
             else
             {
@@ -150,12 +160,14 @@
         {
             if (this.IsGrabbing())
             {
+
                 this.SetPrevPosition(this.GrabbedObject.transform.position);
                 Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
 
                 this.UpdateGrabbedBasket(newpos);
 
                 this.GrabbedObject.transform.position = newpos;
+                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
@@ -179,6 +191,7 @@
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     this.GrabbedObject.GetComponent<Collider>());
                 this.SetPrevPosition(this.grabber.transform.position);
+
             }
         }
 
@@ -303,7 +316,7 @@
         /// Sets the previous rotation.
         /// </summary>
         /// <param name="rot">The rotation.</param>
-        public void SetPrevRotation(Vector3 rot)
+        public void SetPrevRotation(Quaternion rot)
         {
             this.prevRot = rot;
         }
@@ -312,9 +325,19 @@
         /// Gets the previous rotation.
         /// </summary>
         /// <returns>The previous rotation</returns>
-        public Vector3 GetPrevRotation()
+        public Quaternion GetPrevRotation()
         {
             return this.prevRot;
+        }
+
+        public void SetPrevGrabberRot(Quaternion rot)
+        {
+            this.prevGrabberRot = rot;
+        }
+
+        public Quaternion GetPrevGrabberRot()
+        {
+            return this.prevGrabberRot;
         }
 
         #endregion Methods

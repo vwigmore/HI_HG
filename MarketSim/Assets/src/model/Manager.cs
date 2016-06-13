@@ -231,7 +231,6 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
         Manager.highlightOn = true;
         Manager.gestureMovementOn = true;
         Manager.mKbOnly = true;

@@ -8,6 +8,9 @@
  * Author: Wing Nguyen
  **/
 
+/// <summary>
+/// 
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     #region Fields
@@ -18,7 +21,53 @@ public class PlayerController : MonoBehaviour
     private CharacterController pc;
 
     /// <summary>
-    /// The parts of the body: head,hip,left foot and right foot
+    /// The move direction
+    /// </summary>
+    private Vector3 moveDirection;
+
+    /// <summary>
+    /// The player height
+    /// </summary>
+    private float playerHeight;
+
+    /// <summary>
+    /// The crouch height
+    /// </summary>
+    private float crouchHeight;
+
+    /// <summary>
+    /// The cam_vert_rot
+    /// </summary>
+    private float cam_vert_rot = 0;
+
+    /// <summary>
+    /// The cam_cap
+    /// </summary>
+    private float cam_cap = 90;
+
+    /// <summary>
+    /// The mouse axis y
+    /// </summary>
+    private float mouseAxisY;
+
+    /// <summary>
+    /// The mouse axis x
+    /// </summary>
+    private float mouseAxisX;
+
+    /// <summary>
+    /// The v axis
+    /// </summary>
+    private float vAxis;
+
+    /// <summary>
+    /// The h axis
+    /// </summary>
+    private float hAxis;
+
+
+    /// <summary>
+    /// The parts of the body: head, hip, left foot and right foot
     /// </summary>
     private GameObject head, hip, leftFoot, rightFoot;
 
@@ -58,7 +107,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Rotation to the right.
+    /// Rotates the player to the right.
     /// </summary>
     public void rotateRight()
     {
@@ -66,7 +115,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Rotation to the left.
+    /// Rotates the player to the left.
     /// </summary>
     public void rotateLeft()
     {

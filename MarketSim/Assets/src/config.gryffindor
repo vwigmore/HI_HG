@@ -16,9 +16,9 @@
 # MKBONLY: Controlling the simulation without VR hardware
 ###############################################
 
-HIGHLIGHTON		= TRUE
+HIGHLIGHTON		= false
 GESTUREMOVEMENTON 	= FALSE
-MKBONLY 		= TRUE
+MKBONLY 		= false
 
 ################## [GRABBING] ################## 
 # PROXDIST: the 'grabber' (hand/camera) has to be within this distance to grab
