@@ -19,6 +19,8 @@ public class HandController : MonoBehaviour
     /// </summary>
     private IHand hand;
 
+    private VibrateHand vhand;
+
     private ArrayList collisionContacts;
 
     private bool[] bends;
@@ -50,8 +52,8 @@ public class HandController : MonoBehaviour
         }
         hand.UpdateHand(bends);
         hand.UpdateGestures();
-        hand.UpdateVibration();
-        hand.UpdateTimer();
+        vhand.UpdateVibration();
+        vhand.UpdateTimer();
 
         ProcessContacts();
 

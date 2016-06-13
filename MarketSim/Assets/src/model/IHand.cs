@@ -51,25 +51,7 @@ namespace Assets.src.model
         /// <returns></returns>
         Gestures GetGesture();
 
-        /// <summary>
-        /// Vibrates this instance.
-        /// </summary>
-        void Vibrate();
-
-        /// <summary>
-        /// Updates the timer.
-        /// </summary>
-        void UpdateTimer();
-
-        /// <summary>
-        /// Resets the timer.
-        /// </summary>
-        void ResetTimer();
-
-        /// <summary>
-        /// Updates the vibration of the glove.
-        /// </summary>
-        void UpdateVibration();
+  
 
         /// <summary>
         /// Touches the specified object.

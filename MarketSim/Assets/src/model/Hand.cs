@@ -10,6 +10,8 @@ public abstract class Hand : IHand
 {
     #region Fields
 
+    public VibrateHand vhand;
+
     /// <summary>
     /// The root transform
     /// </summary>
@@ -67,12 +69,12 @@ public abstract class Hand : IHand
     /// <summary>
     /// The vibrate time
     /// </summary>
-    private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
+    //private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
 
     /// <summary>
     /// The vibration power
     /// </summary>
-    private readonly float vibrationForce = Manager.VibrationForce;
+    //private readonly float vibrationForce = Manager.VibrationForce;
 
     /// <summary>
     /// The base hand collider size
@@ -107,7 +109,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// The timer
     /// </summary>
-    private float timer;
+    //private float timer;
 
     /// <summary>
     /// The last touched gameobject
@@ -119,7 +121,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// Bool if the glove should be vibrated.
     /// </summary>
-    private bool vibrateGlove;
+    //private bool vibrateGlove;
 
    private static readonly int ONE = 1;
    private static readonly int TWO = 2;
@@ -139,7 +141,7 @@ public abstract class Hand : IHand
     /// <param name="hand">The hand.</param>
     /// <param name="animation">The animation.</param>
     /// <param name="highlightColor">Color of the highlight.</param>
-    public Hand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color highlightColor)
+    public Hand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color highlightColor, VibrateHand vh)
     {
         Manus.ManusInit();
         this.glove = glove;
@@ -149,8 +151,9 @@ public abstract class Hand : IHand
         this.hand = hand;
         this.animationClip = animation;
         this.highlightColor = highlightColor;
-        this.timer = 0f;
-        this.vibrateGlove = false;
+        this.vhand = vh;
+        //this.timer = 0f;
+        //this.vibrateGlove = false;
         this.lastTouched = null;
 
         this.correctionBends = new float[glove.Fingers.Length];
@@ -400,7 +403,7 @@ public abstract class Hand : IHand
         if ((lastTouched == null || !lastTouched.Equals(obj))
             && Manager.EnableVibration)
         {
-            Vibrate();
+            vhand.Vibrate();
             lastTouched = obj;
         }
         else
@@ -409,46 +412,46 @@ public abstract class Hand : IHand
         }
     }
 
-    /// <summary>
-    /// Resets the timer.
-    /// </summary>
-    public void ResetTimer()
-    {
-        timer = 0;
-    }
+    ///// <summary>
+    ///// Resets the timer.
+    ///// </summary>
+    //public void ResetTimer()
+    //{
+    //    timer = 0;
+    //}
 
-    /// <summary>
-    /// Updates the timer.
-    /// </summary>
-    public void UpdateTimer()
-    {
-        timer += Time.deltaTime;
-    }
+    ///// <summary>
+    ///// Updates the timer.
+    ///// </summary>
+    //public void UpdateTimer()
+    //{
+    //    timer += Time.deltaTime;
+    //}
 
-    /// <summary>
-    /// Updates the vibration of the glove.
-    /// </summary>
-    public void UpdateVibration()
-    {
-        if (timer <= vibrateTime && vibrateGlove)
-        {
-            glove.SetVibration(vibrationForce);
-        }
-        else
-        {
-            glove.SetVibration(0.0f);
-            ResetTimer();
-            vibrateGlove = false;
-        }
-    }
+    ///// <summary>
+    ///// Updates the vibration of the glove.
+    ///// </summary>
+    //public void UpdateVibration()
+    //{
+    //    if (timer <= vibrateTime && vibrateGlove)
+    //    {
+    //        glove.SetVibration(vibrationForce);
+    //    }
+    //    else
+    //    {
+    //        glove.SetVibration(0.0f);
+    //        ResetTimer();
+    //        vibrateGlove = false;
+    //    }
+    //}
 
     /// <summary>
     /// Vibrates this glove.
     /// </summary>
-    public void Vibrate()
-    {
-        vibrateGlove = true;
-    }
+    //public void Vibrate()
+    //{
+    //    vibrateGlove = true;
+    //}
 
     public ArrayList GetColliders()
     {
