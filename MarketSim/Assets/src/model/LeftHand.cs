@@ -34,9 +34,15 @@ public class LeftHand : Hand
     {
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
+
+        GameObject wrist = GameObject.Find("12_Wrist_Left");
+        GameObject elbow = GameObject.Find("11_Elbow_Left");
+        Vector3 dir = wrist.transform.position - elbow.transform.position;
+        this.handModel.transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
+
         Vector3 newrot = this.root.transform.rotation.eulerAngles;
 
-        newrot.y -= 90;
+        newrot.y += 90;
 
         this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
@@ -54,8 +60,6 @@ public class LeftHand : Hand
         {
             MoveWithGesture(gesture);
         }
-        this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
-        this.manusGrab.basket.UpdateList();
     }
 
     /// <summary>
