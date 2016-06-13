@@ -24,7 +24,6 @@
         /// </summary>
         protected float proxDist = Manager.ProximityDist;
 
-
         /// <summary>
         /// GameObject player.
         /// </summary>
@@ -125,10 +124,16 @@
         {
             if (this.highlighted != null)
             {
-                Debug.Log("grabbing: "+ highlighted);
                 this.GrabbedObject = this.highlighted;
                 SetPrevRotation(GrabbedObject.transform.rotation);
+                if (basket.items.Contains(highlighted))
+                {
+                    Debug.Log("trying to remove " + highlighted);
+                    basket.removeItem(highlighted);
+                }
             }
+
+            ClearHighlights();
         }
 
         /// <summary>
@@ -139,13 +144,14 @@
             if (this.GrabbedObject == null)
                 return;
 
+            if (!GrabbedObject.GetComponent<Collider>().enabled)
+                GrabbedObject.GetComponent<Collider>().enabled = true;
+
             if (this.InProximity(this.basket.holder)
                 && !this.GrabbedObject.tag.Equals("basket")
                 && !this.basket.items.Contains(this.GrabbedObject))
             {
-
                 this.DropInBasket();
-
             }
             else
             {
@@ -156,18 +162,17 @@
         /// <summary>
         /// Updates the grabbed object.
         /// </summary>
-        public virtual void UpdateGrabbedObject()
+        public virtual void UpdateGrabbedObject(Vector3 grabPoint)
         {
             if (this.IsGrabbing())
             {
-
                 this.SetPrevPosition(this.GrabbedObject.transform.position);
-                Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
 
-                this.UpdateGrabbedBasket(newpos);
+                //Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
 
-                this.GrabbedObject.transform.position = newpos;
-                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
+                this.UpdateGrabbedBasket(grabPoint);
+
+                this.GrabbedObject.transform.position = grabPoint;
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
@@ -191,7 +196,6 @@
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     this.GrabbedObject.GetComponent<Collider>());
                 this.SetPrevPosition(this.grabber.transform.position);
-
             }
         }
 
@@ -210,6 +214,9 @@
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
         {
+            if (IsGrabbing())
+                return;
+
             this.ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && this.InProximity(obj))
             {
@@ -245,6 +252,7 @@
             {
                 this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
             }
+            highlighted = null;
         }
 
         /// <summary>

@@ -106,6 +106,12 @@ namespace Assets.src.model
             }
         }
 
+        public void removeItem(GameObject item)
+        {
+            if (items.Count > 0)
+                items.Remove(item);
+        }
+
         /// <summary>
         /// Updates the list with items that are in the basket
         /// </summary>
@@ -118,7 +124,15 @@ namespace Assets.src.model
                 Quaternion newrot = this.holder.transform.rotation;
                 newpos += this.offsets[i];
                 newpos.y -= 0.65f;
-                o.GetComponent<Collider>().enabled = false;
+
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    o.GetComponent<Collider>());
+
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("basket").GetComponent<Collider>(),
+                    o.GetComponent<Collider>());
+
                 o.transform.position = newpos;
 
                 o.transform.localRotation = newrot;

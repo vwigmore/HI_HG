@@ -49,11 +49,12 @@
         /// Updates the grabbed object.
         /// Also stores previous position of object.
         /// </summary>
-        public override void UpdateGrabbedObject()
+        public override void UpdateGrabbedObject(Vector3 grabPoint)
         {
             if (IsGrabbing())
                 prevPos = GrabbedObject.transform.position;
-            base.UpdateGrabbedObject();
+
+            base.UpdateGrabbedObject(grabPoint);
         }
 
         /// <summary>

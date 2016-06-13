@@ -56,8 +56,12 @@
             {
                 SetPrevPosition(GrabbedObject.transform.position);
                 Vector3 newpos = grabber.transform.position;
-
-                UpdateItemInBasket(offset, trans, newpos);
+                if (GrabbedObject.tag.Equals("basket"))
+                {
+                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
+                    UpdateGrabbedObjectsPosition(newpos);
+                    UpdateGrabbedObjectsRotation(trans);
+                }
                 newpos.z += offset;
 
                 UpdateGrabbedObjectsPosition(newpos);
@@ -65,22 +69,6 @@
             }
         }
 
-        /// <summary>
-        /// Updates the item in the basket.
-        /// </summary>
-        /// <param name="offset">The offset.</param>
-        /// <param name="trans">The trans.</param>
-        /// <param name="newpos">The newpos.</param>
-        public void UpdateItemInBasket(float offset, Transform trans,Vector3 newpos)
-        {
-            if (GrabbedObject.tag.Equals("basket"))
-            {
-                float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                UpdateGrabbedObjectsPosition(newpos);
-                UpdateGrabbedObjectsRotation(trans);
-            }
-        }
-             
         /// <summary>
         /// Updates the grabbed objects position.
         /// </summary>

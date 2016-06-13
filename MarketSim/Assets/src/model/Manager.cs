@@ -205,22 +205,14 @@ public class Manager : MonoBehaviour
     {
         switch (split[0])
         {
-            case "HIGHLIGHTON":
-                Manager.highlightOn = (split[1] == "TRUE"); break;
-            case "GESTUREMOVEMENTON":
-                Manager.gestureMovementOn = (split[1] == "TRUE"); break;
-            case "MKBONLY":
-                Manager.mKbOnly = (split[1] == "TRUE"); break;
-            case "PROXDIST":
-                Manager.proximityDist = float.Parse(split[1]); break;
-            case "THROWFORCE":
-                Manager.throwForce = float.Parse(split[1]); break;
-            case "ENABLEVIBRATION":
-                Manager.enableVibration = (split[1] == "TRUE"); break;
-            case "VIBRATIONFORCE":
-                Manager.vibrationForce = float.Parse(split[1]); break;
-            case "VIBRATIONTIME":
-                Manager.vibrationTime = int.Parse(split[1]); break;
+            case "HIGHLIGHTON": Manager.highlightOn = (split[1] == "TRUE"); break;
+            case "GESTUREMOVEMENTON": Manager.gestureMovementOn = (split[1] == "TRUE"); break;
+            case "MKBONLY": Manager.mKbOnly = (split[1] == "TRUE"); break;
+            case "PROXDIST": Manager.proximityDist = float.Parse(split[1]); break;
+            case "THROWFORCE": Manager.throwForce = float.Parse(split[1]); break;
+            case "ENABLEVIBRATION": Manager.enableVibration = (split[1] == "TRUE"); break;
+            case "VIBRATIONFORCE": Manager.vibrationForce = float.Parse(split[1]); break;
+            case "VIBRATIONTIME": Manager.vibrationTime = int.Parse(split[1]); break;
             default: break;
         }
     }

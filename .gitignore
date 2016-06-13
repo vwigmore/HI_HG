@@ -3,7 +3,6 @@ MarketSim/Library/*
 MarketSim/obj/*
 MarketSim/.vs/*
 MarketSim/packages/*
-MarketSim/Assets/3rd_party/*
 
 **.csproj
 **.unityproj

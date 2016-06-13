@@ -9,7 +9,7 @@
  **/
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
     /// The h axis
     /// </summary>
     private float hAxis;
-
 
     /// <summary>
     /// The parts of the body: head, hip, left foot and right foot
@@ -181,7 +180,7 @@ public class PlayerController : MonoBehaviour
         if (Manager.MKBOnly)
         {
             Vector3 newpos = Camera.main.transform.position;
-            newpos.y = 1.7f;
+            newpos.y = 1.85f;
             Camera.main.transform.position = newpos;
         }
     } 

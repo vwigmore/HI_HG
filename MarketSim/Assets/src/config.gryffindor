@@ -16,7 +16,7 @@
 # MKBONLY: Controlling the simulation without VR hardware
 ###############################################
 
-HIGHLIGHTON		= false
+HIGHLIGHTON		= True
 GESTUREMOVEMENTON 	= FALSE
 MKBONLY 		= false
 
@@ -30,10 +30,10 @@ MKBONLY 		= false
 # VIBRATIONTIME: the time of the haptic feedback in ms.
 ###############################################
 
-PROXDIST 		= 2.0
+PROXDIST 		= 1.0
 THROWFORCE		= 500
 
-ENABLEVIBRATION		= TRUE
+ENABLEVIBRATION		= false
 VIBRATIONFORCE		= 0.1
 VIBRATIONTIME		= 100
 
