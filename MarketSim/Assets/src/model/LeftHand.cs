@@ -41,7 +41,7 @@ public class LeftHand : Hand
     }
 
     /// <summary>
-    /// Updates the gestures.
+    /// Update the gestures.
     /// </summary>
     public override void UpdateGestures()
     {
@@ -56,7 +56,7 @@ public class LeftHand : Hand
     }
 
     /// <summary>
-    /// Gestures the movement.
+    /// decides when the hand nieed to move.
     /// </summary>
     public void GestureMovement(Gestures gesture)
     {
@@ -79,7 +79,7 @@ public void MoveWithGesture(Gestures g)
     }
 
     /// <summary>
-    /// Walks the back wards.
+    /// Decides if it can walk backward.
     /// </summary>
     /// <param name="g">The g.</param>
     public void WalkBackWards(Gestures g)
@@ -88,7 +88,7 @@ public void MoveWithGesture(Gestures g)
     }
 
     /// <summary>
-    /// Walks the forward.
+    /// Decides if it can walk forward.
     /// </summary>
     /// <param name="g">The g.</param>
     public void WalkForward(Gestures g)
@@ -97,7 +97,7 @@ public void MoveWithGesture(Gestures g)
     }
 
     /// <summary>
-    /// Rotates the right.
+    /// Rotation to the right.
     /// </summary>
     /// <param name="g">The g.</param>
     public void RotateRight(Gestures g)

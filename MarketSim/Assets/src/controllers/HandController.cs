@@ -35,16 +35,24 @@ public class HandController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (!Manager.MKBOnly)
-        {
-            hand.UpdatePosition();
-        }
+        UpdatePosition();
+
         hand.UpdateHand();
         hand.UpdateGestures();
         hand.UpdateVibration();
         hand.UpdateTimer();
     }
 
+    /// <summary>
+    /// Updates the position.
+    /// </summary>
+    public void UpdatePosition()
+    {
+        if (!Manager.MKBOnly)
+        {
+            hand.UpdatePosition();
+        }
+    }
     /// <summary>
     /// Called when [trigger enter].
     /// </summary>
