@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,7 @@ namespace Assets.src.model
         /// <summary>
         /// Updates the hand.
         /// </summary>
-        void UpdateHand();
+        void UpdateHand(bool[] o);
 
         /// <summary>
         /// Updates the gestures.
@@ -75,6 +76,16 @@ namespace Assets.src.model
         /// </summary>
         /// <param name="obj">The object.</param>
         void Touch(GameObject obj);
+
+        /// <summary>
+        /// Gets the colliders.
+        /// </summary>
+        /// <returns></returns>
+        ArrayList GetColliders();
+
+        Transform GetRootTransform();
+
+        Vector3 GetPosition();
 
         #endregion Methods
     }

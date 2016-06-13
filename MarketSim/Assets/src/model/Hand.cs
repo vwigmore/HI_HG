@@ -40,6 +40,8 @@ public abstract class Hand : IHand
     /// </summary>
     protected ManusGrab manusGrab;
 
+    protected ArrayList colliders;
+
     /// <summary>
     /// The game transforms
     /// </summary>
@@ -75,7 +77,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// The base hand collider size
     /// </summary>
-    private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.05f, 0.10f);
+    private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.02f, 0.1f);
 
     /// <summary>
     /// Game object hand.
@@ -112,6 +114,8 @@ public abstract class Hand : IHand
     /// </summary>
     private GameObject lastTouched;
 
+    private float[] correctionBends;
+
     /// <summary>
     /// Bool if the glove should be vibrated.
     /// </summary>
@@ -143,10 +147,16 @@ public abstract class Hand : IHand
         this.vibrateGlove = false;
         this.lastTouched = null;
 
+        this.correctionBends = new float[glove.Fingers.Length];
+        for (int i = 0; i < glove.Fingers.Length; i++)
+            correctionBends[i] = glove.Fingers[i];
+
+        this.colliders = new ArrayList();
+
         InitTransforms();
         CreateColliders();
 
-        this.manusGrab = new ManusGrab(baseCollider.gameObject, highlightColor);
+        this.manusGrab = new ManusGrab(baseCollider.gameObject, highlightColor, this);
 
         hand.SetActive(true);
     }
@@ -172,28 +182,46 @@ public abstract class Hand : IHand
     /// <summary>
     /// Updates the hand.
     /// </summary>
-    public void UpdateHand()
+    public void UpdateHand(bool[] bend)
     {
         Quaternion q = glove.Quaternion;
         float[] fingers = glove.Fingers;
         RootTransform.localRotation = q;
 
-        UpdateFingers(fingers);
+        for (int i = 0; i < fingers.Length; i++)
+        {
+            if (fingers[i] > correctionBends[i])
+                correctionBends[i] = bend[i] ? fingers[i] : correctionBends[i];
+            else
+                correctionBends[i] = fingers[i];
+        }
+
+        UpdateFingers(correctionBends, bend);
     }
 
     /// <summary>
     /// Updates all fingers.
     /// </summary>
     /// <param name="f">Array of floats containing fingers.</param>
-    public void UpdateFingers(float[] f)
+    public void UpdateFingers(float[] f, bool[] bend)
     {
+        float avgbend = 0.0f;
         for (int i = 0; i < (int)FingersBent.five; i++)
         {
             animationClip.SampleAnimation(hand, f[i] * timeFactor);
+            avgbend += f[i];
             for (int j = 0; j < (int)FingersBent.four; j++)
             {
                 gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
+        }
+        avgbend /= 4;
+
+        float thumbvalue = (avgbend > f[0]) ? avgbend : f[0];
+        animationClip.SampleAnimation(hand, thumbvalue * timeFactor);
+        for (int j = 0; j < (int)FingersBent.four; j++)
+        {
+            gameTransforms[0][j].localRotation = modelTransforms[0][j].localRotation;
         }
     }
 
@@ -203,15 +231,22 @@ public abstract class Hand : IHand
     public virtual void UpdateGestures()
     {
         Gestures gesture = GetGesture();
-        if (!manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Grab)
-            {
-                manusGrab.GrabHighlightedObject();
-                manusGrab.SetPrevGrabberRot(baseCollider.transform.rotation);
-            }
-        }
-        else
+
+        //if (!manusGrab.IsGrabbing())
+        //{
+        //    if (gesture == Gestures.Grab)
+        //    {
+        //        manusGrab.GrabHighlightedObject();
+        //        manusGrab.SetPrevGrabberRot(baseCollider.transform.rotation);
+        //    }
+        //}
+        //else
+        //{
+        //    if (gesture == Gestures.Open)
+        //        manusGrab.DropObject();
+        //}
+
+        if (manusGrab.IsGrabbing())
         {
             if (gesture == Gestures.Open)
                 manusGrab.DropObject();
@@ -261,8 +296,10 @@ public abstract class Hand : IHand
     public void CreateColliders()
     {
         InitializeBaseCollider();
-        InitializeRigidCollider();       
+
+        //InitializeRigidCollider(); not needed
     }
+
     /// <summary>
     /// Initializes the base collider.
     /// </summary>
@@ -275,7 +312,9 @@ public abstract class Hand : IHand
         pos2 = TranslateHandBoundingBox(pos2);
 
         baseCollider.center = pos2;
-        baseCollider.isTrigger = true;
+
+        //baseCollider.isTrigger = true;
+        colliders.Add(baseCollider);
     }
 
     public void InitializeRigidCollider()
@@ -296,7 +335,7 @@ public abstract class Hand : IHand
     public Vector3 TranslateHandBoundingBox(Vector3 pos)
     {
         pos.x -= .05f;
-        pos.y -= .1f;
+        pos.y -= .02f;
         return pos;
     }
 
@@ -325,9 +364,23 @@ public abstract class Hand : IHand
                 gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
 
-                BoxCollider b = new BoxCollider();
-                b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
-                b.size = new Vector3(.03f, .03f, .03f);
+                if (j == 3)
+                {
+                    SphereCollider s = new SphereCollider();
+                    s = gameTransforms[i][j].gameObject.AddComponent<SphereCollider>();
+
+                    if (i == 0)
+                        s.radius = .025f;
+                    else s.radius = .015f;
+
+                    colliders.Add(s);
+                }
+                else
+                {
+                    BoxCollider b = new BoxCollider();
+                    b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
+                    b.size = new Vector3(.02f, .02f, .02f);
+                }
             }
         };
     }
@@ -389,6 +442,21 @@ public abstract class Hand : IHand
     public void Vibrate()
     {
         vibrateGlove = true;
+    }
+
+    public ArrayList GetColliders()
+    {
+        return this.colliders;
+    }
+
+    public Transform GetRootTransform()
+    {
+        return this.RootTransform;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return this.root.transform.position;
     }
 
     /// <summary>
