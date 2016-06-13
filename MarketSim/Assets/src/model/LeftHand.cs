@@ -49,27 +49,60 @@ public class LeftHand : Hand
 
         Gestures gesture = GetGesture();
 
-        if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
-        {
-            MoveWithGesture(gesture);
-        }
+        GestureMovement(gesture);
+
         this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
         this.manusGrab.basket.UpdateList();
     }
 
     /// <summary>
-    /// Moves according to the given gesture.
+    /// Gestures the movement.
     /// </summary>
-    /// <param name="g">The gesture.</param>
-    public void MoveWithGesture(Gestures g)
+    public void GestureMovement(Gestures gesture)
     {
-        if (g == Gestures.Thumb)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-        if (g == Gestures.Point)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-        if (g == Gestures.Pinky)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+        if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
+        {
+            MoveWithGesture(gesture);
+        }
+    }
+   
+/// <summary>
+/// Moves according to the given gesture.
+/// </summary>
+/// <param name="g">The gesture.</param>
+public void MoveWithGesture(Gestures g)
+    {
+        if (g == Gestures.Thumb) WalkBackWards(g);
+        if (g == Gestures.Point) WalkForward(g);
+        if (g == Gestures.Pinky) RotateRight(g);
+          
     }
 
+    /// <summary>
+    /// Walks the back wards.
+    /// </summary>
+    /// <param name="g">The g.</param>
+    public void WalkBackWards(Gestures g)
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+    }
+
+    /// <summary>
+    /// Walks the forward.
+    /// </summary>
+    /// <param name="g">The g.</param>
+    public void WalkForward(Gestures g)
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+    }
+
+    /// <summary>
+    /// Rotates the right.
+    /// </summary>
+    /// <param name="g">The g.</param>
+    public void RotateRight(Gestures g)
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+    }
     #endregion Methods
 }
