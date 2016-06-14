@@ -1,5 +1,11 @@
 ﻿namespace Assets.src.model
 {
+    using ManusMachina;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using UnityEngine;
 
     /// <summary>
@@ -13,12 +19,14 @@
         /// <summary>
         /// The throw force
         /// </summary>
-        private new readonly float  throwForce = 500;
+        private readonly float throwForce = 500;
 
         /// <summary>
         /// The last position
         /// </summary>
         private Vector3 lastPos;
+
+        private IHand hand;
 
         /// <summary>
         /// The last rotation
@@ -34,12 +42,13 @@
         /// </summary>
         /// <param name="grabber">The grabber.</param>
         /// <param name="highlightColor">Color of the highlight.</param>
-        public ManusGrab(GameObject grabber, Color highlightColor)
+        public ManusGrab(GameObject grabber, Color highlightColor, IHand hand)
             : base(grabber, highlightColor)
         {
             this.Grabber = grabber;
             this.highlightColor = highlightColor;
             this.lastRotation = Quaternion.identity;
+            this.hand = hand;
         }
 
         #endregion Constructors
@@ -50,22 +59,26 @@
         /// Updates the grabbed object.
         /// </summary>
         /// <param name="trans">The trans.</param>
-        public void UpdateGrabbedObject(float offset, Transform trans)
+        public void UpdateGrabbedObject(Vector3 grabPos, Transform grabberTransform)
         {
             if (IsGrabbing())
             {
                 SetPrevPosition(GrabbedObject.transform.position);
-                Vector3 newpos = grabber.transform.position;
+
+                //Vector3 newpos = grabber.transform.position;
                 if (GrabbedObject.tag.Equals("basket"))
                 {
                     float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    UpdateGrabbedObjectsPosition(newpos);
-                    UpdateGrabbedObjectsRotation(trans);
-                }
-                newpos.z += offset;
+                    UpdateGrabbedObjectsPosition(grabPos);
 
-                UpdateGrabbedObjectsPosition(newpos);
-                UpdateGrabbedObjectsRotation(trans);
+                    UpdateGrabbedObjectsRotation(grabberTransform);
+                }
+
+                //newpos.z += offset;
+
+                UpdateGrabbedObjectsPosition(grabPos);
+
+                UpdateGrabbedObjectsRotation(grabberTransform);
             }
         }
 
@@ -78,6 +91,7 @@
         {
             GrabbedObject.transform.position = newpos;
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+            GrabbedObject.GetComponent<Collider>().enabled = false;
         }
 
         /// <summary>
@@ -86,10 +100,16 @@
         /// <param name="trans">The trans.</param>
         public void UpdateGrabbedObjectsRotation(Transform trans)
         {
-            Quaternion current = trans.rotation;
-            Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
-            Quaternion newrot = offset * GetPrevRotation();
-            GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
+            if (GrabbedObject.tag.Equals("basket"))
+                return;
+
+            //Quaternion current = trans.rotation;
+            //Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
+            //Quaternion newrot = offset * GetPrevRotation();
+            //GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
+            GrabbedObject.transform.rotation = trans.rotation;
+            if (this.hand is RightHand)
+                GrabbedObject.transform.Rotate(Vector3.up, 180);
         }
 
         #endregion Methods
