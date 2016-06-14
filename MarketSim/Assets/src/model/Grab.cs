@@ -152,11 +152,12 @@
                 float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
                 pos.y -= y;
                 this.GrabbedObject.transform.position = pos;
+                this.prevPos = this.grabber.transform.position;
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+
                 Physics.IgnoreCollision(
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     this.GrabbedObject.GetComponent<Collider>());
-                this.prevPos = this.grabber.transform.position;
             }
         }
 
@@ -170,7 +171,8 @@
         }
 
         /// <summary>
-        /// Highlight selected object
+        /// If not currently grabbing an object, highlight
+        /// the selected object.
         /// </summary>
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
@@ -181,39 +183,12 @@
             this.ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && this.InProximity(obj))
             {
-                this.HighlightHelp(obj);
+                this.Highlight(obj);
             }
             else
             {
                 this.highlighted = null;
             }
-        }
-
-        /// <summary>
-        /// Helper method for HighlightSelectedObjects
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        public void HighlightHelp(GameObject obj)
-        {
-            this.prevHighlighted = obj;
-            this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
-            this.highlighted = obj;
-            if (Manager.HighlightOn)
-            {
-                obj.GetComponent<Renderer>().material.color = this.highlightColor;
-            }
-        }
-
-        /// <summary>
-        /// Clear previously highlighted objects
-        /// </summary>
-        public void ClearHighlights()
-        {
-            if (this.prevHighlighted != null)
-            {
-                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
-            }
-            highlighted = null;
         }
 
         /// <summary>
@@ -237,6 +212,33 @@
         }
 
         /// <summary>
+        /// Set the previously highlighted object back to its original color.
+        /// </summary>
+        public void ClearHighlights()
+        {
+            if (this.prevHighlighted != null)
+            {
+                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
+            }
+            highlighted = null;
+        }
+
+        /// <summary>
+        /// Highlights the specified object.
+        /// </summary>
+        /// <param name="obj">The object to be highlighted.</param>
+        private void Highlight(GameObject obj)
+        {
+            this.prevHighlighted = obj;
+            this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
+            this.highlighted = obj;
+            if (Manager.HighlightOn)
+            {
+                obj.GetComponent<Renderer>().material.color = this.highlightColor;
+            }
+        }
+
+        /// <summary>
         /// Drops the grabbed object into the basket.
         /// </summary>
         private void DropInBasket()
@@ -251,12 +253,13 @@
         }
 
         /// <summary>
-        /// Add force to object when throwing.
+        /// Add force to object when throwing it away.
         /// </summary>
         private void ObjectForce()
         {
             Vector3 targetPos = this.GrabbedObject.transform.position;
             Vector3 direction = targetPos - this.prevPos;
+
             this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
             this.GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * Manager.ThrowForce, ForceMode.Force);
             this.GrabbedObject = null;

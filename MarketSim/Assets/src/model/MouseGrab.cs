@@ -34,9 +34,10 @@
         #region Methods
 
         /// <summary>
-        /// Updates the grabbed object.
-        /// Also stores previous position of object.
+        /// Updates the grabbed object, by changing the position
+        /// and reference points for other objects.
         /// </summary>
+        /// <param name="grabPoint">The collision point of with the grabbed object.</param>
         public void UpdateGrabbedObject(Vector3 grabPoint)
         {
             if (IsGrabbing())
@@ -44,9 +45,9 @@
                 base.UpdateGrabbedObject();
 
                 this.UpdateGrabbedBasket(grabPoint);
-
                 this.GrabbedObject.transform.position = grabPoint;
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+
                 Physics.IgnoreCollision(
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     this.GrabbedObject.GetComponent<Collider>());
