@@ -42,6 +42,9 @@ public abstract class Hand : IHand
     /// </summary>
     protected ManusGrab manusGrab;
 
+    /// <summary>
+    /// The colliders
+    /// </summary>
     protected ArrayList colliders;
 
     /// <summary>
@@ -49,6 +52,9 @@ public abstract class Hand : IHand
     /// </summary>
     protected Transform[][] gameTransforms;
 
+    /// <summary>
+    /// The base collider
+    /// </summary>
     protected BoxCollider baseCollider;
 
     /// <summary>
@@ -65,16 +71,6 @@ public abstract class Hand : IHand
     /// The sphere collider radius
     /// </summary>
     private const float SphereColliderRadius = 0.035f;
-
-    /// <summary>
-    /// The vibrate time
-    /// </summary>
-    //private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
-
-    /// <summary>
-    /// The vibration power
-    /// </summary>
-    //private readonly float vibrationForce = Manager.VibrationForce;
 
     /// <summary>
     /// The base hand collider size
@@ -107,27 +103,39 @@ public abstract class Hand : IHand
     private Color highlightColor;
 
     /// <summary>
-    /// The timer
-    /// </summary>
-    //private float timer;
-
-    /// <summary>
     /// The last touched gameobject
     /// </summary>
     private GameObject lastTouched;
 
+    /// <summary>
+    /// The correction bends
+    /// </summary>
     private float[] correctionBends;
 
     /// <summary>
-    /// Bool if the glove should be vibrated.
+    /// One
     /// </summary>
-    //private bool vibrateGlove;
+    private static readonly int ONE = 1;
 
-   private static readonly int ONE = 1;
-   private static readonly int TWO = 2;
-   private static readonly int THREE = 3;
-   private static readonly int FOUR = 4;
-   private static readonly int FIVE = 5;
+    /// <summary>
+    /// Two
+    /// </summary>
+    private static readonly int TWO = 2;
+
+    /// <summary>
+    /// Three
+    /// </summary>
+    private static readonly int THREE = 3;
+
+    /// <summary>
+    /// Four
+    /// </summary>
+    private static readonly int FOUR = 4;
+
+    /// <summary>
+    /// Five
+    /// </summary>
+    private static readonly int FIVE = 5;
 
     #endregion Fields
 
@@ -152,8 +160,6 @@ public abstract class Hand : IHand
         this.animationClip = animation;
         this.highlightColor = highlightColor;
         this.vhand = vh;
-        //this.timer = 0f;
-        //this.vibrateGlove = false;
         this.lastTouched = null;
 
         this.correctionBends = new float[glove.Fingers.Length];
@@ -171,15 +177,6 @@ public abstract class Hand : IHand
     }
 
     #endregion Constructors
-
-    //#region Enums
-
-    /// <summary>
-    /// Contains count of fingers bent 0-5.
-    /// </summary>
-    //public enum FingersBent { zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5 }
-
-    //#endregion Enums
 
     #region Methods
 
@@ -241,20 +238,6 @@ public abstract class Hand : IHand
     {
         Gestures gesture = GetGesture();
 
-        //if (!manusGrab.IsGrabbing())
-        //{
-        //    if (gesture == Gestures.Grab)
-        //    {
-        //        manusGrab.GrabHighlightedObject();
-        //        manusGrab.SetPrevGrabberRot(baseCollider.transform.rotation);
-        //    }
-        //}
-        //else
-        //{
-        //    if (gesture == Gestures.Open)
-        //        manusGrab.DropObject();
-        //}
-
         if (manusGrab.IsGrabbing())
         {
             if (gesture == Gestures.Open)
@@ -305,8 +288,6 @@ public abstract class Hand : IHand
     public void CreateColliders()
     {
         InitializeBaseCollider();
-
-        //InitializeRigidCollider(); not needed
     }
 
     /// <summary>
@@ -325,18 +306,6 @@ public abstract class Hand : IHand
         //baseCollider.isTrigger = true;
         colliders.Add(baseCollider);
     }
-
-    public void InitializeRigidCollider()
-    {
-        BoxCollider rigid = new BoxCollider();
-        rigid = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
-        Vector3 rigidsize = new Vector3(0.15f, 0.02f, 0.15f);
-        Vector3 rigidpos = rigid.center;
-        rigidpos.x -= .05f;
-        rigid.size = rigidsize;
-        rigid.center = rigidpos;
-    }
-
     /// <summary>
     /// Helper method for creating a collider.
     /// </summary>
@@ -349,7 +318,7 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Returns the ManusGrabs.
+    /// Returns the ManusGrab.
     /// </summary>
     /// <returns>ManusGrab</returns>
     public ManusGrab GetManusGrab()
@@ -395,7 +364,7 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Touches the specified object.
+    /// Checks if an object is touched.
     /// </summary>
     /// <param name="obj">The object.</param>
     public void Touch(GameObject obj)
@@ -412,57 +381,28 @@ public abstract class Hand : IHand
         }
     }
 
-    ///// <summary>
-    ///// Resets the timer.
-    ///// </summary>
-    //public void ResetTimer()
-    //{
-    //    timer = 0;
-    //}
-
-    ///// <summary>
-    ///// Updates the timer.
-    ///// </summary>
-    //public void UpdateTimer()
-    //{
-    //    timer += Time.deltaTime;
-    //}
-
-    ///// <summary>
-    ///// Updates the vibration of the glove.
-    ///// </summary>
-    //public void UpdateVibration()
-    //{
-    //    if (timer <= vibrateTime && vibrateGlove)
-    //    {
-    //        glove.SetVibration(vibrationForce);
-    //    }
-    //    else
-    //    {
-    //        glove.SetVibration(0.0f);
-    //        ResetTimer();
-    //        vibrateGlove = false;
-    //    }
-    //}
-
     /// <summary>
-    /// Vibrates this glove.
+    /// Gets the colliders.
     /// </summary>
-    //public void Vibrate()
-    //{
-    //    vibrateGlove = true;
-    //}
-
+    /// <returns></returns>
     public ArrayList GetColliders()
     {
         return this.colliders;
     }
 
+    /// <summary>
+    /// Gets the root transform.
+    /// </summary>
+    /// <returns></returns>
     public Transform GetRootTransform()
     {
         return this.RootTransform;
     }
 
+    /// <summary>
+    /// Gets the position.
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetPosition()
     {
         return this.root.transform.position;
