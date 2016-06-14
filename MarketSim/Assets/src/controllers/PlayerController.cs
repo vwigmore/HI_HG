@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 /**
  * Player Controller Script
@@ -17,7 +16,7 @@ public class PlayerController : MonoBehaviour
     #region Fields
 
     /// <summary>
-    /// The player controller
+    /// The charactercontroller
     /// </summary>
     private CharacterController pc;
 
@@ -67,12 +66,12 @@ public class PlayerController : MonoBehaviour
     private float hAxis;
 
     /// <summary>
-    /// The head
+    /// The parts of the body: head, hip, left foot and right foot
     /// </summary>
     private GameObject head, hip, leftFoot, rightFoot;
 
     /// <summary>
-    /// The last delta height
+    /// The heights: delta height and initial heigth
     /// </summary>
     private float lastDeltaHeight, initialDeltaHeight;
 
@@ -91,7 +90,7 @@ public class PlayerController : MonoBehaviour
     #region Methods
 
     /// <summary>
-    /// moves the player forward.
+    /// Allows the player to walk forward.
     /// </summary>
     public void walkForward()
     {
@@ -99,7 +98,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    ///  moves the player backwards.
+    /// Allows the player to walk backward.
     /// </summary>
     public void walkBackwards()
     {
@@ -123,7 +122,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Check if the player is in proximity.
+    /// Ckecks if the user is in proximity of the object.
     /// </summary>
     /// <param name="obj">The object.</param>
     /// <returns></returns>
@@ -170,13 +169,21 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdateCamPos()
     {
+        ChangePosition();
+    }
+
+    /// <summary>
+    /// Changes the  camera position.
+    /// </summary>
+    public void ChangePosition()
+    {
         if (Manager.MKBOnly)
         {
             Vector3 newpos = Camera.main.transform.position;
             newpos.y = 1.85f;
             Camera.main.transform.position = newpos;
         }
-    }
+    } 
 
     /// <summary>
     /// Updates the movement of the player.

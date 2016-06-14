@@ -13,7 +13,7 @@
         /// <summary>
         /// The throw force
         /// </summary>
-        private readonly float throwForce = 500;
+        private new readonly float throwForce = 500;
 
         /// <summary>
         /// The ray cast hit
@@ -23,7 +23,7 @@
         /// <summary>
         /// The initial position of the object
         /// </summary>
-        private Vector3 prevPos;
+        private new Vector3 prevPos;
 
         #endregion Fields
 

@@ -1,6 +1,4 @@
-﻿using Assets.src.model;
-using ManusMachina;
-using System.Collections;
+﻿using ManusMachina;
 using UnityEngine;
 
 /// <summary>

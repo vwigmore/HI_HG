@@ -10,7 +10,7 @@ namespace Assets.Editor
         #region Fields
 
         /// <summary>
-        /// The mouse grab
+        /// The mouse grab variable
         /// </summary>
         private MouseGrab mouseGrab;
 
@@ -20,7 +20,7 @@ namespace Assets.Editor
         private Color highlightColor = Color.cyan;
 
         /// <summary>
-        /// The highlighted
+        /// The highlighted object variable
         /// </summary>
         private GameObject highlighted;
 
@@ -39,7 +39,7 @@ namespace Assets.Editor
         #region Methods
 
         /// <summary>
-        /// Setups of all instances
+        /// setup for all instances
         /// </summary>
         [SetUp]
         public new void Setup()

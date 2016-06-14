@@ -1,5 +1,4 @@
 ﻿using Assets.src.model;
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
