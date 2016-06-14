@@ -19,8 +19,6 @@ public class HandController : MonoBehaviour
     /// </summary>
     private IHand hand;
 
-    private VibrateHand vhand;
-
     /// <summary>
     /// The collision contacts
     /// </summary>
@@ -47,7 +45,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Tells if the fingers are bend.
+    /// Tells that the fingers are bend.
     /// </summary>
     private void BendFingersIsTrue()
     {
@@ -63,8 +61,6 @@ public class HandController : MonoBehaviour
         UpdateHandPosition();
         hand.UpdateHand(bends);
         hand.UpdateGestures();
-        vhand.UpdateVibration();
-        vhand.UpdateTimer();
 
         ProcessContacts();
 
@@ -122,7 +118,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// processes the contacts and verifies that the thumb is not touched by the other figers
     /// </summary>
     private void ProcessContacts()
     {
@@ -134,7 +130,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Contactses the size of the count.
+    /// If the collision contact count is greater than one the index is updated and the object is highlighted 
     /// </summary>
     /// <param name="thumbTouch">if set to <c>true</c> [thumb touch].</param>
     /// <param name="othersTouch">The others touch.</param>
@@ -143,14 +139,11 @@ public class HandController : MonoBehaviour
         if (collisionContacts.Count >= 1)
         {
             BendFingersIsTrue();
-
             ContactPoint c = (ContactPoint)collisionContacts[0];
 
             IndexUpdate(c, thumbTouch, othersTouch);
-
             GetManusHighlightedObject(thumbTouch, othersTouch);
         }
-
         else if (collisionContacts.Count == 0)
         {
             hand.GetManusGrab().ClearHighlights();
@@ -158,7 +151,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets the manus highlighted object.
+    /// if the thumb thouches the other fingers, the highligted object is picked up, else it is dropped.
     /// </summary>
     /// <param name="thumbTouch">if set to <c>true</c> [thumb touch].</param>
     /// <param name="othersTouch">The others touch.</param>
@@ -175,12 +168,23 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Indexes the update.
+    /// Update the index of the fingers that thouch.
     /// </summary>
     /// <param name="c">The c.</param>
     /// <param name="thumbTouch">if set to <c>true</c> [thumb touch].</param>
     /// <param name="othersTouch">The others touch.</param>
     private void IndexUpdate(ContactPoint c, bool thumbTouch, int othersTouch)
+    {
+        FingersTouch(c, thumbTouch, othersTouch);
+    }
+
+    /// <summary>
+    ///  Get the index of the fingers that thouch.
+    /// </summary>
+    /// <param name="c">The c.</param>
+    /// <param name="thumbTouch">if set to <c>true</c> [thumb touch].</param>
+    /// <param name="othersTouch">The others touch.</param>
+    private void FingersTouch(ContactPoint c, bool thumbTouch, int othersTouch)
     {
         for (int i = 0; i < collisionContacts.Count; i++)
         {
@@ -188,14 +192,34 @@ public class HandController : MonoBehaviour
 
             int index = hand.GetColliders().IndexOf(c.thisCollider);
 
-            if (index < bends.Length && hand.GetManusGrab().IsGrabbing())
-                bends[index] = false;
+            FingersNotBended(index);
+            ThumbTouched(c, thumbTouch, othersTouch);
 
-            if (hand.GetColliders().IndexOf(c.thisCollider) == 0)
-                thumbTouch = true;
-            else
-                othersTouch++;
         }
+    }
+
+    /// <summary>
+    /// Verifies that the fingers are not bended.
+    /// </summary>
+    /// <param name="index">The index.</param>
+    private void FingersNotBended(int index)
+    {
+        if (index < bends.Length && hand.GetManusGrab().IsGrabbing())
+            bends[index] = false;
+    }
+
+    /// <summary>
+    /// Check if the other fingers thouch the thumb.
+    /// </summary>
+    /// <param name="c">The c.</param>
+    /// <param name="thumbTouch">if set to <c>true</c> [thumb touch].</param>
+    /// <param name="othersTouch">The others touch.</param>
+    private void ThumbTouched(ContactPoint c, bool thumbTouch,int othersTouch)
+    {
+        if (hand.GetColliders().IndexOf(c.thisCollider) == 0)
+            thumbTouch = true;
+        else
+            othersTouch++;
     }
 
     /// <summary>
@@ -211,7 +235,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds the contact if greater than one.
+    /// Adds the contact if the length is greater than one.
     /// </summary>
     /// <param name="col">The col.</param>
     private void AddContactIfGreaterThanOne(Collision col)
@@ -222,6 +246,7 @@ public class HandController : MonoBehaviour
             AddContact(col, thisCollider);
         }
     }
+ 
 
     /// <summary>
     /// Adds the contact.
@@ -241,7 +266,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Containments the check.
+    /// Cecks if the contact list contains a certain contact, if it does not than the contact is added to the list.
     /// </summary>
     /// <param name="col">The col.</param>
     private void ContainmentCheck(Collision col)
@@ -271,7 +296,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes the contact.
+    /// Removes the contact from the list.
     /// </summary>
     /// <param name="c">The c.</param>
     private void RemoveContact(ContactPoint c)
@@ -288,7 +313,7 @@ public class HandController : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes all contact.
+    /// Removes all contacts from the list.
     /// </summary>
     private void RemoveAllContact()
     {

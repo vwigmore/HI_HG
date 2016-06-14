@@ -66,8 +66,16 @@ namespace Assets.src.model
         /// <returns></returns>
         ArrayList GetColliders();
 
+        /// <summary>
+        /// Gets the root transform.
+        /// </summary>
+        /// <returns></returns>
         Transform GetRootTransform();
 
+        /// <summary>
+        /// Gets the position.
+        /// </summary>
+        /// <returns></returns>
         Vector3 GetPosition();
 
         #endregion Methods
