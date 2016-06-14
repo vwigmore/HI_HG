@@ -35,7 +35,6 @@ public class MouseGrabController : MonoBehaviour
         }
         else
         {
-            this.mouseGrab.SetHit(hit);
             this.mouseGrab.DropObject();
         }
     }

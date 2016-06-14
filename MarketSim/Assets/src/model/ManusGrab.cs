@@ -17,21 +17,11 @@
         #region Fields
 
         /// <summary>
-        /// The throw force
-        /// </summary>
-        private readonly float throwForce = 500;
-
-        /// <summary>
         /// The last position
         /// </summary>
         private Vector3 lastPos;
 
         private IHand hand;
-
-        /// <summary>
-        /// The last rotation
-        /// </summary>
-        private Quaternion lastRotation;
 
         #endregion Fields
 
@@ -45,9 +35,6 @@
         public ManusGrab(GameObject grabber, Color highlightColor, IHand hand)
             : base(grabber, highlightColor)
         {
-            this.Grabber = grabber;
-            this.highlightColor = highlightColor;
-            this.lastRotation = Quaternion.identity;
             this.hand = hand;
         }
 
@@ -63,21 +50,15 @@
         {
             if (IsGrabbing())
             {
-                SetPrevPosition(GrabbedObject.transform.position);
+                base.UpdateGrabbedObject();
 
-                //Vector3 newpos = grabber.transform.position;
                 if (GrabbedObject.tag.Equals("basket"))
                 {
-                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
                     UpdateGrabbedObjectsPosition(grabPos);
-
                     UpdateGrabbedObjectsRotation(grabberTransform);
                 }
 
-                //newpos.z += offset;
-
                 UpdateGrabbedObjectsPosition(grabPos);
-
                 UpdateGrabbedObjectsRotation(grabberTransform);
             }
         }
@@ -103,10 +84,6 @@
             if (GrabbedObject.tag.Equals("basket"))
                 return;
 
-            //Quaternion current = trans.rotation;
-            //Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
-            //Quaternion newrot = offset * GetPrevRotation();
-            //GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
             GrabbedObject.transform.rotation = trans.rotation;
             if (this.hand is RightHand)
                 GrabbedObject.transform.Rotate(Vector3.up, 180);

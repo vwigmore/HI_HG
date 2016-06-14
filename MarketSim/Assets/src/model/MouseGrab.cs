@@ -11,16 +11,6 @@
         #region Fields
 
         /// <summary>
-        /// The throw force
-        /// </summary>
-        private readonly float throwForce = 500;
-
-        /// <summary>
-        /// The ray cast hit
-        /// </summary>
-        private RaycastHit hit;
-
-        /// <summary>
         /// The initial position of the object
         /// </summary>
         private Vector3 prevPos;
@@ -37,8 +27,6 @@
         public MouseGrab(GameObject grabber, Color highlightColor)
             : base(grabber, highlightColor)
         {
-            this.Grabber = grabber;
-            this.highlightColor = highlightColor;
         }
 
         #endregion Constructors
@@ -49,21 +37,20 @@
         /// Updates the grabbed object.
         /// Also stores previous position of object.
         /// </summary>
-        public override void UpdateGrabbedObject(Vector3 grabPoint)
+        public void UpdateGrabbedObject(Vector3 grabPoint)
         {
             if (IsGrabbing())
-                prevPos = GrabbedObject.transform.position;
+            {
+                base.UpdateGrabbedObject();
 
-            base.UpdateGrabbedObject(grabPoint);
-        }
+                this.UpdateGrabbedBasket(grabPoint);
 
-        /// <summary>
-        /// Sets the Ray cast hit.
-        /// </summary>
-        /// <param name="hit">The Ray cast hit.</param>
-        public void SetHit(RaycastHit hit)
-        {
-            this.hit = hit;
+                this.GrabbedObject.transform.position = grabPoint;
+                this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    this.GrabbedObject.GetComponent<Collider>());
+            }
         }
 
         #endregion Methods
