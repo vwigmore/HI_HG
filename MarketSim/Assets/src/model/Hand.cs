@@ -193,21 +193,8 @@ public abstract class Hand : IHand
     /// </summary>
     public virtual void UpdateGestures()
     {
-        Gestures gesture = GestureController.GetGesture(this.glove);
-
-        if (!manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Grab)
-            {
-                manusGrab.GrabHighlightedObject();
-                manusGrab.SetPrevGrabberRot(baseCollider.transform.rotation);
-            }
-        }
-        else
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
+        IMoveGesture gesture = GestureController.GetGesture(this.glove);
+        gesture.UpdateGrabbed(baseCollider.transform.rotation, this.manusGrab);
     }
 
     /// <summary>

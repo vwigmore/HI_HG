@@ -1,10 +1,33 @@
-﻿using UnityEngine;
+﻿using Assets.src.model;
+using UnityEngine;
 
 public interface IMoveGesture
 {
     #region Methods
 
-    void movePlayer(GameObject player);
+    void MovePlayer(GameObject player);
+
+    void UpdateGrabbed(Quaternion quat, Grab grab);
+
+    #endregion Methods
+}
+
+/// <summary>
+///
+/// </summary>
+internal class GestureGrab : IMoveGesture
+{
+    #region Methods
+
+    public void MovePlayer(GameObject player)
+    {
+    }
+
+    public void UpdateGrabbed(Quaternion quat, Grab grab)
+    {
+        grab.GrabHighlightedObject();
+        grab.SetPrevGrabberRot(quat);
+    }
 
     #endregion Methods
 }
@@ -12,7 +35,7 @@ public interface IMoveGesture
 /// <summary>
 /// Strategy to move the player forward.
 /// </summary>
-internal class Forward : IMoveGesture
+internal class GesturePoint : IMoveGesture
 {
     #region Methods
 
@@ -20,9 +43,13 @@ internal class Forward : IMoveGesture
     /// Moves the player forward.
     /// </summary>
     /// <param name="player">The player game object.</param>
-    public void movePlayer(GameObject player)
+    public void MovePlayer(GameObject player)
     {
         player.GetComponent<PlayerController>().walkForward();
+    }
+
+    public void UpdateGrabbed(Quaternion quat, Grab grab)
+    {
     }
 
     #endregion Methods
@@ -31,7 +58,7 @@ internal class Forward : IMoveGesture
 /// <summary>
 /// Strategy to move the player backward.
 /// </summary>
-internal class Backward : IMoveGesture
+internal class GestureThumb : IMoveGesture
 {
     #region Methods
 
@@ -39,9 +66,13 @@ internal class Backward : IMoveGesture
     /// Moves the player backward.
     /// </summary>
     /// <param name="player">The player.</param>
-    public void movePlayer(GameObject player)
+    public void MovePlayer(GameObject player)
     {
         player.GetComponent<PlayerController>().walkBackwards();
+    }
+
+    public void UpdateGrabbed(Quaternion quat, Grab grab)
+    {
     }
 
     #endregion Methods
@@ -50,13 +81,54 @@ internal class Backward : IMoveGesture
 /// <summary>
 /// Strategy to rotate the player right
 /// </summary>
-internal class RotateRight : IMoveGesture
+internal class GesturePinky : IMoveGesture
 {
     #region Methods
 
-    public void movePlayer(GameObject player)
+    public void MovePlayer(GameObject player)
     {
         player.GetComponent<PlayerController>().rotateRight();
+    }
+
+    public void UpdateGrabbed(Quaternion quat, Grab grab)
+    {
+    }
+
+    #endregion Methods
+}
+
+/// <summary>
+///
+/// </summary>
+internal class GestureNone : IMoveGesture
+{
+    #region Methods
+
+    public void MovePlayer(GameObject player)
+    {
+    }
+
+    public void UpdateGrabbed(Quaternion quat, Grab grab)
+    {
+    }
+
+    #endregion Methods
+}
+
+/// <summary>
+///
+/// </summary>
+internal class GestureOpen : IMoveGesture
+{
+    #region Methods
+
+    public void MovePlayer(GameObject player)
+    {
+    }
+
+    public void UpdateGrabbed(Quaternion quat, Grab grab)
+    {
+        grab.DropObject();
     }
 
     #endregion Methods
