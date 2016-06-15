@@ -25,8 +25,11 @@ internal class GestureGrab : IMoveGesture
 
     public void UpdateGrabbed(Quaternion quat, Grab grab)
     {
-        grab.GrabHighlightedObject();
-        grab.SetPrevGrabberRot(quat);
+        if (!grab.IsGrabbing())
+        {
+            grab.GrabHighlightedObject();
+            grab.SetPrevGrabberRot(quat);
+        }
     }
 
     #endregion Methods
@@ -128,7 +131,10 @@ internal class GestureOpen : IMoveGesture
 
     public void UpdateGrabbed(Quaternion quat, Grab grab)
     {
-        grab.DropObject();
+        if (grab.IsGrabbing())
+        {
+            grab.DropObject();
+        }
     }
 
     #endregion Methods
