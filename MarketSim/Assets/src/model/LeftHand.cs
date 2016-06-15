@@ -48,7 +48,7 @@ public class LeftHand : Hand
     {
         base.UpdateGestures();
 
-        Gestures gesture = GetGesture();
+        Gestures gesture = GestureController.GetGesture(this.glove);
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
