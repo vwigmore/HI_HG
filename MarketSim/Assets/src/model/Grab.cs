@@ -92,14 +92,6 @@
         /// </summary>
         protected GameObject grabber { get; set; }
 
-        /// <summary>
-        /// Gets or sets the grabber.
-        /// </summary>
-        /// <value>
-        /// The grabber.
-        /// </value>
-        protected GameObject Grabber { get; set; }
-
         #endregion Properties
 
         #region Methods
@@ -198,7 +190,7 @@
         /// <returns>True if object is in range, else false.</returns>
         public bool InProximity(GameObject obj)
         {
-            return Vector3.Distance(this.Grabber.transform.position, obj.transform.position) <= Manager.ProximityDist;
+            return Vector3.Distance(this.grabber.transform.position, obj.transform.position) <= Manager.ProximityDist;
         }
 
         /// <summary>
@@ -208,7 +200,7 @@
         /// <returns>True if object is in range, else false.</returns>
         public bool InProximity(Vector3 pos)
         {
-            return Vector3.Distance(this.Grabber.transform.position, pos) <= Manager.ProximityDist;
+            return Vector3.Distance(this.grabber.transform.position, pos) <= Manager.ProximityDist;
         }
 
         /// <summary>
