@@ -11,22 +11,22 @@ public class VibrateHand : MonoBehaviour
     #region Fields
 
     /// <summary>
-    /// The time factor
+    /// The time factor.
     /// </summary>
     private const float timeFactor = 10.0f;
 
     /// <summary>
-    /// The vibrate time
+    /// The vibrate time.
     /// </summary>
     private readonly float vibrateTime = (float)Manager.VibrationTime / 1000;
 
     /// <summary>
-    /// The vibration power
+    /// The vibration power.
     /// </summary>
     private readonly float vibrationForce = Manager.VibrationForce;
 
     /// <summary>
-    /// The timer
+    /// The timer.
     /// </summary>
     private float timer;
 
@@ -44,7 +44,9 @@ public class VibrateHand : MonoBehaviour
 
     #region Constructor
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes a new instance of the <see cref="VibrateHand"/> class.
+    /// </summary>
     public VibrateHand()
     {
         this.timer = 0f;
@@ -91,7 +93,7 @@ public class VibrateHand : MonoBehaviour
     }
 
     /// <summary>
-    /// Vibrates this glove.
+    /// Vibrates the hand.
     /// </summary>
     public void Vibrate()
     {

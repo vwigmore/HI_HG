@@ -11,7 +11,7 @@ public abstract class Hand : IHand
     #region Fields
 
     /// <summary>
-    /// The root transform
+    /// The root transform.
     /// </summary>
     public Transform RootTransform;
 
@@ -31,32 +31,32 @@ public abstract class Hand : IHand
     protected GameObject root;
 
     /// <summary>
-    /// The hand model
+    /// The hand model.
     /// </summary>
     protected GameObject handModel;
 
     /// <summary>
-    /// The manus grab
+    /// The manus grab.
     /// </summary>
     protected ManusGrab manusGrab;
 
     /// <summary>
-    /// The colliders
+    /// The colliders.
     /// </summary>
     protected ArrayList colliders;
 
     /// <summary>
-    /// The game transforms
+    /// The game transforms.
     /// </summary>
     protected Transform[][] gameTransforms;
 
     /// <summary>
-    /// The base collider
+    /// The base collider.
     /// </summary>
     protected BoxCollider baseCollider;
 
     /// <summary>
-    /// The time factor
+    /// The time factor.
     /// </summary>
     private const float timeFactor = 10.0f;
 
@@ -66,12 +66,12 @@ public abstract class Hand : IHand
     private const float BendThreshold = 0.4f;
 
     /// <summary>
-    /// The sphere collider radius
+    /// The sphere collider radius.
     /// </summary>
     private const float SphereColliderRadius = 0.035f;
 
     /// <summary>
-    /// The base hand collider size
+    /// The base hand collider size.
     /// </summary>
     private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.02f, 0.1f);
 
@@ -81,17 +81,17 @@ public abstract class Hand : IHand
     private GameObject hand;
 
     /// <summary>
-    /// The sphere collider
+    /// The sphere collider.
     /// </summary>
     private SphereCollider sphereCollider;
 
     /// <summary>
-    /// The model transforms
+    /// The model transforms.
     /// </summary>
     private Transform[][] modelTransforms;
 
     /// <summary>
-    /// The animation clip
+    /// The animation clip.
     /// </summary>
     private AnimationClip animationClip;
 
@@ -101,37 +101,32 @@ public abstract class Hand : IHand
     private Color highlightColor;
 
     /// <summary>
-    /// The last touched gameobject
+    /// The last touched gameobject.
     /// </summary>
     private GameObject lastTouched;
 
     /// <summary>
-    /// The correction bends
+    /// The correction bends.
     /// </summary>
     private float[] correctionBends;
 
     /// <summary>
-    /// One
+    /// One.
     /// </summary>
     private static readonly int ONE = 1;
 
     /// <summary>
-    /// Two
-    /// </summary>
-    private static readonly int TWO = 2;
-
-    /// <summary>
-    /// Three
+    /// Three.
     /// </summary>
     private static readonly int THREE = 3;
 
     /// <summary>
-    /// Four
+    /// Four.
     /// </summary>
     private static readonly int FOUR = 4;
 
     /// <summary>
-    /// Five
+    /// Five.
     /// </summary>
     private static readonly int FIVE = 5;
 
@@ -263,7 +258,7 @@ public abstract class Hand : IHand
     /// Returns a gesture by checking the number of fingers bent.
     /// </summary>
     /// <param name="fingersBent">The number of fingers bent.</param>
-    /// <returns></returns>
+    /// <returns>Gesture the hand is making</returns>
     public Gestures GetGesturesHelp(int fingersBent)
     {
         if (fingersBent == FIVE)
@@ -284,29 +279,22 @@ public abstract class Hand : IHand
     /// </summary>
     public void CreateColliders()
     {
-        InitializeBaseCollider();
-    }
-
-    /// <summary>
-    /// Initializes the base collider.
-    /// </summary>
-    public void InitializeBaseCollider()
-    {
         baseCollider = new BoxCollider();
         baseCollider = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
         baseCollider.size = BaseHandColliderSize;
+
         Vector3 pos2 = baseCollider.center;
         pos2 = TranslateHandBoundingBox(pos2);
 
         baseCollider.center = pos2;
-
-        //baseCollider.isTrigger = true;
         colliders.Add(baseCollider);
     }
+
     /// <summary>
     /// Helper method for creating a collider.
     /// </summary>
     /// <param name="pos">The position.</param>
+    /// <returns>The new position</returns>
     public Vector3 TranslateHandBoundingBox(Vector3 pos)
     {
         pos.x -= .05f;
@@ -380,7 +368,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// Gets the colliders.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The colliders</returns>
     public ArrayList GetColliders()
     {
         return this.colliders;
@@ -398,7 +386,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// Gets the position.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The position</returns>
     public Vector3 GetPosition()
     {
         return this.root.transform.position;

@@ -54,7 +54,7 @@ public class MouseGrabController : MonoBehaviour
     }
 
     /// <summary>
-    /// Use this for initialization
+    /// Use this for initialization.
     /// </summary>
     private void Start()
     {
@@ -63,7 +63,7 @@ public class MouseGrabController : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Update is called once per frame.
     /// </summary>
     private void Update()
     {

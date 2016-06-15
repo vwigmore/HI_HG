@@ -86,7 +86,7 @@ public class LeftHand : Hand
     }
 
     /// <summary>
-    /// The player walks backwards
+    /// The player walks backwards.
     /// </summary>
     private void MoveBackward()
     {
@@ -94,7 +94,7 @@ public class LeftHand : Hand
     }
 
     /// <summary>
-    /// The player walks forward
+    /// The player walks forward.
     /// </summary>
     private void moveForward()
     {
@@ -102,7 +102,7 @@ public class LeftHand : Hand
     }
 
     /// <summary>
-    /// The player moves right
+    /// The player moves right.
     /// </summary>
     private void moveRight()
     {

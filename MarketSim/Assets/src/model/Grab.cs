@@ -10,12 +10,12 @@
         #region Fields
 
         /// <summary>
-        /// The basket
+        /// The basket.
         /// </summary>
         public ItemHolder basket;
 
         /// <summary>
-        /// The throw force
+        /// The throw force.
         /// </summary>
         protected readonly float throwForce = Manager.ThrowForce;
 
@@ -56,7 +56,7 @@
         protected Quaternion prevRot;
 
         /// <summary>
-        /// The previous grabber rot
+        /// The previous grabber rot.
         /// </summary>
         protected Quaternion prevGrabberRot;
 
@@ -167,11 +167,7 @@
             if (this.IsGrabbing())
             {
                 this.SetPrevPosition(this.GrabbedObject.transform.position);
-
-                //Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
-
                 this.UpdateGrabbedBasket(grabPoint);
-
                 this.GrabbedObject.transform.position = grabPoint;
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
                 Physics.IgnoreCollision(
@@ -209,7 +205,7 @@
         }
 
         /// <summary>
-        /// Highlight selected object
+        /// Highlight selected object.
         /// </summary>
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
@@ -229,7 +225,7 @@
         }
 
         /// <summary>
-        /// Helper method for HighlightSelectedObjects
+        /// Helper method for HighlightSelectedObjects.
         /// </summary>
         /// <param name="obj">The object.</param>
         public void HighlightHelp(GameObject obj)
@@ -244,7 +240,7 @@
         }
 
         /// <summary>
-        /// Clear previously highlighted objects
+        /// Clear previously highlighted objects.
         /// </summary>
         public void ClearHighlights()
         {

@@ -10,22 +10,22 @@ public class HandController : MonoBehaviour
     public Transform RootTransform;
 
     /// <summary>
-    /// The glove_hand
+    /// The glove_hand.
     /// </summary>
     public GLOVE_HAND glove_hand;
 
     /// <summary>
-    /// The hand
+    /// The hand.
     /// </summary>
     private IHand hand;
 
     /// <summary>
-    /// The collision contacts
+    /// The collision contacts.
     /// </summary>
     private ArrayList collisionContacts;
 
     /// <summary>
-    /// The bend values
+    /// The bend values.
     /// </summary>
     private bool[] bends;
 
@@ -84,7 +84,7 @@ public class HandController : MonoBehaviour
     /// <summary>
     /// Calculates the contact point.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The new point</returns>
     private Vector3 CalculateContactPoint()
     {
         if (collisionContacts.Count == 0)

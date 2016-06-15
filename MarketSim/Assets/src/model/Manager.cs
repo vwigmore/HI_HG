@@ -25,12 +25,12 @@ public class Manager : MonoBehaviour
     private static bool mKbOnly;
 
     /// <summary>
-    /// The throw force
+    /// The throw force.
     /// </summary>
     private static float throwForce;
 
     /// <summary>
-    /// The proximity dist
+    /// The proximity dist.
     /// </summary>
     private static float proximityDist;
 
@@ -45,12 +45,12 @@ public class Manager : MonoBehaviour
     private static float vibrationForce;
 
     /// <summary>
-    /// The vibration time in MILLISECONDS
+    /// The vibration time in MILLISECONDS.
     /// </summary>
     private static int vibrationTime;
 
     /// <summary>
-    /// The configuration location
+    /// The configuration location.
     /// </summary>
     private readonly string configLocation = "Assets\\src\\config.gryffindor";
 

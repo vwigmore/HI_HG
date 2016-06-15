@@ -11,17 +11,17 @@
         #region Fields
 
         /// <summary>
-        /// The throw force
+        /// The throw force.
         /// </summary>
         private new readonly float throwForce = 500;
 
         /// <summary>
-        /// The ray cast hit
+        /// The ray cast hit.
         /// </summary>
         private RaycastHit hit;
 
         /// <summary>
-        /// The initial position of the object
+        /// The initial position of the object.
         /// </summary>
         private new Vector3 prevPos;
 

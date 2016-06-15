@@ -13,82 +13,82 @@ public class Player
     public float mouseSensitivity = 3.0f;
 
     /// <summary>
-    /// The move speed
+    /// The move speed.
     /// </summary>
     public float moveSpeed = 3.0f;
 
     /// <summary>
-    /// The jump speed
+    /// The jump speed.
     /// </summary>
     public float jumpSpeed = 5.0f;
 
     /// <summary>
-    /// The gravity
+    /// The gravity.
     /// </summary>
     public float gravity = 20f;
 
     /// <summary>
-    /// Character controller for the player
+    /// Character controller for the player.
     /// </summary>
     public CharacterController pc;
 
     /// <summary>
-    /// The hip
+    /// The hip.
     /// </summary>
     public GameObject hip, leftFoot, rightFoot;
 
     /// <summary>
-    /// The model
+    /// The model.
     /// </summary>
     public GameObject model;
 
     /// <summary>
-    /// The move direction
+    /// The move direction.
     /// </summary>
     private Vector3 moveDirection;
 
     /// <summary>
-    /// The player height
+    /// The player height.
     /// </summary>
     private float playerHeight;
 
     /// <summary>
-    /// The crouch height
+    /// The crouch height.
     /// </summary>
     private float crouchHeight;
 
     /// <summary>
-    /// The cam_vert_rot
+    /// The cam_vert_rot.
     /// </summary>
     private float cam_vert_rot = 0;
 
     /// <summary>
-    /// The cam_cap
+    /// The cam_cap.
     /// </summary>
     private float cam_cap = 90;
 
     /// <summary>
-    /// The mouse axis y
+    /// The mouse axis y.
     /// </summary>
     private float mouseAxisY;
 
     /// <summary>
-    /// The mouse axis x
+    /// The mouse axis x.
     /// </summary>
     private float mouseAxisX;
 
     /// <summary>
-    /// The v axis
+    /// The v axis.
     /// </summary>
     private float vAxis;
 
     /// <summary>
-    /// The h axis
+    /// The h axis.
     /// </summary>
     private float hAxis;
 
     /// <summary>
-    /// The last delta height
+    /// The last delta height.
     /// </summary>
     private float lastDeltaHeight, initialDeltaHeight;
 
@@ -118,7 +118,7 @@ public class Player
     #region Methods
 
     /// <summary>
-    /// Updates the player position when crouching
+    /// Updates the player position when crouching.
     /// </summary>
     public void UpdateCrouch()
     {
@@ -164,7 +164,6 @@ public class Player
     /// <summary>
     /// Updates the rotation.
     /// </summary>
-    ///
     public void updateRotation()
     {
         mouseAxisY = Input.GetAxis("Mouse Y");
@@ -215,7 +214,7 @@ public class Player
     }
 
     /// <summary>
-    /// Helper method for updateMovement
+    /// Helper method for updateMovement.
     /// </summary>
     public void updateMovementHelp()
     {

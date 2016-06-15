@@ -17,19 +17,19 @@
         #region Fields
 
         /// <summary>
-        /// The throw force
+        /// The throw force.
         /// </summary>
         private readonly float throwForce = 500;
 
         /// <summary>
-        /// The last position
+        /// The last position.
         /// </summary>
         private Vector3 lastPos;
 
         private IHand hand;
 
         /// <summary>
-        /// The last rotation
+        /// The last rotation.
         /// </summary>
         private Quaternion lastRotation;
 
@@ -74,10 +74,7 @@
                     UpdateGrabbedObjectsRotation(grabberTransform);
                 }
 
-                //newpos.z += offset;
-
                 UpdateGrabbedObjectsPosition(grabPos);
-
                 UpdateGrabbedObjectsRotation(grabberTransform);
             }
         }
@@ -103,10 +100,6 @@
             if (GrabbedObject.tag.Equals("basket"))
                 return;
 
-            //Quaternion current = trans.rotation;
-            //Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
-            //Quaternion newrot = offset * GetPrevRotation();
-            //GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
             GrabbedObject.transform.rotation = trans.rotation;
             if (this.hand is RightHand)
                 GrabbedObject.transform.Rotate(Vector3.up, 180);

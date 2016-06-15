@@ -25,6 +25,12 @@ public class HandFactory
         }
     }
 
+    /// <summary>
+    /// Creates the left hand.
+    /// </summary>
+    /// <param name="gt">The gt.</param>
+    /// <param name="rt">The rt.</param>
+    /// <returns>The left hand</returns>
     private static IHand createLeft(GLOVE_HAND gt, Transform rt)
     {
         Glove glove = new Glove(gt);
@@ -36,6 +42,12 @@ public class HandFactory
         return new LeftHand(glove, rt, handModel, root, handResource, animation, Color.green, vh);
     }
 
+    /// <summary>
+    /// Creates the right hand.
+    /// </summary>
+    /// <param name="gt">The gt.</param>
+    /// <param name="rt">The rt.</param>
+    /// <returns>The right hand</returns>
     private static IHand createRight(GLOVE_HAND gt, Transform rt)
     {
         Glove glove = new Glove(gt);

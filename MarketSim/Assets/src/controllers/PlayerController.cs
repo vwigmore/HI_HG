@@ -8,80 +8,78 @@
  * Author: Wing Nguyen
  **/
 
-/// <summary>
-///
-/// </summary>
+
 public class PlayerController : MonoBehaviour
 {
     #region Fields
 
     /// <summary>
-    /// The charactercontroller
+    /// The charactercontroller.
     /// </summary>
     private CharacterController pc;
 
     /// <summary>
-    /// The move direction
+    /// The move direction.
     /// </summary>
     private Vector3 moveDirection;
 
     /// <summary>
-    /// The player height
+    /// The player height.
     /// </summary>
     private float playerHeight;
 
     /// <summary>
-    /// The crouch height
+    /// The crouch height.
     /// </summary>
     private float crouchHeight;
 
     /// <summary>
-    /// The cam_vert_rot
+    /// The cam_vert_rot.
     /// </summary>
     private float cam_vert_rot = 0;
 
     /// <summary>
-    /// The cam_cap
+    /// The cam_cap.
     /// </summary>
     private float cam_cap = 90;
 
     /// <summary>
-    /// The mouse axis y
+    /// The mouse axis y.
     /// </summary>
     private float mouseAxisY;
 
     /// <summary>
-    /// The mouse axis x
+    /// The mouse axis x.
     /// </summary>
     private float mouseAxisX;
 
     /// <summary>
-    /// The v axis
+    /// The v axis.
     /// </summary>
     private float vAxis;
 
     /// <summary>
-    /// The h axis
+    /// The h axis.
     /// </summary>
     private float hAxis;
 
     /// <summary>
-    /// The parts of the body: head, hip, left foot and right foot
+    /// The parts of the body: head, hip, left foot and right foot.
     /// </summary>
     private GameObject head, hip, leftFoot, rightFoot;
 
     /// <summary>
-    /// The heights: delta height and initial heigth
+    /// The heights: delta height and initial heigth.
     /// </summary>
     private float lastDeltaHeight, initialDeltaHeight;
 
     /// <summary>
-    /// The model
+    /// The model.
     /// </summary>
     private GameObject model;
 
     /// <summary>
-    /// The player
+    /// The player.
     /// </summary>
     private Player player;
 
@@ -132,7 +130,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Use this for initialization
+    /// Use this for initialization.
     /// </summary>
     private void Start()
     {
@@ -149,7 +147,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is called once per frame
+    /// Update is called once per frame.
     /// </summary>
     private void Update()
     {

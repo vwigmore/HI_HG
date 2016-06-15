@@ -8,12 +8,12 @@ namespace Assets.src.model
         #region Fields
 
         /// <summary>
-        /// The holder
+        /// The holder.
         /// </summary>
         public GameObject holder;
 
         /// <summary>
-        /// The items in the holder
+        /// The items in the holder.
         /// </summary>
         public ArrayList items;
 
@@ -43,12 +43,12 @@ namespace Assets.src.model
         private float startZ;
 
         /// <summary>
-        /// Width of a cell
+        /// Width of a cell.
         /// </summary>
         private float cellWidth;
 
         /// <summary>
-        /// Height of a cell
+        /// Height of a cell.
         /// </summary>
         private float cellHeight;
 
@@ -88,7 +88,7 @@ namespace Assets.src.model
         #region Methods
 
         /// <summary>
-        /// Calculate offset for each cell
+        /// Calculate offset for each cell.
         /// </summary>
         public void InitOffsets()
         {
@@ -113,7 +113,7 @@ namespace Assets.src.model
         }
 
         /// <summary>
-        /// Updates the list with items that are in the basket
+        /// Updates the list with items that are in the basket.
         /// </summary>
         public void UpdateList()
         {

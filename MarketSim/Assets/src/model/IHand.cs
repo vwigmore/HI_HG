@@ -49,7 +49,7 @@ namespace Assets.src.model
         /// <summary>
         /// Gets the gesture.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The gesture</returns>
         Gestures GetGesture();
 
   
@@ -63,19 +63,19 @@ namespace Assets.src.model
         /// <summary>
         /// Gets the colliders.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The Colliders</returns>
         ArrayList GetColliders();
 
         /// <summary>
         /// Gets the root transform.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The root</returns>
         Transform GetRootTransform();
 
         /// <summary>
         /// Gets the position.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The position</returns>
         Vector3 GetPosition();
 
         #endregion Methods
