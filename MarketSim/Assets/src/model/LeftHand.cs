@@ -19,7 +19,7 @@ public class LeftHand : Hand
     /// <param name="animation">The animation.</param>
     /// <param name="hl">The highlight color.</param>
     public LeftHand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color hl, VibrateHand vh)
-        : base(glove, RootTransform, handModel, handRoot, hand, animation, hl)
+        : base(glove, RootTransform, handModel, handRoot, hand, animation, hl, vh)
     {
     }
 
@@ -77,12 +77,23 @@ public class LeftHand : Hand
     /// <param name="g">The gesture.</param>
     public void MoveWithGesture(Gestures g)
     {
-        if (g == Gestures.Thumb) MoveBackward();
 
-        if (g == Gestures.Point) moveForward();
+        if (g == Gestures.Thumb)
+        {
+            GestureClient gc = new GestureClient(new Backward());
+            gc.movePlayer(GameObject.FindGameObjectWithTag("Player"));
+        }
+        if (g == Gestures.Point)
+        {
+            GestureClient gc = new GestureClient(new Forward());
+            gc.movePlayer(GameObject.FindGameObjectWithTag("Player"));
+        }
 
-        if (g == Gestures.Pinky) moveRight();
-          
+        if (g == Gestures.Pinky)
+        {
+            GestureClient gc = new GestureClient(new RotateRight());
+            gc.movePlayer(GameObject.FindGameObjectWithTag("Player"));
+        }
     }
 
     /// <summary>

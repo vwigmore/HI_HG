@@ -10,6 +10,8 @@ public abstract class Hand : IHand
 {
     #region Fields
 
+    public VibrateHand vh; 
+
     /// <summary>
     /// The root transform.
     /// </summary>
@@ -142,9 +144,10 @@ public abstract class Hand : IHand
     /// <param name="hand">The hand.</param>
     /// <param name="animation">The animation.</param>
     /// <param name="highlightColor">Color of the highlight.</param>
-    public Hand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color highlightColor)
+    public Hand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color highlightColor, VibrateHand vh)
     {
         Manus.ManusInit();
+        this.vh = vh;
         this.glove = glove;
         this.RootTransform = RootTransform;
         this.handModel = handModel;
@@ -357,6 +360,7 @@ public abstract class Hand : IHand
         if ((lastTouched == null || !lastTouched.Equals(obj))
             && Manager.EnableVibration)
         {
+            vh.Vibrate();
             lastTouched = obj;
         }
         else
