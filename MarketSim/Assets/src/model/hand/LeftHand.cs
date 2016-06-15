@@ -18,8 +18,8 @@ public class LeftHand : Hand
     /// <param name="hand">The hand.</param>
     /// <param name="animation">The animation.</param>
     /// <param name="hl">The highlight color.</param>
-    public LeftHand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color hl, VibrateHand vh)
-        : base(glove, RootTransform, handModel, handRoot, hand, animation, hl, vh)
+    public LeftHand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color hl)
+        : base(glove, RootTransform, handModel, handRoot, hand, animation, hl)
     {
     }
 

@@ -10,7 +10,14 @@ public abstract class Hand : IHand
 {
     #region Fields
 
-    public VibrateHand vh; 
+    /// <summary>
+    /// Hand Vibration.
+    /// </summary>
+    public VibrateHand vibrateHand;
+    /// <summary>
+    /// Hand Movement.
+    /// </summary>
+    private HandMovement handMovement;
 
     /// <summary>
     /// The root transform.
@@ -71,12 +78,7 @@ public abstract class Hand : IHand
     /// The sphere collider radius.
     /// </summary>
     private const float SphereColliderRadius = 0.035f;
-
-    /// <summary>
-    /// The base hand collider size.
-    /// </summary>
-    private Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.02f, 0.1f);
-
+    
     /// <summary>
     /// Game object hand.
     /// </summary>
@@ -115,22 +117,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// One.
     /// </summary>
-    private static readonly int ONE = 1;
-
-    /// <summary>
-    /// Three.
-    /// </summary>
-    private static readonly int THREE = 3;
-
-    /// <summary>
-    /// Four.
-    /// </summary>
-    private static readonly int FOUR = 4;
-
-    /// <summary>
-    /// Five.
-    /// </summary>
-    private static readonly int FIVE = 5;
+    private static readonly int ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5;
 
     #endregion Fields
 
@@ -144,10 +131,9 @@ public abstract class Hand : IHand
     /// <param name="hand">The hand.</param>
     /// <param name="animation">The animation.</param>
     /// <param name="highlightColor">Color of the highlight.</param>
-    public Hand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color highlightColor, VibrateHand vh)
+    public Hand(Glove glove, Transform RootTransform, GameObject handModel, GameObject handRoot, GameObject hand, AnimationClip animation, Color highlightColor)
     {
         Manus.ManusInit();
-        this.vh = vh;
         this.glove = glove;
         this.RootTransform = RootTransform;
         this.handModel = handModel;
@@ -163,8 +149,10 @@ public abstract class Hand : IHand
 
         this.colliders = new ArrayList();
 
-        InitTransforms();
-        CreateColliders();
+        //init die transforms
+
+        //basehandcollider
+        colliders.Add(HandCollider.CreateColliders(gameTransforms[0][0].parent.gameObject));
 
         this.manusGrab = new ManusGrab(baseCollider.gameObject, highlightColor, this);
 
@@ -197,33 +185,7 @@ public abstract class Hand : IHand
                 correctionBends[i] = fingers[i];
         }
 
-        UpdateFingers(correctionBends, bend);
-    }
-
-    /// <summary>
-    /// Updates all fingers.
-    /// </summary>
-    /// <param name="f">Array of floats containing fingers.</param>
-    public void UpdateFingers(float[] f, bool[] bend)
-    {
-        float avgbend = 0.0f;
-        for (int i = 0; i < FIVE; i++)
-        {
-            animationClip.SampleAnimation(hand, f[i] * timeFactor);
-            avgbend += f[i];
-            for (int j = 0; j < FOUR; j++)
-            {
-                gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
-            }
-        }
-        avgbend /= 4;
-
-        float thumbvalue = (avgbend > f[0]) ? avgbend : f[0];
-        animationClip.SampleAnimation(hand, thumbvalue * timeFactor);
-        for (int j = 0; j < FOUR; j++)
-        {
-            gameTransforms[0][j].localRotation = modelTransforms[0][j].localRotation;
-        }
+        //hm.UpdateFingers(correctionBends, bend);
     }
 
     /// <summary>
@@ -278,77 +240,12 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Creates the grab collider.
-    /// </summary>
-    public void CreateColliders()
-    {
-        baseCollider = new BoxCollider();
-        baseCollider = gameTransforms[0][0].parent.gameObject.AddComponent<BoxCollider>();
-        baseCollider.size = BaseHandColliderSize;
-
-        Vector3 pos2 = baseCollider.center;
-        pos2 = TranslateHandBoundingBox(pos2);
-
-        baseCollider.center = pos2;
-        colliders.Add(baseCollider);
-    }
-
-    /// <summary>
-    /// Helper method for creating a collider.
-    /// </summary>
-    /// <param name="pos">The position.</param>
-    /// <returns>The new position</returns>
-    public Vector3 TranslateHandBoundingBox(Vector3 pos)
-    {
-        pos.x -= .05f;
-        pos.y -= .02f;
-        return pos;
-    }
-
-    /// <summary>
     /// Returns the ManusGrab.
     /// </summary>
     /// <returns>ManusGrab</returns>
     public ManusGrab GetManusGrab()
     {
         return this.manusGrab;
-    }
-
-    /// <summary>
-    /// Initializes the transforms.
-    /// </summary>
-    public void InitTransforms()
-    {
-        gameTransforms = new Transform[FIVE][];
-        modelTransforms = new Transform[FIVE][];
-        for (int i = 0; i < FIVE; i++)
-        {
-            gameTransforms[i] = new Transform[FOUR];
-            modelTransforms[i] = new Transform[FOUR];
-            for (int j = 0; j < FOUR; j++)
-            {
-                gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
-                modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
-
-                if (j == 3)
-                {
-                    SphereCollider s = new SphereCollider();
-                    s = gameTransforms[i][j].gameObject.AddComponent<SphereCollider>();
-
-                    if (i == 0)
-                        s.radius = .025f;
-                    else s.radius = .015f;
-
-                    colliders.Add(s);
-                }
-                else
-                {
-                    BoxCollider b = new BoxCollider();
-                    b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
-                    b.size = new Vector3(.02f, .02f, .02f);
-                }
-            }
-        };
     }
 
     /// <summary>
@@ -360,7 +257,7 @@ public abstract class Hand : IHand
         if ((lastTouched == null || !lastTouched.Equals(obj))
             && Manager.EnableVibration)
         {
-            vh.Vibrate();
+            //vh.Vibrate();
             lastTouched = obj;
         }
         else
@@ -394,26 +291,6 @@ public abstract class Hand : IHand
     public Vector3 GetPosition()
     {
         return this.root.transform.position;
-    }
-
-    /// <summary>
-    /// Finds a deep child in a transform
-    /// </summary>
-    /// <param name="aParent">Transform to be searched</param>
-    /// <param name="aName">Name of the (grand)child to be found</param>
-    /// <returns></returns>
-    private static Transform FindDeepChild(Transform aParent, string aName)
-    {
-        var result = aParent.Find(aName);
-        if (result != null)
-            return result;
-        foreach (Transform child in aParent)
-        {
-            result = FindDeepChild(child, aName);
-            if (result != null)
-                return result;
-        }
-        return null;
     }
 
     /// <summary>

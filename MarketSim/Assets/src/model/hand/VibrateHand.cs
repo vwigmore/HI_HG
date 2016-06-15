@@ -47,10 +47,11 @@ public class VibrateHand : MonoBehaviour
     /// <summary>
     /// Initializes a new instance of the <see cref="VibrateHand"/> class.
     /// </summary>
-    public VibrateHand()
+    public VibrateHand(Glove glove)
     {
         this.timer = 0f;
         this.vibrateGlove = false;
+        this.glove = glove;
 
     }
 
