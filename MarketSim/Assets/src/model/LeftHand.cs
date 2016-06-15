@@ -48,7 +48,7 @@ public class LeftHand : Hand
     {
         base.UpdateGestures();
 
-        Gestures gesture = GetGesture();
+        Gestures gesture = GestureController.GetGesture(this.glove);
 
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
@@ -65,11 +65,21 @@ public class LeftHand : Hand
     public void MoveWithGesture(Gestures g)
     {
         if (g == Gestures.Thumb)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+        {
+            GestureClient gc = new GestureClient(new Backward());
+            gc.movePlayer(GameObject.FindGameObjectWithTag("Player"));
+        }
         if (g == Gestures.Point)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+        {
+            GestureClient gc = new GestureClient(new Forward());
+            gc.movePlayer(GameObject.FindGameObjectWithTag("Player"));
+        }
+
         if (g == Gestures.Pinky)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+        {
+            GestureClient gc = new GestureClient(new RotateRight());
+            gc.movePlayer(GameObject.FindGameObjectWithTag("Player"));
+        }
     }
 
     #endregion Methods

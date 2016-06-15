@@ -45,12 +45,6 @@ namespace Assets.src.model
         ManusGrab GetManusGrab();
 
         /// <summary>
-        /// Gets the gesture.
-        /// </summary>
-        /// <returns></returns>
-        Gestures GetGesture();
-
-        /// <summary>
         /// Vibrates this instance.
         /// </summary>
         void Vibrate();

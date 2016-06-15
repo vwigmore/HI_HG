@@ -202,7 +202,8 @@ public abstract class Hand : IHand
     /// </summary>
     public virtual void UpdateGestures()
     {
-        Gestures gesture = GetGesture();
+        Gestures gesture = GestureController.GetGesture(this.glove);
+
         if (!manusGrab.IsGrabbing())
         {
             if (gesture == Gestures.Grab)
@@ -219,50 +220,14 @@ public abstract class Hand : IHand
     }
 
     /// <summary>
-    /// Returns which gesture the hand is making.
-    /// </summary>
-    /// <returns>Gesture the hand is making</returns>
-    public Gestures GetGesture()
-    {
-        int fingersBent = 0;
-        for (int i = 0; i < (int)FingersBent.five; i++)
-        {
-            if (this.glove.Fingers[i] >= BendThreshold)
-            {
-                fingersBent++;
-            }
-        }
-        return GetGesturesHelp(fingersBent);
-    }
-
-    /// <summary>
-    /// Returns a gesture by checking the number of fingers bent.
-    /// </summary>
-    /// <param name="fingersBent">The number of fingers bent.</param>
-    /// <returns></returns>
-    public Gestures GetGesturesHelp(int fingersBent)
-    {
-        if (fingersBent == (int)FingersBent.five)
-            return Gestures.Grab;
-        else if (fingersBent == (int)FingersBent.four && glove.Fingers[0] < 0.4f)
-            return Gestures.Thumb;
-        else if (fingersBent == (int)FingersBent.four && glove.Fingers[4] < 0.4f)
-            return Gestures.Pinky;
-        else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == (int)FingersBent.three)
-            return Gestures.Point;
-        else if (fingersBent <= (int)FingersBent.one)
-            return Gestures.Open;
-        return Gestures.None;
-    }
-
-    /// <summary>
     /// Creates the grab collider.
     /// </summary>
     public void CreateColliders()
     {
         InitializeBaseCollider();
-        InitializeRigidCollider();       
+        InitializeRigidCollider();
     }
+
     /// <summary>
     /// Initializes the base collider.
     /// </summary>
