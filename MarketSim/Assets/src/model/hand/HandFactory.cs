@@ -38,8 +38,8 @@ public class HandFactory
         GameObject root = GameObject.Find("13_Hand_Left");
         GameObject handResource = Resources.Load<GameObject>("Manus_Handv2_Left");
         AnimationClip animation = Resources.Load<AnimationClip>("Manus_Handv2_Left");
-        VibrateHand vh = new VibrateHand();
-        return new LeftHand(glove, rt, handModel, root, handResource, animation, Color.green, vh);
+        VibrateHand vh = new VibrateHand(glove);
+        return new LeftHand(glove, rt, handModel, root, handResource, animation, Color.green);
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public class HandFactory
         GameObject root = GameObject.Find("23_Hand_Right");
         GameObject handResource = Resources.Load<GameObject>("Manus_Handv2_Right");
         AnimationClip animation = Resources.Load<AnimationClip>("Manus_Handv2_Right");
-        VibrateHand vh = new VibrateHand();
-        return new RightHand(glove, rt, handModel, root, handResource, animation, Color.red, vh);
+        VibrateHand vh = new VibrateHand(glove);
+        return new RightHand(glove, rt, handModel, root, handResource, animation, Color.red);
     }
 
     #endregion Methods

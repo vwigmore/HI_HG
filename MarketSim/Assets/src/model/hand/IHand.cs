@@ -18,12 +18,12 @@ namespace Assets.src.model
         /// <summary>
         /// Initializes the transforms.
         /// </summary>
-        void InitTransforms();
+        //void InitTransforms();
 
         /// <summary>
         /// Creates the colliders.
         /// </summary>
-        void CreateColliders();
+        //void CreateColliders();
 
         /// <summary>
         /// Updates the position.

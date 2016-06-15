@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 
-public static class HandCollider : MonoBehaviour {
+public class HandCollider : MonoBehaviour {
     
     /// <summary>
     /// The base hand collider size.
@@ -23,8 +23,6 @@ public static class HandCollider : MonoBehaviour {
         pos2 = TranslateHandBoundingBox(pos2);
 
         baseCollider.center = pos2;
-        //colliders.Add(baseCollider);
-
         return baseCollider;
     }
 

@@ -11,13 +11,14 @@ public abstract class Hand : IHand
     #region Fields
 
     /// <summary>
+    /// The manus control.
+    /// </summary>
+    public ManusControl manusControl;
+
+    /// <summary>
     /// Hand Vibration.
     /// </summary>
     public VibrateHand vibrateHand;
-    /// <summary>
-    /// Hand Movement.
-    /// </summary>
-    private HandMovement handMovement;
 
     /// <summary>
     /// The root transform.
@@ -55,9 +56,9 @@ public abstract class Hand : IHand
     protected ArrayList colliders;
 
     /// <summary>
-    /// The game transforms.
+    /// The game and model transforms.
     /// </summary>
-    protected Transform[][] gameTransforms;
+    protected Transform[][] gameTransforms, modelTransforms;
 
     /// <summary>
     /// The base collider.
@@ -90,11 +91,6 @@ public abstract class Hand : IHand
     private SphereCollider sphereCollider;
 
     /// <summary>
-    /// The model transforms.
-    /// </summary>
-    private Transform[][] modelTransforms;
-
-    /// <summary>
     /// The animation clip.
     /// </summary>
     private AnimationClip animationClip;
@@ -115,7 +111,7 @@ public abstract class Hand : IHand
     private float[] correctionBends;
 
     /// <summary>
-    /// One.
+    /// Magic numbers.
     /// </summary>
     private static readonly int ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5;
 
@@ -126,6 +122,8 @@ public abstract class Hand : IHand
     /// <summary>
     /// Initializes a new instance of the <see cref="Hand"/> class.
     /// </summary>
+    /// <param name="glove">The glove.</param>
+    /// <param name="RootTransform">The root transform.</param>
     /// <param name="handModel">The hand model.</param>
     /// <param name="handRoot">The hand root.</param>
     /// <param name="hand">The hand.</param>
@@ -142,20 +140,10 @@ public abstract class Hand : IHand
         this.animationClip = animation;
         this.highlightColor = highlightColor;
         this.lastTouched = null;
-
-        this.correctionBends = new float[glove.Fingers.Length];
-        for (int i = 0; i < glove.Fingers.Length; i++)
-            correctionBends[i] = glove.Fingers[i];
-
+        this.correctionBends = InitCorrectionBends();
         this.colliders = new ArrayList();
-
-        //init die transforms
-
-        //basehandcollider
-        colliders.Add(HandCollider.CreateColliders(gameTransforms[0][0].parent.gameObject));
-
+        this.manusControl = new ManusControl(RootTransform, hand);
         this.manusGrab = new ManusGrab(baseCollider.gameObject, highlightColor, this);
-
         hand.SetActive(true);
     }
 
@@ -168,6 +156,17 @@ public abstract class Hand : IHand
     /// </summary>
     public abstract void UpdatePosition();
 
+    /// <summary>
+    /// Updates this instance.
+    /// </summary>
+    public void Update(float[] fingers, bool[] bends)
+    {
+        UpdatePosition();
+        UpdateHand(bends);
+        UpdateFingers(fingers, bends);
+        UpdateGestures();
+    }
+           
     /// <summary>
     /// Updates the hand.
     /// </summary>
@@ -184,10 +183,44 @@ public abstract class Hand : IHand
             else
                 correctionBends[i] = fingers[i];
         }
-
-        //hm.UpdateFingers(correctionBends, bend);
     }
 
+    /// <summary>
+    /// Initializes the correction bends.
+    /// </summary>
+    /// <returns></returns>
+   public float[] InitCorrectionBends()
+    {
+        float[] res = new float[glove.Fingers.Length];
+        for (int i = 0; i < glove.Fingers.Length; i++)
+            correctionBends[i] = glove.Fingers[i];
+
+        return res;
+    }
+
+   void InitializeFingerCollider()
+   {
+       for (int i = 0; i < 5; i++)
+           for (int j = 0; j < 4; j++)
+           {
+               if (j == 3)
+               {
+                   SphereCollider s = new SphereCollider();
+                   s = gameTransforms[i][j].gameObject.AddComponent<SphereCollider>();
+                   if (i == 0)
+                       s.radius = .025f;
+                   else s.radius = .015f;
+
+                   colliders.Add(s);
+               }
+               else
+               {
+                   BoxCollider b = new BoxCollider();
+                   b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
+                   b.size = new Vector3(.02f, .02f, .02f);
+               }
+           }
+   }
     /// <summary>
     /// Updates the gestures.
     /// </summary>
@@ -239,6 +272,32 @@ public abstract class Hand : IHand
         return Gestures.None;
     }
 
+    // Update is called once per frame
+    /// <summary>
+    /// Updates all fingers.
+    /// </summary>
+    /// <param name="f">Array of floats containing fingers.</param>
+    public void UpdateFingers(float[] f, bool[] bend)
+    {
+        float avgbend = 0.0f;
+        for (int i = 0; i < FIVE; i++)
+        {
+            animationClip.SampleAnimation(hand, f[i] * timeFactor);
+            avgbend += f[i];
+            for (int j = 0; j < FOUR; j++)
+            {
+                gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
+            }
+        }
+        avgbend /= 4;
+
+        float thumbvalue = (avgbend > f[0]) ? avgbend : f[0];
+        animationClip.SampleAnimation(hand, thumbvalue * timeFactor);
+        for (int j = 0; j < FOUR; j++)
+        {
+            gameTransforms[0][j].localRotation = modelTransforms[0][j].localRotation;
+        }
+    }
     /// <summary>
     /// Returns the ManusGrab.
     /// </summary>

@@ -49,15 +49,18 @@ public class VibrateHand : MonoBehaviour
     /// </summary>
     public VibrateHand(Glove glove)
     {
-        this.timer = 0f;
-        this.vibrateGlove = false;
         this.glove = glove;
-
     }
 
     #endregion Constructor
 
     #region Methods
+
+    public void Update()
+    {
+        UpdateTimer();
+        UpdateVibration();
+    }
 
     /// <summary>
     /// Resets the timer.
