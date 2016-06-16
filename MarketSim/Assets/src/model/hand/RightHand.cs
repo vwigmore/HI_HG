@@ -41,13 +41,13 @@ public class RightHand : Hand
 		if (Manager.MKBOnly)
 			return;
 		
-        Vector3 newpos = this.root.transform.position;
-        this.handModel.transform.position = newpos;
+			Vector3 newpos = this.root.transform.position;
+			this.handModel.transform.position = newpos;
 
-        GameObject wrist = GameObject.Find("22_Wrist_Right");
-        GameObject elbow = GameObject.Find("21_Elbow_Right");
-        Vector3 dir = wrist.transform.position - elbow.transform.position;
-        this.handModel.transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
+			GameObject wrist = GameObject.Find ("22_Wrist_Right");
+			GameObject elbow = GameObject.Find ("21_Elbow_Right");
+			Vector3 dir = wrist.transform.position - elbow.transform.position;
+			this.handModel.transform.rotation = Quaternion.FromToRotation (Vector3.right, dir);
 
         Vector3 newrot = this.root.transform.rotation.eulerAngles;
         newrot.y -= 180;

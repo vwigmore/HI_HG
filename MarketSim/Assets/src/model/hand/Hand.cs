@@ -152,12 +152,17 @@ public abstract class Hand : IHand
 
     #region Methods
 
+	/// <summary>
+	/// Inits the colliders.
+	/// </summary>
 	public void InitColliders()
 	{
 		this.colliders = new ArrayList();
 		this.colliders.AddRange(HandCollider.InitializeFingerColliders(gameTransforms));
-		this.baseCollider = (BoxCollider) HandCollider.CreateHandBaseCollider (root);
+		this.baseCollider = (BoxCollider) HandCollider.CreateHandBaseCollider (RootTransform.gameObject);
+		Debug.Log (colliders.Count);
 		this.colliders.Add(baseCollider);
+		Debug.Log (colliders.Count);
 	}
 
     /// <summary>

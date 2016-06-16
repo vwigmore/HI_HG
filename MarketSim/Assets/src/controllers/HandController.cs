@@ -7,6 +7,9 @@ public class HandController : MonoBehaviour
 {
 	#region Fields
 
+	/// <summary>
+	/// The root transform.
+	/// </summary>
 	public Transform RootTransform;
 
 	/// <summary>
@@ -19,6 +22,9 @@ public class HandController : MonoBehaviour
 	/// </summary>
 	private IHand hand;
 
+	/// <summary>
+	/// The collision contacts.
+	/// </summary>
 	private ArrayList collisionContacts;
 
 	private bool[] bends;
