@@ -1,40 +1,58 @@
 ﻿using Assets.src.model;
-using UnityEngine;
+using System;
 using System.Collections;
+using UnityEngine;
 
+public static class HandCollider
+{
+	private static Vector3 baseColliderSize = new Vector3(0.1f, 0.02f, 0.1f);
+	public static Collider CreateHandBaseCollider(GameObject root)
+	{
+		BoxCollider baseCollider = new BoxCollider();
+		baseCollider = root.AddComponent<BoxCollider>();
+		baseCollider.size = baseColliderSize;
+		baseCollider.center = TranslateBaseColliderPos (baseCollider.center);
+		return baseCollider;
+	}
 
-public class HandCollider : MonoBehaviour {
-    
-    /// <summary>
-    /// The base hand collider size.
-    /// </summary>
-    private static Vector3 BaseHandColliderSize = new Vector3(0.1f, 0.02f, 0.1f);
+	public static Vector3 TranslateBaseColliderPos(Vector3 pos)
+	{
+		pos.x -= 0.05f;
+		pos.y -= 0.2f;
+		return pos;
+	}
 
-    /// <summary>
-    /// Creates the grab collider.
-    /// </summary>
-    public static Collider CreateColliders(GameObject ob)
-    {
-        BoxCollider baseCollider = new BoxCollider();
-        baseCollider = ob.AddComponent<BoxCollider>();
-        baseCollider.size = BaseHandColliderSize;
+	public static ArrayList InitializeFingerColliders(Transform[][] gameTransforms)
+	{
+		ArrayList colliders = new ArrayList();
+		for (int i = 0; i < 5; i++)
+			for (int j = 0; j < 4; j++)
+			{
+				Collider collider;
+				if (j == 3)
+					collider = CreateFingerTipCollider (gameTransforms [i] [j].gameObject);
+				else 
+					collider = CreateFingerPartCollider (gameTransforms [i] [j].gameObject);
+				colliders.Add (collider);
+			}		
+		return colliders;
+	}
 
-        Vector3 pos2 = baseCollider.center;
-        pos2 = TranslateHandBoundingBox(pos2);
+	public static Collider CreateFingerTipCollider(GameObject root)
+	{
+		SphereCollider s = new SphereCollider();
+		s = root.AddComponent<SphereCollider>();
+		s.radius = .02f;
+		return s;
+	}
 
-        baseCollider.center = pos2;
-        return baseCollider;
-    }
-
-    /// <summary>
-    /// Helper method for creating a collider.
-    /// </summary>
-    /// <param name="pos">The position.</param>
-    /// <returns>The new position</returns>
-    public static Vector3 TranslateHandBoundingBox(Vector3 pos)
-    {
-        pos.x -= .05f;
-        pos.y -= .02f;
-        return pos;
-    }
+	public static Collider CreateFingerPartCollider(GameObject root)
+	{
+		BoxCollider b = new BoxCollider();
+		b = root.AddComponent<BoxCollider>();
+		b.size = new Vector3(.02f, .02f, .02f);
+		return b;
+	}
 }
+
+

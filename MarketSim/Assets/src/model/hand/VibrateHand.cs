@@ -6,15 +6,7 @@ using ManusMachina;
 
 public class VibrateHand : MonoBehaviour
 {
-
-
     #region Fields
-
-    /// <summary>
-    /// The time factor.
-    /// </summary>
-    private const float timeFactor = 10.0f;
-
     /// <summary>
     /// The vibrate time.
     /// </summary>

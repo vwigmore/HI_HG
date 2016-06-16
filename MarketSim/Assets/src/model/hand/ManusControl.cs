@@ -1,57 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ManusControl : MonoBehaviour
+public static class ManusControl
 {
     #region Fields
-    /// <summary>
-    /// Game object hand.
-    /// </summary>
-    private GameObject hand;
-
-    /// <summary>
-    /// The root transform.
-    /// </summary>
-    public Transform RootTransform;
 
     /// <summary>
     /// Magic numbers.
     /// </summary>
-    private readonly int FOUR = 4, FIVE = 5;
+	private static readonly int FOUR = 4, FIVE = 5;
 
-    /// <summary>
-    /// The game transforms.
-    /// </summary>
-    protected Transform[][] gameTransforms;
-
-    /// <summary>
-    /// The model transforms.
-    /// </summary>
-    private Transform[][] modelTransforms;
-
-    /// <summary>
-    /// The colliders.
-    /// </summary>
-    protected ArrayList colliders;
-
-    #endregion Fields
-
-    #region Constructor
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ManusControl"/> class.
-    /// </summary>
-    /// <param name="rootTransform">The root transform.</param>
-    /// <param name="hand">The hand.</param>
-    public ManusControl(Transform rootTransform, GameObject hand)
-    {
-        this.RootTransform = rootTransform;
-        this.hand = hand;
-        this.gameTransforms = CreateGameTransforms();
-        this.modelTransforms = CreateModelTransforms();
-    }
-
-    #endregion Constructor
+	#endregion Fields
 
     #region Methods
 
@@ -59,34 +18,14 @@ public class ManusControl : MonoBehaviour
     /// Creates the game transforms.
     /// </summary>
     /// <returns></returns>
-    public  Transform[][] CreateGameTransforms()
+	public static Transform[][] CreateGameTransforms(Transform rootTransform)
     {
-        gameTransforms = new Transform[FIVE][];
+        Transform[][] gameTransforms = new Transform[FIVE][];
         for (int i = 0; i < FIVE; i++)
         {
             gameTransforms[i] = new Transform[FOUR];
             for (int j = 0; j < FOUR; j++)
-            {
-                gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
-
-                if (j == 3)
-                {
-                    SphereCollider s = new SphereCollider();
-                    s = gameTransforms[i][j].gameObject.AddComponent<SphereCollider>();
-
-                    if (i == 0)
-                        s.radius = .025f;
-                    else s.radius = .015f;
-
-                    colliders.Add(s);
-                }
-                else
-                {
-                    BoxCollider b = new BoxCollider();
-                    b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
-                    b.size = new Vector3(.02f, .02f, .02f);
-                }
-            }
+				gameTransforms[i][j] = FindDeepChild(rootTransform, "Finger_" + i.ToString() + j.ToString());
         };
         return gameTransforms;
     }
@@ -95,9 +34,9 @@ public class ManusControl : MonoBehaviour
     /// Creates the model transforms.
     /// </summary>
     /// <returns></returns>
-    public Transform[][] CreateModelTransforms()
+	public static Transform[][] CreateModelTransforms(GameObject hand)
     {
-          modelTransforms = new Transform[FIVE][];
+          Transform[][] modelTransforms = new Transform[FIVE][];
         for (int i = 0; i < FIVE; i++)
         {
             modelTransforms[i] = new Transform[FOUR];

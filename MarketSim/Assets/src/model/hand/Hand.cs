@@ -10,15 +10,10 @@ public abstract class Hand : IHand
 {
     #region Fields
 
-    /// <summary>
-    /// The manus control.
-    /// </summary>
-    public ManusControl manusControl;
-
-    /// <summary>
-    /// Hand Vibration.
-    /// </summary>
-    public VibrateHand vibrateHand;
+	/// <summary>
+	/// Controls the vibration of the hand.
+	/// </summary>
+	public VibrateHand vh;
 
     /// <summary>
     /// The root transform.
@@ -141,15 +136,29 @@ public abstract class Hand : IHand
         this.highlightColor = highlightColor;
         this.lastTouched = null;
         this.correctionBends = InitCorrectionBends();
-        this.colliders = new ArrayList();
-        this.manusControl = new ManusControl(RootTransform, hand);
+        
+		this.gameTransforms = ManusControl.CreateGameTransforms (RootTransform);
+		this.modelTransforms = ManusControl.CreateModelTransforms (hand);
+
+		InitColliders ();
+		    
         this.manusGrab = new ManusGrab(baseCollider.gameObject, highlightColor, this);
-        hand.SetActive(true);
+		this.vh = new VibrateHand (glove);
+
+		hand.SetActive(true);
     }
 
     #endregion Constructors
 
     #region Methods
+
+	public void InitColliders()
+	{
+		this.colliders = new ArrayList();
+		this.colliders.AddRange(HandCollider.InitializeFingerColliders(gameTransforms));
+		this.baseCollider = (BoxCollider) HandCollider.CreateHandBaseCollider (root);
+		this.colliders.Add(baseCollider);
+	}
 
     /// <summary>
     /// Update the position of the hand according to the arm.
@@ -165,6 +174,7 @@ public abstract class Hand : IHand
         UpdateHand(bends);
         UpdateFingers(fingers, bends);
         UpdateGestures();
+		vh.Update ();
     }
            
     /// <summary>
@@ -191,36 +201,13 @@ public abstract class Hand : IHand
     /// <returns></returns>
    public float[] InitCorrectionBends()
     {
-        float[] res = new float[glove.Fingers.Length];
-        for (int i = 0; i < glove.Fingers.Length; i++)
-            correctionBends[i] = glove.Fingers[i];
-
+        float[] res = new float[this.glove.Fingers.Length];
+		for (int i = 0; i < this.glove.Fingers.Length; i++) 
+			res [i] = this.glove.Fingers [i];
+		
         return res;
     }
-
-   void InitializeFingerCollider()
-   {
-       for (int i = 0; i < 5; i++)
-           for (int j = 0; j < 4; j++)
-           {
-               if (j == 3)
-               {
-                   SphereCollider s = new SphereCollider();
-                   s = gameTransforms[i][j].gameObject.AddComponent<SphereCollider>();
-                   if (i == 0)
-                       s.radius = .025f;
-                   else s.radius = .015f;
-
-                   colliders.Add(s);
-               }
-               else
-               {
-                   BoxCollider b = new BoxCollider();
-                   b = gameTransforms[i][j].gameObject.AddComponent<BoxCollider>();
-                   b.size = new Vector3(.02f, .02f, .02f);
-               }
-           }
-   }
+		
     /// <summary>
     /// Updates the gestures.
     /// </summary>
@@ -316,7 +303,7 @@ public abstract class Hand : IHand
         if ((lastTouched == null || !lastTouched.Equals(obj))
             && Manager.EnableVibration)
         {
-            //vh.Vibrate();
+            vh.Vibrate();
             lastTouched = obj;
         }
         else
