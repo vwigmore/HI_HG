@@ -39,7 +39,6 @@ public class HandController : MonoBehaviour
     private void Start()
     {
         hand = HandFactory.createHand(glove_hand, RootTransform);
-        Debug.Log("roottrans: " + RootTransform.ToString());
         collisionContacts = new ArrayList();
         bends = new bool[5];
         ResetBends();
