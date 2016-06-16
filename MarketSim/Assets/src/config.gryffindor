@@ -28,6 +28,7 @@ MKBONLY 		= false
 # ENABLEVIBRATION: enables haptic feedback
 # VIBRATIONFORCE: the force of the haptic feedback [0, 1]
 # VIBRATIONTIME: the time of the haptic feedback in ms.
+# GLOVEORIENTATION: used to align the glove in the z axis -1 or 1
 ###############################################
 
 PROXDIST 		= 0.5
@@ -37,3 +38,4 @@ ENABLEVIBRATION		= true
 VIBRATIONFORCE		= 0.1
 VIBRATIONTIME		= 100
 
+GLOVEFORWARD		= -1
