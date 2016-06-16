@@ -70,9 +70,9 @@ public class VibrateHand : MonoBehaviour
         timer += Time.deltaTime;
     }
 
-    ///// <summary>
-    ///// Updates the vibration of the glove.
-    ///// </summary>
+    /// <summary>
+    /// Updates the vibration of the glove.
+    /// </summary>
     public void UpdateVibration()
     {
         if (timer <= vibrateTime && vibrateGlove)
