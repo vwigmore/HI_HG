@@ -32,13 +32,20 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-        Vector3 newpos = this.root.transform.position;
-        this.handModel.transform.position = newpos;
-        Vector3 newrot = this.root.transform.rotation.eulerAngles;
+		if (Manager.MKBOnly)
+			return;
+		
+		Vector3 newpos = this.root.transform.position;
+		this.handModel.transform.position = newpos;
 
-        newrot.y -= 90;
+		GameObject wrist = GameObject.Find ("12_Wrist_Left");
+		GameObject elbow = GameObject.Find ("11_Elbow_Left");
+		Vector3 dir = wrist.transform.position - elbow.transform.position;
+		this.handModel.transform.rotation = Quaternion.FromToRotation (Vector3.forward, dir);
 
-        this.handModel.transform.rotation = Quaternion.Euler(newrot);
+        //Vector3 newrot = this.root.transform.rotation.eulerAngles;
+        //newrot.y += 90;
+        //this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 
     /// <summary>
@@ -47,30 +54,44 @@ public class LeftHand : Hand
     public override void UpdateGestures()
     {
         base.UpdateGestures();
-
-        Gestures gesture = GetGesture();
-
         if (glove_hand == GLOVE_HAND.GLOVE_LEFT && Manager.GestureMovementOn)
         {
+            IMoveGesture gesture = GestureController.GetGesture(this.glove);
             MoveWithGesture(gesture);
         }
-        this.manusGrab.UpdateGrabbedObject(-0.1f, gameTransforms[0][0].parent.gameObject.transform);
-        this.manusGrab.basket.UpdateList();
     }
 
     /// <summary>
     /// Moves according to the given gesture.
     /// </summary>
     /// <param name="g">The gesture.</param>
-    public void MoveWithGesture(Gestures g)
+    public void MoveWithGesture(IMoveGesture gesture)
     {
-        if (g == Gestures.Thumb)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
-        if (g == Gestures.Point)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
-        if (g == Gestures.Pinky)
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+        gesture.MovePlayer(GameObject.FindGameObjectWithTag("Player"));
     }
 
+    /// <summary>
+    /// The player walks backwards.
+    /// </summary>
+    private void MoveBackward()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkBackwards();
+    }
+
+    /// <summary>
+    /// The player walks forward.
+    /// </summary>
+    private void moveForward()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().walkForward();
+    }
+
+    /// <summary>
+    /// The player moves right.
+    /// </summary>
+    private void moveRight()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
+    }
     #endregion Methods
 }

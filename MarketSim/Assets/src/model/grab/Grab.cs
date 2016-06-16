@@ -1,7 +1,5 @@
 ﻿namespace Assets.src.model
 {
-    using System;
-    using System.Collections;
     using UnityEngine;
 
     /// <summary>
@@ -12,22 +10,12 @@
         #region Fields
 
         /// <summary>
-        /// The basket
+        /// The basket.
         /// </summary>
         public ItemHolder basket;
 
         /// <summary>
-        /// The throw force
-        /// </summary>
-        protected readonly float throwForce = Manager.ThrowForce;
 
-        /// <summary>
-        /// An object in proximity has to be within this distance.
-        /// </summary>
-        protected float proxDist = Manager.ProximityDist;
-
-
-        /// <summary>
         /// GameObject player.
         /// </summary>
         protected GameObject player;
@@ -51,22 +39,12 @@
         /// <summary>
         /// Last position of the grabbed object.
         /// </summary>
-        protected Vector3 prevPos;
+        private Vector3 prevPos;
 
         /// <summary>
-        /// The previous rotation.
+        /// The previous grabber rot.
         /// </summary>
-        protected Quaternion prevRot;
-
-        /// <summary>
-        /// The previous grabber rot
-        /// </summary>
-        protected Quaternion prevGrabberRot;
-
-        /// <summary>
-        /// Object currently selected.
-        /// </summary>
-        public GameObject highlighted { get; protected set; }
+        public Quaternion prevGrabberRot { get; set; }
 
         #endregion Fields
 
@@ -96,6 +74,11 @@
         #region Properties
 
         /// <summary>
+        /// Object currently selected.
+        /// </summary>
+        public GameObject highlighted { get; protected set; }
+
+        /// <summary>
         /// Gets or sets the grabbed object.
         /// </summary>
         /// <value>
@@ -108,77 +91,47 @@
         /// </summary>
         protected GameObject grabber { get; set; }
 
-        /// <summary>
-        /// Gets or sets the grabber.
-        /// </summary>
-        /// <value>
-        /// The grabber.
-        /// </value>
-        protected GameObject Grabber { get; set; }
-
         #endregion Properties
 
         #region Methods
 
         /// <summary>
-        /// Grab the highlighted object.
+        /// Checks if there is an object highlighted,
+        /// if there is, it is grabbed.
         /// </summary>
         public void GrabHighlightedObject()
         {
             if (this.highlighted != null)
             {
-                Debug.Log("grabbing: "+ highlighted);
-                this.GrabbedObject = this.highlighted;
-                SetPrevRotation(GrabbedObject.transform.rotation);
+                GrabHighlightedNotNull();
             }
+
+            ClearHighlights();
         }
 
         /// <summary>
-        /// Drop the currently grabbed object.
+        /// Checks if there is an object currently grabbed,
+        /// if there is, drop it.
         /// </summary>
         public virtual void DropObject()
         {
-            if (this.GrabbedObject == null)
-                return;
-
-            if (this.InProximity(this.basket.holder)
-                && !this.GrabbedObject.tag.Equals("basket")
-                && !this.basket.items.Contains(this.GrabbedObject))
+            if (this.GrabbedObject != null)
             {
-
-                this.DropInBasket();
-
-            }
-            else
-            {
-                this.ObjectForce();
+                DropObjectNotNull();
             }
         }
 
         /// <summary>
-        /// Updates the grabbed object.
+        /// Updates the position of the grabbed object.
         /// </summary>
         public virtual void UpdateGrabbedObject()
         {
             if (this.IsGrabbing())
-            {
-
-                this.SetPrevPosition(this.GrabbedObject.transform.position);
-                Vector3 newpos = this.grabber.transform.position + this.grabber.transform.forward;
-
-                this.UpdateGrabbedBasket(newpos);
-
-                this.GrabbedObject.transform.position = newpos;
-                GrabbedObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.left);
-                this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
-                Physics.IgnoreCollision(
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
-                    this.GrabbedObject.GetComponent<Collider>());
-            }
+                this.prevPos = this.GrabbedObject.transform.position;
         }
 
         /// <summary>
-        /// Updates the grabbed basket.
+        /// Updates the position of the basket if it is grabbed.
         /// </summary>
         /// <param name="pos">The position.</param>
         public void UpdateGrabbedBasket(Vector3 pos)
@@ -188,12 +141,12 @@
                 float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
                 pos.y -= y;
                 this.GrabbedObject.transform.position = pos;
+                this.prevPos = this.grabber.transform.position;
                 this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+
                 Physics.IgnoreCollision(
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
                     this.GrabbedObject.GetComponent<Collider>());
-                this.SetPrevPosition(this.grabber.transform.position);
-
             }
         }
 
@@ -207,15 +160,19 @@
         }
 
         /// <summary>
-        /// Highlight selected object
+        /// If not currently grabbing an object, highlight
+        /// the selected object.
         /// </summary>
         /// <param name="obj">Object to highlight</param>
         public void HighlightSelectedObject(GameObject obj)
         {
+            if (IsGrabbing())
+                return;
+
             this.ClearHighlights();
             if ((obj.tag.Equals("pickup") || obj.tag.Equals("basket")) && this.InProximity(obj))
             {
-                this.HighlightHelp(obj);
+                this.Highlight(obj);
             }
             else
             {
@@ -224,10 +181,42 @@
         }
 
         /// <summary>
-        /// Helper method for HighlightSelectedObjects
+        /// Returns whether an object is in range of the grabber.
         /// </summary>
-        /// <param name="obj">The object.</param>
-        public void HighlightHelp(GameObject obj)
+        /// <param name="obj">The object to check.</param>
+        /// <returns>True if object is in range, else false.</returns>
+        public bool InProximity(GameObject obj)
+        {
+            return Vector3.Distance(this.grabber.transform.position, obj.transform.position) <= Manager.ProximityDist;
+        }
+
+        /// <summary>
+        /// Returns whether an object is in range of the grabber.
+        /// </summary>
+        /// <param name="pos">The position to check.</param>
+        /// <returns>True if object is in range, else false.</returns>
+        public bool InProximity(Vector3 pos)
+        {
+            return Vector3.Distance(this.grabber.transform.position, pos) <= Manager.ProximityDist;
+        }
+
+        /// <summary>
+        /// Set the previously highlighted object back to its original color.
+        /// </summary>
+        public void ClearHighlights()
+        {
+            if (this.prevHighlighted != null)
+            {
+                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
+            }
+            highlighted = null;
+        }
+
+        /// <summary>
+        /// Highlights the specified object.
+        /// </summary>
+        /// <param name="obj">The object to be highlighted.</param>
+        private void Highlight(GameObject obj)
         {
             this.prevHighlighted = obj;
             this.prevHighlightedColor = obj.GetComponent<Renderer>().sharedMaterial.color;
@@ -239,20 +228,9 @@
         }
 
         /// <summary>
-        /// Clear previously highlighted objects
-        /// </summary>
-        public void ClearHighlights()
-        {
-            if (this.prevHighlighted != null)
-            {
-                this.prevHighlighted.GetComponent<Renderer>().material.color = this.prevHighlightedColor;
-            }
-        }
-
-        /// <summary>
         /// Drops the grabbed object into the basket.
         /// </summary>
-        public void DropInBasket()
+        private void DropInBasket()
         {
             Vector3 newpos = this.basket.holder.transform.position;
             newpos.y -= newpos.y;
@@ -264,82 +242,49 @@
         }
 
         /// <summary>
-        /// Add force to object when throwing.
+        /// Add force to object when throwing it away.
         /// </summary>
-        public void ObjectForce()
+        private void ObjectForce()
         {
             Vector3 targetPos = this.GrabbedObject.transform.position;
-            Vector3 direction = targetPos - this.GetPrevPosition();
+            Vector3 direction = targetPos - this.prevPos;
+
             this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-            this.GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * this.throwForce, ForceMode.Force);
+            this.GrabbedObject.GetComponent<Rigidbody>().AddForce(direction * Manager.ThrowForce, ForceMode.Force);
             this.GrabbedObject = null;
             this.highlighted = null;
         }
 
         /// <summary>
-        /// Returns whether an object is in range of the grabber.
+        /// Grabs the highlighted object.
         /// </summary>
-        /// <param name="obj">The object to check.</param>
-        /// <returns>True if object is in range, else false.</returns>
-        public bool InProximity(GameObject obj)
+        private void GrabHighlightedNotNull()
         {
-            return Vector3.Distance(this.Grabber.transform.position, obj.transform.position) <= this.proxDist;
+            this.GrabbedObject = this.highlighted;
+            if (basket.items.Contains(highlighted))
+            {
+                basket.removeItem(highlighted);
+            }
         }
 
         /// <summary>
-        /// Returns whether an object is in range of the grabber.
+        /// Drops the grabbed object into the basked if it is in range,
+        /// else drop it with inertia applied.
         /// </summary>
-        /// <param name="pos">The position to check.</param>
-        /// <returns>True if object is in range, else false.</returns>
-        public bool InProximity(Vector3 pos)
+        private void DropObjectNotNull()
         {
-            return Vector3.Distance(this.Grabber.transform.position, pos) <= this.proxDist;
-        }
+            GrabbedObject.GetComponent<Collider>().enabled = true;
 
-        /// <summary>
-        /// Sets the previous position.
-        /// </summary>
-        /// <param name="pos">The position.</param>
-        public void SetPrevPosition(Vector3 pos)
-        {
-            this.prevPos = pos;
-        }
-
-        /// <summary>
-        /// Gets the previous position.
-        /// </summary>
-        /// <returns>The previous position</returns>
-        public Vector3 GetPrevPosition()
-        {
-            return this.prevPos;
-        }
-
-        /// <summary>
-        /// Sets the previous rotation.
-        /// </summary>
-        /// <param name="rot">The rotation.</param>
-        public void SetPrevRotation(Quaternion rot)
-        {
-            this.prevRot = rot;
-        }
-
-        /// <summary>
-        /// Gets the previous rotation.
-        /// </summary>
-        /// <returns>The previous rotation</returns>
-        public Quaternion GetPrevRotation()
-        {
-            return this.prevRot;
-        }
-
-        public void SetPrevGrabberRot(Quaternion rot)
-        {
-            this.prevGrabberRot = rot;
-        }
-
-        public Quaternion GetPrevGrabberRot()
-        {
-            return this.prevGrabberRot;
+            if (this.InProximity(this.basket.holder)
+                && !this.GrabbedObject.tag.Equals("basket")
+                && !this.basket.items.Contains(this.GrabbedObject))
+            {
+                this.DropInBasket();
+            }
+            else
+            {
+                this.ObjectForce();
+            }
         }
 
         #endregion Methods

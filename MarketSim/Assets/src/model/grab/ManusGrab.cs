@@ -1,5 +1,6 @@
 ﻿namespace Assets.src.model
 {
+    using ManusMachina;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -16,19 +17,11 @@
         #region Fields
 
         /// <summary>
-        /// The throw force
-        /// </summary>
-        private readonly float throwForce = 500;
-
-        /// <summary>
         /// The last position
         /// </summary>
         private Vector3 lastPos;
 
-        /// <summary>
-        /// The last rotation
-        /// </summary>
-        private Quaternion lastRotation;
+        private IHand hand;
 
         #endregion Fields
 
@@ -39,12 +32,10 @@
         /// </summary>
         /// <param name="grabber">The grabber.</param>
         /// <param name="highlightColor">Color of the highlight.</param>
-        public ManusGrab(GameObject grabber, Color highlightColor)
+        public ManusGrab(GameObject grabber, Color highlightColor, IHand hand)
             : base(grabber, highlightColor)
         {
-            this.Grabber = grabber;
-            this.highlightColor = highlightColor;
-            this.lastRotation = Quaternion.identity;
+            this.hand = hand;
         }
 
         #endregion Constructors
@@ -52,25 +43,25 @@
         #region Methods
 
         /// <summary>
-        /// Updates the grabbed object.
+        /// Updates the grabbed object's position and rotation
+        /// depending on whether it is a basket or not.
         /// </summary>
-        /// <param name="trans">The trans.</param>
-        public void UpdateGrabbedObject(float offset, Transform trans)
+        /// <param name="grabPos">The collision point of with the grabbed object.</param>
+        /// <param name="grabberTransform">The transform component of the grabber.</param>
+        public void UpdateGrabbedObject(Vector3 grabPos, Transform grabberTransform)
         {
             if (IsGrabbing())
             {
-                SetPrevPosition(GrabbedObject.transform.position);
-                Vector3 newpos = grabber.transform.position;
+                base.UpdateGrabbedObject();
+
                 if (GrabbedObject.tag.Equals("basket"))
                 {
-                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
-                    UpdateGrabbedObjectsPosition(newpos);
-                    UpdateGrabbedObjectsRotation(trans);
+                    UpdateGrabbedObjectsPosition(grabPos);
+                    UpdateGrabbedObjectsRotation(grabberTransform);
                 }
-                newpos.z += offset;
 
-                UpdateGrabbedObjectsPosition(newpos);
-                UpdateGrabbedObjectsRotation(trans);
+                UpdateGrabbedObjectsPosition(grabPos);
+                UpdateGrabbedObjectsRotation(grabberTransform);
             }
         }
 
@@ -78,23 +69,25 @@
         /// Updates the grabbed objects position.
         /// </summary>
         /// <param name="newpos">The new position.</param>
-        /// <param name="trans">The transform.</param>
-        public void UpdateGrabbedObjectsPosition(Vector3 newpos)
+        private void UpdateGrabbedObjectsPosition(Vector3 newpos)
         {
             GrabbedObject.transform.position = newpos;
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
+            GrabbedObject.GetComponent<Collider>().enabled = false;
         }
 
         /// <summary>
-        /// Updates the grabbed objects rotation.
+        /// Updates the grabbed objects rotation if it is not a basket.
         /// </summary>
         /// <param name="trans">The trans.</param>
-        public void UpdateGrabbedObjectsRotation(Transform trans)
+        private void UpdateGrabbedObjectsRotation(Transform trans)
         {
-            Quaternion current = trans.rotation;
-            Quaternion offset = Quaternion.Inverse(GetPrevGrabberRot()) * current;
-            Quaternion newrot = offset * GetPrevRotation();
-            GrabbedObject.transform.rotation = Quaternion.Inverse(newrot);
+            if (GrabbedObject.tag.Equals("basket"))
+                return;
+
+            GrabbedObject.transform.rotation = trans.rotation;
+            if (this.hand is RightHand)
+                GrabbedObject.transform.Rotate(Vector3.up, 180);
         }
 
         #endregion Methods

@@ -1,4 +1,5 @@
 ﻿using Assets.src.model;
+using ManusMachina;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -34,6 +35,8 @@ namespace Assets.Editor
         /// </summary>
         private GameObject basket;
 
+        private IHand hand;
+
         #endregion Fields
 
         #region Methods
@@ -49,6 +52,7 @@ namespace Assets.Editor
             basket.AddComponent<BoxCollider>();
             h = new ItemHolder(basket, 2, 4);
             manusGrab = (ManusGrab)PassGrab();
+            hand = HandFactory.createHand(GLOVE_HAND.GLOVE_RIGHT, basket.transform);
         }
 
         /// <summary>
@@ -69,7 +73,9 @@ namespace Assets.Editor
         public override Grab PassGrab()
         {
             GameObject player = new GameObject("player");
-            return new ManusGrab(player, highlightColor);
+            return new ManusGrab(player, highlightColor, hand);
+
+            //return new ManusGrab(player, highlightColor);
         }
 
         /// <summary>

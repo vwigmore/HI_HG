@@ -27,13 +27,13 @@ namespace Assets.Editor
         #region Methods
 
         /// <summary>
-        /// Passes the grab.
+        /// verifies that the grab function passes.
         /// </summary>
         /// <returns></returns>
         public abstract Grab PassGrab();
 
         /// <summary>
-        /// Sets this instance up.
+        /// setup for all instances.
         /// </summary>
         [SetUp]
         public void Setup()
@@ -61,7 +61,7 @@ namespace Assets.Editor
         }
 
         /// <summary>
-        /// Tests the constructor not null.
+        /// Tests the constructor that it is not null.
         /// </summary>
         [Test]
         public void TestConstructorNotNull()

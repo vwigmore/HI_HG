@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Assets.src.model
@@ -11,12 +8,12 @@ namespace Assets.src.model
         #region Fields
 
         /// <summary>
-        /// The holder
+        /// The holder.
         /// </summary>
         public GameObject holder;
 
         /// <summary>
-        /// The items in the holder
+        /// The items in the holder.
         /// </summary>
         public ArrayList items;
 
@@ -46,12 +43,12 @@ namespace Assets.src.model
         private float startZ;
 
         /// <summary>
-        /// Width of a cell
+        /// Width of a cell.
         /// </summary>
         private float cellWidth;
 
         /// <summary>
-        /// Height of a cell
+        /// Height of a cell.
         /// </summary>
         private float cellHeight;
 
@@ -91,7 +88,7 @@ namespace Assets.src.model
         #region Methods
 
         /// <summary>
-        /// Calculate offset for each cell
+        /// Calculates the offset for each cell.
         /// </summary>
         public void InitOffsets()
         {
@@ -109,8 +106,14 @@ namespace Assets.src.model
             }
         }
 
+        public void removeItem(GameObject item)
+        {
+            if (items.Count > 0)
+                items.Remove(item);
+        }
+
         /// <summary>
-        /// Updates the list with items that are in the basket
+        /// Updates the list with items that are in the basket.
         /// </summary>
         public void UpdateList()
         {
@@ -121,7 +124,15 @@ namespace Assets.src.model
                 Quaternion newrot = this.holder.transform.rotation;
                 newpos += this.offsets[i];
                 newpos.y -= 0.65f;
-                o.GetComponent<Collider>().enabled = false;
+
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    o.GetComponent<Collider>());
+
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("basket").GetComponent<Collider>(),
+                    o.GetComponent<Collider>());
+
                 o.transform.position = newpos;
 
                 o.transform.localRotation = newrot;

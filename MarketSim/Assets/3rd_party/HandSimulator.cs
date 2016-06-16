@@ -39,7 +39,7 @@ public class HandSimulator : MonoBehaviour
     /// </summary>
     /// <param name="aParent">Transform to be searched</param>
     /// <param name="aName">Name of the (grand)child to be found</param>
-    /// <returns></returns>
+    /// <returns></returns> result
     private static Transform FindDeepChild(Transform aParent, string aName)
     {
         var result = aParent.Find(aName);

@@ -45,7 +45,7 @@ public class PlayerTest
     private Vector3 posLeft;
 
     /// <summary>
-    /// The position of the rigt foot
+    /// The position of the right foot
     /// </summary>
     private Vector3 posRight;
 
@@ -59,7 +59,7 @@ public class PlayerTest
     #region Methods
 
     /// <summary>
-    /// Setups this instance.
+    /// setup for the instances.
     /// </summary>
     [SetUp]
     public void Setup()
@@ -106,11 +106,9 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestModel()
     {
- 
         player.UpdateCrouch();
 
-        Assert.AreNotEqual(player.pc.transform.position.x,initialPcPosition.x);
-      
+        Assert.AreNotEqual(player.pc.transform.position.x, initialPcPosition.x);
     }
 
     /// <summary>
@@ -119,12 +117,10 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestLeftFoot()
     {
-    
         player.UpdateCrouch();
-   
+
         Assert.AreNotEqual(player.leftFoot.transform.position.z, posLeft.z);
         Assert.AreNotEqual(player.leftFoot.transform.position.x, posLeft.x);
-
     }
 
     /// <summary>
@@ -133,7 +129,6 @@ public class PlayerTest
     [Test]
     public void UpdateCrouchTestrightFoot()
     {
-      
         player.UpdateCrouch();
         Assert.AreNotEqual(player.rightFoot.transform.position.z, posRight.z);
         Assert.AreNotEqual(player.rightFoot.transform.position.x, posRight.x);
@@ -157,12 +152,10 @@ public class PlayerTest
     [Test]
     public void UpdateMovementTest()
     {
-
         player.updateMovement();
 
         Assert.AreNotEqual(player.pc.transform.position.z, initialPcPosition.z);
         Assert.AreNotEqual(player.pc.transform.position.x, initialPcPosition.x);
-
     }
 
     /// <summary>
@@ -171,9 +164,8 @@ public class PlayerTest
     [Test]
     public void UpdateRotationTest()
     {
-
         player.updateRotation();
-  
+
         Assert.AreNotEqual(player.pc.transform.position.z, initialPcPosition.z);
         Assert.AreNotEqual(player.pc.transform.position.x, initialPcPosition.x);
     }

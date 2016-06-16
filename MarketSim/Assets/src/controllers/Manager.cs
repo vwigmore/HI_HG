@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -26,12 +25,12 @@ public class Manager : MonoBehaviour
     private static bool mKbOnly;
 
     /// <summary>
-    /// The throw force
+    /// The throw force.
     /// </summary>
     private static float throwForce;
 
     /// <summary>
-    /// The proximity dist
+    /// The proximity dist.
     /// </summary>
     private static float proximityDist;
 
@@ -46,12 +45,12 @@ public class Manager : MonoBehaviour
     private static float vibrationForce;
 
     /// <summary>
-    /// The vibration time in MILLISECONDS
+    /// The vibration time in MILLISECONDS.
     /// </summary>
     private static int vibrationTime;
 
     /// <summary>
-    /// The configuration location
+    /// The configuration location.
     /// </summary>
     private readonly string configLocation = "Assets\\src\\config.gryffindor";
 
@@ -183,6 +182,7 @@ public class Manager : MonoBehaviour
 
     #region Methods
 
+	/// <summary>
     /// Configuration of filtering, splitting and delimiting the configuration file.
     /// </summary>
     /// <param name="line">The line to configure.</param>
@@ -199,6 +199,7 @@ public class Manager : MonoBehaviour
         }
     }
 
+	/// <summary>
     /// Applies the parameters in the Manager.
     /// </summary>
     /// <param name="split">The configuration in array form.</param>
@@ -206,22 +207,14 @@ public class Manager : MonoBehaviour
     {
         switch (split[0])
         {
-            case "HIGHLIGHTON":
-                Manager.highlightOn = (split[1] == "TRUE"); break;
-            case "GESTUREMOVEMENTON":
-                Manager.gestureMovementOn = (split[1] == "TRUE"); break;
-            case "MKBONLY":
-                Manager.mKbOnly = (split[1] == "TRUE"); break;
-            case "PROXDIST":
-                Manager.proximityDist = float.Parse(split[1]); break;
-            case "THROWFORCE":
-                Manager.throwForce = float.Parse(split[1]); break;
-            case "ENABLEVIBRATION":
-                Manager.enableVibration = (split[1] == "TRUE"); break;
-            case "VIBRATIONFORCE":
-                Manager.vibrationForce = float.Parse(split[1]); break;
-            case "VIBRATIONTIME":
-                Manager.vibrationTime = int.Parse(split[1]); break;
+            case "HIGHLIGHTON": Manager.highlightOn = (split[1] == "TRUE"); break;
+            case "GESTUREMOVEMENTON": Manager.gestureMovementOn = (split[1] == "TRUE"); break;
+            case "MKBONLY": Manager.mKbOnly = (split[1] == "TRUE"); break;
+            case "PROXDIST": Manager.proximityDist = float.Parse(split[1]); break;
+            case "THROWFORCE": Manager.throwForce = float.Parse(split[1]); break;
+            case "ENABLEVIBRATION": Manager.enableVibration = (split[1] == "TRUE"); break;
+            case "VIBRATIONFORCE": Manager.vibrationForce = float.Parse(split[1]); break;
+            case "VIBRATIONTIME": Manager.vibrationTime = int.Parse(split[1]); break;
             default: break;
         }
     }

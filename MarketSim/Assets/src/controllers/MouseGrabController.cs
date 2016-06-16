@@ -1,5 +1,4 @@
 ﻿using Assets.src.model;
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -24,35 +23,6 @@ public class MouseGrabController : MonoBehaviour
     #region Methods
 
     /// <summary>
-    /// Use this for initialization
-    /// </summary>
-    private void Start()
-    {
-        this.camera = Camera.main;
-        this.mouseGrab = new MouseGrab(this.camera.gameObject, Color.blue);
-    }
-
-    /// <summary>
-    /// Update is called once per frame
-    /// </summary>
-    private void Update()
-    {
-        RaycastHit hit;
-        Ray ray = this.camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            UpdateCastedRay(hit);
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnMouseEvent(hit);
-        }
-        mouseGrab.UpdateGrabbedObject();
-        mouseGrab.basket.UpdateList();
-    }
-
-    /// <summary>
     /// Help method for RayCasting.
     /// </summary>
     /// <param name="hit">The hit.</param>
@@ -64,7 +34,6 @@ public class MouseGrabController : MonoBehaviour
         }
         else
         {
-            this.mouseGrab.SetHit(hit);
             this.mouseGrab.DropObject();
         }
     }
@@ -82,5 +51,37 @@ public class MouseGrabController : MonoBehaviour
             this.mouseGrab.HighlightSelectedObject(objectHit);
         }
     }
+
+    /// <summary>
+    /// Use this for initialization.
+    /// </summary>
+    private void Start()
+    {
+        this.camera = Camera.main;
+        this.mouseGrab = new MouseGrab(this.camera.gameObject, Color.blue);
+    }
+
+    /// <summary>
+    /// Update is called once per frame.
+    /// </summary>
+    private void Update()
+    {
+        RaycastHit hit;
+        Ray ray = this.camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            UpdateCastedRay(hit);
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnMouseEvent(hit);
+        }
+
+        Vector3 newpos = Camera.main.transform.position + Camera.main.transform.forward;
+        mouseGrab.UpdateGrabbedObject(newpos);
+        mouseGrab.basket.UpdateList();
+    }
+
     #endregion Methods
 }

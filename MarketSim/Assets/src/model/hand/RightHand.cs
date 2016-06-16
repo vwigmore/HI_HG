@@ -1,6 +1,4 @@
-﻿using Assets.src.model;
-using ManusMachina;
-using System.Collections;
+﻿using ManusMachina;
 using UnityEngine;
 
 /// <summary>
@@ -33,8 +31,6 @@ public class RightHand : Hand
     public override void UpdateGestures()
     {
         base.UpdateGestures();
-        this.manusGrab.UpdateGrabbedObject(0.1f, gameTransforms[0][0].parent.gameObject.transform);
-        this.manusGrab.basket.UpdateList();
     }
 
     /// <summary>
@@ -42,11 +38,20 @@ public class RightHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-        Vector3 newpos = this.root.transform.position;
-        this.handModel.transform.position = newpos;
-        Vector3 newrot = this.root.transform.rotation.eulerAngles;
-        newrot.y -= 90;
-        this.handModel.transform.rotation = Quaternion.Euler(newrot);
+		if (Manager.MKBOnly)
+			return;
+		
+			Vector3 newpos = this.root.transform.position;
+			this.handModel.transform.position = newpos;
+
+			GameObject wrist = GameObject.Find ("22_Wrist_Right");
+			GameObject elbow = GameObject.Find ("21_Elbow_Right");
+			Vector3 dir = wrist.transform.position - elbow.transform.position;
+			this.handModel.transform.rotation = Quaternion.FromToRotation (Vector3.forward, dir);
+
+        //Vector3 newrot = this.root.transform.rotation.eulerAngles;
+        //newrot.y -= 180;
+        //this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 
     #endregion Methods

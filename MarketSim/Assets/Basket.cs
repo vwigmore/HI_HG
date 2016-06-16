@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// Translate the handle to the basket
@@ -35,14 +34,13 @@ public class Basket : MonoBehaviour
 
     // Use this for initialization
 
-    /// <summary> 
+    /// <summary>
     /// Starts this instance
     /// </summary>
     public void Start()
     {
         this.basketModel = GameObject.Find("single_basket_no_handle");
         this.handleModel = GameObject.Find("single_basket_handle");
-
     }
 
     /// <summary>
@@ -54,8 +52,8 @@ public class Basket : MonoBehaviour
         float height = this.handleModel.GetComponent<MeshCollider>().bounds.size.y;
         newPos.y += height;
         this.handleModel.transform.position = newPos;
-        
     }
-    #endregion Methods 
-    
+
+    #endregion Methods
+
 }
