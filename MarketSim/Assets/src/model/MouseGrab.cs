@@ -8,15 +8,6 @@
     /// <seealso cref="Assets.src.model.Grab" />
     public class MouseGrab : Grab
     {
-        #region Fields
-
-        /// <summary>
-        /// The initial position of the object
-        /// </summary>
-        private new Vector3 prevPos;
-
-        #endregion Fields
-
         #region Constructors
 
         /// <summary>

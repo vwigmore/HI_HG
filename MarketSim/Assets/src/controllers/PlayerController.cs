@@ -8,7 +8,6 @@
  * Author: Wing Nguyen
  **/
 
-
 public class PlayerController : MonoBehaviour
 {
     #region Fields
@@ -34,16 +33,6 @@ public class PlayerController : MonoBehaviour
     private float crouchHeight;
 
     /// <summary>
-    /// The cam_vert_rot.
-    /// </summary>
-    private float cam_vert_rot = 0;
-
-    /// <summary>
-    /// The cam_cap.
-    /// </summary>
-    private float cam_cap = 90;
-
-    /// <summary>
     /// The mouse axis y.
     /// </summary>
     private float mouseAxisY;
@@ -66,12 +55,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// The parts of the body: head, hip, left foot and right foot.
     /// </summary>
-    private GameObject head, hip, leftFoot, rightFoot;
-
-    /// <summary>
-    /// The heights: delta height and initial heigth.
-    /// </summary>
-    private float lastDeltaHeight, initialDeltaHeight;
+    private GameObject hip, leftFoot, rightFoot;
 
     /// <summary>
     /// The model.
@@ -137,13 +121,10 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         pc = GetComponent<CharacterController>();
         model = GameObject.Find("KinectPointMan");
-        head = GameObject.Find("03_Head");
         hip = GameObject.Find("30_Hip_Left");
         leftFoot = GameObject.Find("33_Foot_Left");
         rightFoot = GameObject.Find("43_Foot_Right");
         player = new Player(pc, model, hip, leftFoot, rightFoot);
-        initialDeltaHeight = hip.transform.position.y - leftFoot.transform.position.y;
-        lastDeltaHeight = initialDeltaHeight;
     }
 
     /// <summary>
@@ -181,7 +162,7 @@ public class PlayerController : MonoBehaviour
             newpos.y = 1.85f;
             Camera.main.transform.position = newpos;
         }
-    } 
+    }
 
     /// <summary>
     /// Updates the movement of the player.
