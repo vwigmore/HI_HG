@@ -168,11 +168,10 @@ public abstract class Hand : IHand
     /// <summary>
     /// Updates this instance.
     /// </summary>
-    public void Update(float[] fingers, bool[] bends)
+    public void Update(bool[] bends)
     {
-        UpdatePosition();
+		UpdatePosition ();
         UpdateHand(bends);
-        UpdateFingers(fingers, bends);
         UpdateGestures();
 		vh.Update ();
     }
@@ -180,7 +179,7 @@ public abstract class Hand : IHand
     /// <summary>
     /// Updates the hand.
     /// </summary>
-    public void UpdateHand(bool[] bend)
+    public void UpdateHand(bool[] bends)
     {
         Quaternion q = glove.Quaternion;
         float[] fingers = glove.Fingers;
@@ -189,10 +188,12 @@ public abstract class Hand : IHand
         for (int i = 0; i < fingers.Length; i++)
         {
             if (fingers[i] > correctionBends[i])
-                correctionBends[i] = bend[i] ? fingers[i] : correctionBends[i];
+                correctionBends[i] = bends[i] ? fingers[i] : correctionBends[i];
             else
                 correctionBends[i] = fingers[i];
         }
+
+		UpdateFingers(correctionBends, bends);
     }
 
     /// <summary>

@@ -30,6 +30,12 @@ namespace Assets.src.model
         /// </summary>
         void UpdatePosition();
 
+		/// <summary>
+		/// Update the specified f and b.
+		/// </summary>
+		/// <param name="b">The bends value, determines if a finger can bend or not.</param>
+		void Update (bool[] b);
+
         /// <summary>
         /// Updates the hand.
         /// </summary>

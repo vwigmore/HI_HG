@@ -32,6 +32,9 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
+		if (Manager.MKBOnly)
+			return;
+		
         Vector3 newpos = this.root.transform.position;
         this.handModel.transform.position = newpos;
 
