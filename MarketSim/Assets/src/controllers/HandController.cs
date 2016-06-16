@@ -39,6 +39,7 @@ public class HandController : MonoBehaviour
     private void Start()
     {
         hand = HandFactory.createHand(glove_hand, RootTransform);
+        Debug.Log("roottrans: " + RootTransform.ToString());
         collisionContacts = new ArrayList();
         bends = new bool[5];
         ResetBends();
@@ -70,8 +71,8 @@ public class HandController : MonoBehaviour
     /// <returns>The new point</returns>
     private Vector3 CalculateContactPoint()
     {
-		if (collisionContacts.Count == 0)
-			return ((Collider)hand.GetColliders () [0]).transform.position;
+        if (collisionContacts.Count == 0)
+            return ((Collider)hand.GetColliders()[0]).transform.position;
         return CalculateAverageContactPoint();
     }
 
@@ -81,7 +82,7 @@ public class HandController : MonoBehaviour
     /// <param name="x">The x.</param>
     /// <param name="y">The y.</param>
     /// <param name="z">The z.</param>
-	private Vector3 CalculateAverageContactPoint()
+    private Vector3 CalculateAverageContactPoint()
     {
         float x = 0f, y = 0f, z = 0f;
         for (int i = 0; i < collisionContacts.Count; i++)
@@ -103,9 +104,9 @@ public class HandController : MonoBehaviour
         {
             bool thumbTouch = false;
             int othersTouch = 0;
-            ContactDetected(thumbTouch,othersTouch);
+            ContactDetected(thumbTouch, othersTouch);
         }
-        else 
+        else
         {
             hand.GetManusGrab().ClearHighlights();
         }
@@ -150,7 +151,7 @@ public class HandController : MonoBehaviour
         else
             hand.GetManusGrab().DropObject();
     }
- 
+
     /// <summary>
     /// Called when [collision enter].
     /// </summary>
@@ -175,14 +176,13 @@ public class HandController : MonoBehaviour
             AddContact(col, thisCollider);
         }
     }
- 
 
     /// <summary>
     /// Adds the contact.
     /// </summary>
     /// <param name="col">The col.</param>
     /// <param name="thisCollider">The this collider.</param>
-    private void AddContact(Collision col, Collider thisCollider )
+    private void AddContact(Collision col, Collider thisCollider)
     {
         for (int j = 0; j < hand.GetColliders().Count; j++)
         {
@@ -232,7 +232,6 @@ public class HandController : MonoBehaviour
             if (hand.GetColliders()[j].Equals(c.thisCollider))
                 collisionContacts.Remove(c);
         }
-
     }
 
     /// <summary>

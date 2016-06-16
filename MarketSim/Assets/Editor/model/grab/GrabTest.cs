@@ -64,7 +64,7 @@ namespace Assets.Editor
         /// Tests the constructor that it is not null.
         /// </summary>
         [Test]
-        public void TestConstructorNotNull()
+        public void ConstructorNotNullTest()
         {
             Assert.IsNotNull(this.grab);
         }
@@ -73,7 +73,7 @@ namespace Assets.Editor
         /// Tests if the highlighted object is picked up.
         /// </summary>
         [Test]
-        public void TestHighlightSelectedObject()
+        public void HighlightSelectedObjectTest()
         {
             Assert.IsNull(this.grab.highlighted);
             this.grab.HighlightSelectedObject(this.pickUpItem);
