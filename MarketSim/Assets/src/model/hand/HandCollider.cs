@@ -51,11 +51,13 @@ public static class HandCollider
 			for (int j = 0; j < 4; j++)
 			{
 				Collider collider;
-				if (j == 3)
+				if (j == 3) {
 					collider = CreateFingerTipCollider (gameTransforms [i] [j].gameObject);
-				else 
+					colliders.Add (collider);
+				} else {
 					collider = CreateFingerPartCollider (gameTransforms [i] [j].gameObject);
-				colliders.Add (collider);
+				}
+				
 			}		
 		return colliders;
 	}
@@ -69,7 +71,7 @@ public static class HandCollider
 	{
 		SphereCollider s = new SphereCollider();
 		s = root.AddComponent<SphereCollider>();
-		s.radius = .03f;
+		s.radius = .02f;
 		return s;
 	}
 

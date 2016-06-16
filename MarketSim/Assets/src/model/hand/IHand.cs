@@ -53,14 +53,6 @@ namespace Assets.src.model
         ManusGrab GetManusGrab();
 
         /// <summary>
-        /// Gets the gesture.
-        /// </summary>
-        /// <returns>The gesture</returns>
-        Gestures GetGesture();
-
-  
-
-        /// <summary>
         /// Touches the specified object.
         /// </summary>
         /// <param name="obj">The object.</param>

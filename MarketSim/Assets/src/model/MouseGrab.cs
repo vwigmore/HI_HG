@@ -11,17 +11,7 @@
         #region Fields
 
         /// <summary>
-        /// The throw force.
-        /// </summary>
-        private new readonly float throwForce = 500;
-
-        /// <summary>
-        /// The ray cast hit.
-        /// </summary>
-        private RaycastHit hit;
-
-        /// <summary>
-        /// The initial position of the object.
+        /// The initial position of the object
         /// </summary>
         private new Vector3 prevPos;
 
@@ -37,8 +27,6 @@
         public MouseGrab(GameObject grabber, Color highlightColor)
             : base(grabber, highlightColor)
         {
-            this.Grabber = grabber;
-            this.highlightColor = highlightColor;
         }
 
         #endregion Constructors
@@ -46,24 +34,24 @@
         #region Methods
 
         /// <summary>
-        /// Updates the grabbed object.
-        /// Also stores previous position of object.
+        /// Updates the grabbed object, by changing the position
+        /// and reference points for other objects.
         /// </summary>
-        public override void UpdateGrabbedObject(Vector3 grabPoint)
+        /// <param name="grabPoint">The collision point of with the grabbed object.</param>
+        public void UpdateGrabbedObject(Vector3 grabPoint)
         {
             if (IsGrabbing())
-                prevPos = GrabbedObject.transform.position;
+            {
+                base.UpdateGrabbedObject();
 
-            base.UpdateGrabbedObject(grabPoint);
-        }
+                this.UpdateGrabbedBasket(grabPoint);
+                this.GrabbedObject.transform.position = grabPoint;
+                this.GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        /// <summary>
-        /// Sets the Ray cast hit.
-        /// </summary>
-        /// <param name="hit">The Ray cast hit.</param>
-        public void SetHit(RaycastHit hit)
-        {
-            this.hit = hit;
+                Physics.IgnoreCollision(
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(),
+                    this.GrabbedObject.GetComponent<Collider>());
+            }
         }
 
         #endregion Methods

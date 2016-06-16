@@ -160,9 +160,7 @@ public abstract class Hand : IHand
 		this.colliders = new ArrayList();
 		this.colliders.AddRange(HandCollider.InitializeFingerColliders(gameTransforms));
 		this.baseCollider = (BoxCollider) HandCollider.CreateHandBaseCollider (RootTransform.gameObject);
-		Debug.Log (colliders.Count);
 		this.colliders.Add(baseCollider);
-		Debug.Log (colliders.Count);
 	}
 
     /// <summary>
@@ -214,56 +212,14 @@ public abstract class Hand : IHand
         return res;
     }
 		
-    /// <summary>
-    /// Updates the gestures.
-    /// </summary>
-    public virtual void UpdateGestures()
-    {
-        Gestures gesture = GetGesture();
-
-        if (manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
-    }
-
-    /// <summary>
-    /// Returns which gesture the hand is making.
-    /// </summary>
-    /// <returns>Gesture the hand is making</returns>
-    public Gestures GetGesture()
-    {
-        int fingersBent = 0;
-        for (int i = 0; i < FIVE; i++)
-        {
-            if (this.glove.Fingers[i] >= BendThreshold)
-            {
-                fingersBent++;
-            }
-        }
-        return GetGesturesHelp(fingersBent);
-    }
-
-    /// <summary>
-    /// Returns a gesture by checking the number of fingers bent.
-    /// </summary>
-    /// <param name="fingersBent">The number of fingers bent.</param>
-    /// <returns>Gesture the hand is making</returns>
-    public Gestures GetGesturesHelp(int fingersBent)
-    {
-        if (fingersBent == FIVE)
-            return Gestures.Grab;
-        else if (fingersBent == FOUR && glove.Fingers[0] < 0.4f)
-            return Gestures.Thumb;
-        else if (fingersBent == FOUR && glove.Fingers[4] < 0.4f)
-            return Gestures.Pinky;
-        else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == THREE)
-            return Gestures.Point;
-        else if (fingersBent <= (int)ONE)
-            return Gestures.Open;
-        return Gestures.None;
-    }
+	/// <summary>
+	/// Updates the gestures.
+	/// </summary>
+	public virtual void UpdateGestures()
+	{
+		IMoveGesture gesture = GestureController.GetGesture(this.glove);
+		gesture.UpdateGrabbed(baseCollider.transform.rotation, this.manusGrab);
+	}
 
     // Update is called once per frame
     /// <summary>

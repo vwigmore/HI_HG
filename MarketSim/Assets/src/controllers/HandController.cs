@@ -70,8 +70,10 @@ public class HandController : MonoBehaviour
     /// <returns>The new point</returns>
     private Vector3 CalculateContactPoint()
     {
-        if (collisionContacts.Count == 0)
-            return ((Collider)hand.GetColliders()[0]).transform.position;
+		if (collisionContacts.Count == 0) {
+			Debug.Log (((Collider)hand.GetColliders () [0]).gameObject);
+			return ((Collider)hand.GetColliders () [0]).transform.position;
+		}
         return CalculateAverageContactPoint();
     }
 
@@ -99,12 +101,10 @@ public class HandController : MonoBehaviour
     /// </summary>
     private void ProcessContacts()
     {
-        
         if (collisionContacts.Count >= 1)
         {
             bool thumbTouch = false;
             int othersTouch = 0;
-
             ContactDetected(thumbTouch,othersTouch);
         }
         else 
@@ -148,13 +148,9 @@ public class HandController : MonoBehaviour
     private void HandleTouch(bool thumbTouch, int othersTouch)
     {
         if (thumbTouch && (othersTouch >= 1))
-        {
             hand.GetManusGrab().GrabHighlightedObject();
-        }
         else
-        {
             hand.GetManusGrab().DropObject();
-        }
     }
  
     /// <summary>

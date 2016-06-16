@@ -17,21 +17,11 @@
         #region Fields
 
         /// <summary>
-        /// The throw force.
-        /// </summary>
-        private readonly float throwForce = 500;
-
-        /// <summary>
-        /// The last position.
+        /// The last position
         /// </summary>
         private Vector3 lastPos;
 
         private IHand hand;
-
-        /// <summary>
-        /// The last rotation.
-        /// </summary>
-        private Quaternion lastRotation;
 
         #endregion Fields
 
@@ -45,9 +35,6 @@
         public ManusGrab(GameObject grabber, Color highlightColor, IHand hand)
             : base(grabber, highlightColor)
         {
-            this.Grabber = grabber;
-            this.highlightColor = highlightColor;
-            this.lastRotation = Quaternion.identity;
             this.hand = hand;
         }
 
@@ -56,21 +43,20 @@
         #region Methods
 
         /// <summary>
-        /// Updates the grabbed object.
+        /// Updates the grabbed object's position and rotation
+        /// depending on whether it is a basket or not.
         /// </summary>
-        /// <param name="trans">The trans.</param>
+        /// <param name="grabPos">The collision point of with the grabbed object.</param>
+        /// <param name="grabberTransform">The transform component of the grabber.</param>
         public void UpdateGrabbedObject(Vector3 grabPos, Transform grabberTransform)
         {
             if (IsGrabbing())
             {
-                SetPrevPosition(GrabbedObject.transform.position);
+                base.UpdateGrabbedObject();
 
-                //Vector3 newpos = grabber.transform.position;
                 if (GrabbedObject.tag.Equals("basket"))
                 {
-                    float y = this.GrabbedObject.GetComponent<BoxCollider>().bounds.size.y;
                     UpdateGrabbedObjectsPosition(grabPos);
-
                     UpdateGrabbedObjectsRotation(grabberTransform);
                 }
 
@@ -83,8 +69,7 @@
         /// Updates the grabbed objects position.
         /// </summary>
         /// <param name="newpos">The new position.</param>
-        /// <param name="trans">The transform.</param>
-        public void UpdateGrabbedObjectsPosition(Vector3 newpos)
+        private void UpdateGrabbedObjectsPosition(Vector3 newpos)
         {
             GrabbedObject.transform.position = newpos;
             GrabbedObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -92,10 +77,10 @@
         }
 
         /// <summary>
-        /// Updates the grabbed objects rotation.
+        /// Updates the grabbed objects rotation if it is not a basket.
         /// </summary>
         /// <param name="trans">The trans.</param>
-        public void UpdateGrabbedObjectsRotation(Transform trans)
+        private void UpdateGrabbedObjectsRotation(Transform trans)
         {
             if (GrabbedObject.tag.Equals("basket"))
                 return;
