@@ -33,7 +33,7 @@ namespace Assets.Editor
         /// <summary>
         /// The basket
         /// </summary>
-        private GameObject basket;
+        private GameObject wrist;
 
         private IHand hand;
 
@@ -47,11 +47,11 @@ namespace Assets.Editor
         [SetUp]
         public new void Setup()
         {
-            basket = GameObject.Find("Wrist");
-            basket.AddComponent<BoxCollider>();
-            h = new ItemHolder(basket, 2, 4);
+            wrist = GameObject.Find("Wrist");
+            wrist.AddComponent<BoxCollider>();
+            h = new ItemHolder(wrist, 2, 4);
             manusGrab = (ManusGrab)PassGrab();
-            hand = HandFactory.createHand(GLOVE_HAND.GLOVE_RIGHT, basket.transform);
+            hand = HandFactory.createHand(GLOVE_HAND.GLOVE_RIGHT, wrist.transform);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Assets.Editor
         {
             manusGrab = null;
             h = null;
-            basket = null;
+            wrist = null;
         }
 
         /// <summary>
