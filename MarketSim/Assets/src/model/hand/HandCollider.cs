@@ -69,7 +69,7 @@ public static class HandCollider
 	{
 		SphereCollider s = new SphereCollider();
 		s = root.AddComponent<SphereCollider>();
-		s.radius = .02f;
+		s.radius = .03f;
 		return s;
 	}
 
