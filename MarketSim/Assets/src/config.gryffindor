@@ -18,7 +18,7 @@
 
 HIGHLIGHTON		= True
 GESTUREMOVEMENTON 	= FALSE
-MKBONLY 		= TRUE
+MKBONLY 		= false
 
 ################## [GRABBING] ################## 
 # PROXDIST: the 'grabber' (hand/camera) has to be within this distance to grab
@@ -30,7 +30,7 @@ MKBONLY 		= TRUE
 # VIBRATIONTIME: the time of the haptic feedback in ms.
 ###############################################
 
-PROXDIST 		= 1.0
+PROXDIST 		= 0.5
 THROWFORCE		= 500
 
 ENABLEVIBRATION		= true

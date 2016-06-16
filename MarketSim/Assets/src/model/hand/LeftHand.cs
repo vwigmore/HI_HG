@@ -35,18 +35,17 @@ public class LeftHand : Hand
 		if (Manager.MKBOnly)
 			return;
 		
-			Vector3 newpos = this.root.transform.position;
-			this.handModel.transform.position = newpos;
+		Vector3 newpos = this.root.transform.position;
+		this.handModel.transform.position = newpos;
 
-			GameObject wrist = GameObject.Find ("12_Wrist_Left");
-			GameObject elbow = GameObject.Find ("11_Elbow_Left");
-			Vector3 dir = wrist.transform.position - elbow.transform.position;
-			this.handModel.transform.rotation = Quaternion.FromToRotation (Vector3.right, dir);
+		GameObject wrist = GameObject.Find ("12_Wrist_Left");
+		GameObject elbow = GameObject.Find ("11_Elbow_Left");
+		Vector3 dir = wrist.transform.position - elbow.transform.position;
+		this.handModel.transform.rotation = Quaternion.FromToRotation (Vector3.forward, dir);
 
-
-        Vector3 newrot = this.root.transform.rotation.eulerAngles;
-        newrot.y += 90;
-        this.handModel.transform.rotation = Quaternion.Euler(newrot);
+        //Vector3 newrot = this.root.transform.rotation.eulerAngles;
+        //newrot.y += 90;
+        //this.handModel.transform.rotation = Quaternion.Euler(newrot);
     }
 
     /// <summary>

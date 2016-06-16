@@ -10,6 +10,7 @@ public static class HandCollider
 {
 	/// <summary>
 	/// The size of the base collider.
+	/// This is a collider for the palm of the hand.
 	/// </summary>
 	private static Vector3 baseColliderSize = new Vector3(0.1f, 0.02f, 0.1f);
 
@@ -29,6 +30,8 @@ public static class HandCollider
 
 	/// <summary>
 	/// Translates the base collider position.
+	/// The base collider will be translated to fit into the palm
+	/// of the hand.
 	/// </summary>
 	/// <returns>The base collider position.</returns>
 	/// <param name="pos">Position.</param>
@@ -41,6 +44,10 @@ public static class HandCollider
 
 	/// <summary>
 	/// Initializes the finger colliders.
+	/// For finger tips, create bigger sphere colliders.
+	/// For other parts of the fingers, 
+	/// 	create box colliders which are cheaper to calculate with.
+	/// Colliders are added to an arraylist, for future reference.
 	/// </summary>
 	/// <returns>The finger colliders.</returns>
 	/// <param name="gameTransforms">Game transforms.</param>
@@ -57,7 +64,6 @@ public static class HandCollider
 				} else {
 					collider = CreateFingerPartCollider (gameTransforms [i] [j].gameObject);
 				}
-				
 			}		
 		return colliders;
 	}
@@ -77,6 +83,7 @@ public static class HandCollider
 
 	/// <summary>
 	/// Creates the finger part collider.
+	/// These colliders are for the non-finger tip parts of the fingers.
 	/// </summary>
 	/// <returns>The finger part collider.</returns>
 	/// <param name="root">Root.</param>
@@ -88,5 +95,3 @@ public static class HandCollider
 		return b;
 	}
 }
-
-

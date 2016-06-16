@@ -70,10 +70,8 @@ public class HandController : MonoBehaviour
     /// <returns>The new point</returns>
     private Vector3 CalculateContactPoint()
     {
-		if (collisionContacts.Count == 0) {
-			Debug.Log (((Collider)hand.GetColliders () [0]).gameObject);
+		if (collisionContacts.Count == 0)
 			return ((Collider)hand.GetColliders () [0]).transform.position;
-		}
         return CalculateAverageContactPoint();
     }
 
