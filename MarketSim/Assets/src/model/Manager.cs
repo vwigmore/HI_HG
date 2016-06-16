@@ -182,6 +182,7 @@ public class Manager : MonoBehaviour
 
     #region Methods
 
+	/// <summary>
     /// Configuration of filtering, splitting and delimiting the configuration file.
     /// </summary>
     /// <param name="line">The line to configure.</param>
@@ -198,6 +199,7 @@ public class Manager : MonoBehaviour
         }
     }
 
+	/// <summary>
     /// Applies the parameters in the Manager.
     /// </summary>
     /// <param name="split">The configuration in array form.</param>
