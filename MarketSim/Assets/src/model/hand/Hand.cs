@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Abstract hand class, implementable by left/righthand controller
+/// Abstract hand class, implementable by left/right hand controller
 /// </summary>
 public abstract class Hand : IHand
 {
@@ -147,7 +147,7 @@ public abstract class Hand : IHand
     #region Methods
 
     /// <summary>
-    /// Inits the colliders.
+    /// Initializes the colliders.
     /// </summary>
     public void InitColliders()
     {

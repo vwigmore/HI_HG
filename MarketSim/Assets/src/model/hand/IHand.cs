@@ -1,10 +1,9 @@
-﻿
-﻿using UnityEngine;
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.src.model
 {
@@ -16,25 +15,15 @@ namespace Assets.src.model
         #region Methods
 
         /// <summary>
-        /// Initializes the transforms.
-        /// </summary>
-        //void InitTransforms();
-
-        /// <summary>
-        /// Creates the colliders.
-        /// </summary>
-        //void CreateColliders();
-
-        /// <summary>
         /// Updates the position.
         /// </summary>
         void UpdatePosition();
 
-		/// <summary>
-		/// Update the specified f and b.
-		/// </summary>
-		/// <param name="b">The bends value, determines if a finger can bend or not.</param>
-		void Update (bool[] b);
+        /// <summary>
+        /// Calls all update methods.
+        /// </summary>
+        /// <param name="b">The bends value, determines if a finger can bend or not.</param>
+        void Update(bool[] b);
 
         /// <summary>
         /// Updates the hand.
@@ -49,7 +38,7 @@ namespace Assets.src.model
         /// <summary>
         /// Returns the ManusGrabs.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The ManusGrab of the hand</returns>
         ManusGrab GetManusGrab();
 
         /// <summary>

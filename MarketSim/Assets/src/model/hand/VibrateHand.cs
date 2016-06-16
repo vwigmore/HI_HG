@@ -1,12 +1,17 @@
-﻿using UnityEngine;
-using System.Collections;
-using Assets.src.model;
+﻿using Assets.src.model;
 using ManusMachina;
-
+using System.Collections;
+using UnityEngine;
 
 public class VibrateHand : MonoBehaviour
 {
     #region Fields
+
+    /// <summary>
+    /// Manus Glove instance.
+    /// </summary>
+    protected Glove glove;
+
     /// <summary>
     /// The vibrate time.
     /// </summary>
@@ -23,14 +28,9 @@ public class VibrateHand : MonoBehaviour
     private float timer;
 
     /// <summary>
-    /// Bool if the glove should be vibrated.
+    /// If the glove should be vibrated.
     /// </summary>
     private bool vibrateGlove;
-
-    /// <summary>
-    /// Manus Glove instance.
-    /// </summary>
-    protected Glove glove;
 
     #endregion Fields
 
@@ -75,7 +75,6 @@ public class VibrateHand : MonoBehaviour
     ///// </summary>
     public void UpdateVibration()
     {
-
         if (timer <= vibrateTime && vibrateGlove)
         {
             glove.SetVibration(vibrationForce);
@@ -97,6 +96,4 @@ public class VibrateHand : MonoBehaviour
     }
 
     #endregion Methods
-
 }
-   

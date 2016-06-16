@@ -1,16 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public static class ManusControl
 {
     #region Fields
 
     /// <summary>
-    /// Magic numbers.
+    /// The number of fingers and phalanges.
     /// </summary>
-	private static readonly int FOUR = 4, FIVE = 5;
+    private static readonly int FOUR = 4, FIVE = 5;
 
-	#endregion Fields
+    #endregion Fields
 
     #region Methods
 
@@ -18,14 +18,14 @@ public static class ManusControl
     /// Creates the game transforms.
     /// </summary>
     /// <returns></returns>
-	public static Transform[][] CreateGameTransforms(Transform rootTransform)
+    public static Transform[][] CreateGameTransforms(Transform rootTransform)
     {
         Transform[][] gameTransforms = new Transform[FIVE][];
         for (int i = 0; i < FIVE; i++)
         {
             gameTransforms[i] = new Transform[FOUR];
             for (int j = 0; j < FOUR; j++)
-				gameTransforms[i][j] = FindDeepChild(rootTransform, "Finger_" + i.ToString() + j.ToString());
+                gameTransforms[i][j] = FindDeepChild(rootTransform, "Finger_" + i.ToString() + j.ToString());
         };
         return gameTransforms;
     }
@@ -34,23 +34,22 @@ public static class ManusControl
     /// Creates the model transforms.
     /// </summary>
     /// <returns></returns>
-	public static Transform[][] CreateModelTransforms(GameObject hand)
+    public static Transform[][] CreateModelTransforms(GameObject hand)
     {
-          Transform[][] modelTransforms = new Transform[FIVE][];
+        Transform[][] modelTransforms = new Transform[FIVE][];
         for (int i = 0; i < FIVE; i++)
         {
             modelTransforms[i] = new Transform[FOUR];
             for (int j = 0; j < FOUR; j++)
             {
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
-
             }
         }
         return modelTransforms;
     }
 
     /// <summary>
-    /// Finds the deep child. 
+    /// Finds the deep child.
     /// </summary>
     /// <param name="aParent">Transform to be searched</param>
     /// <param name="aName">Name of the (grand)child to be found</param>

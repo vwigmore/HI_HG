@@ -5,15 +5,24 @@ public interface IMoveGesture
 {
     #region Methods
 
+    /// <summary>
+    /// Moves the player in a direction according to gesture.
+    /// </summary>
+    /// <param name="player">The player object.</param>
     void MovePlayer(GameObject player);
 
+    /// <summary>
+    /// Updates the behavior when grabbing
+    /// </summary>
+    /// <param name="quat">The quaternion.</param>
+    /// <param name="grab">The type of grabbing.</param>
     void UpdateGrabbed(Quaternion quat, Grab grab);
 
     #endregion Methods
 }
 
 /// <summary>
-///
+/// Strategy for the gesture grab.
 /// </summary>
 internal class GestureGrab : IMoveGesture
 {
@@ -36,16 +45,12 @@ internal class GestureGrab : IMoveGesture
 }
 
 /// <summary>
-/// Strategy to move the player forward.
+/// Strategy for the gesture pointing.
 /// </summary>
 internal class GesturePoint : IMoveGesture
 {
     #region Methods
 
-    /// <summary>
-    /// Moves the player forward.
-    /// </summary>
-    /// <param name="player">The player game object.</param>
     public void MovePlayer(GameObject player)
     {
         player.GetComponent<PlayerController>().walkForward();
@@ -59,16 +64,12 @@ internal class GesturePoint : IMoveGesture
 }
 
 /// <summary>
-/// Strategy to move the player backward.
+/// Strategy for the gesture thumb.
 /// </summary>
 internal class GestureThumb : IMoveGesture
 {
     #region Methods
 
-    /// <summary>
-    /// Moves the player backward.
-    /// </summary>
-    /// <param name="player">The player.</param>
     public void MovePlayer(GameObject player)
     {
         player.GetComponent<PlayerController>().walkBackwards();
@@ -82,7 +83,7 @@ internal class GestureThumb : IMoveGesture
 }
 
 /// <summary>
-/// Strategy to rotate the player right
+/// Strategy for the gesture pinky.
 /// </summary>
 internal class GesturePinky : IMoveGesture
 {
@@ -101,7 +102,7 @@ internal class GesturePinky : IMoveGesture
 }
 
 /// <summary>
-///
+/// Strategy for no gesture.
 /// </summary>
 internal class GestureNone : IMoveGesture
 {
@@ -119,7 +120,7 @@ internal class GestureNone : IMoveGesture
 }
 
 /// <summary>
-///
+/// Strategy for the gesture open.
 /// </summary>
 internal class GestureOpen : IMoveGesture
 {

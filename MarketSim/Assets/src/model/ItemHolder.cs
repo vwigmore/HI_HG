@@ -88,7 +88,7 @@ namespace Assets.src.model
         #region Methods
 
         /// <summary>
-        /// Calculate offset for each cell.
+        /// Calculates the offset for each cell.
         /// </summary>
         public void InitOffsets()
         {

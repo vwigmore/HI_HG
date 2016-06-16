@@ -1,13 +1,9 @@
 ﻿using UnityEngine;
 
-/**
- * Player Controller Script
- * Controls the player character in the simulation.
- * Simulation uses mouse and keyboard for the time being.
- *
- * Author: Wing Nguyen
- **/
-
+/// <summary>
+/// Controls the player character in the simulation.
+/// Simulation uses mouse and keyboard for the time being.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     #region Fields
