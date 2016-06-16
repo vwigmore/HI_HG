@@ -45,7 +45,7 @@
         /// <summary>
         /// The previous grabber rot
         /// </summary>
-        private Quaternion prevGrabberRot;
+        public Quaternion prevGrabberRot { get; set; }
 
         #endregion Fields
 

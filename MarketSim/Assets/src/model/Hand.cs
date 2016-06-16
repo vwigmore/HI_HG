@@ -163,15 +163,6 @@ public abstract class Hand : IHand
 
     #endregion Constructors
 
-    #region Enums
-
-    /// <summary>
-    /// Contains count of fingers bent 0-5.
-    /// </summary>
-    public enum FingersBent { zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5 }
-
-    #endregion Enums
-
     #region Methods
 
     /// <summary>
@@ -206,11 +197,11 @@ public abstract class Hand : IHand
     public void UpdateFingers(float[] f, bool[] bend)
     {
         float avgbend = 0.0f;
-        for (int i = 0; i < (int)FingersBent.five; i++)
+        for (int i = 0; i < 5; i++)
         {
             animationClip.SampleAnimation(hand, f[i] * timeFactor);
             avgbend += f[i];
-            for (int j = 0; j < (int)FingersBent.four; j++)
+            for (int j = 0; j < 4; j++)
             {
                 gameTransforms[i][j].localRotation = modelTransforms[i][j].localRotation;
             }
@@ -219,7 +210,7 @@ public abstract class Hand : IHand
 
         float thumbvalue = (avgbend > f[0]) ? avgbend : f[0];
         animationClip.SampleAnimation(hand, thumbvalue * timeFactor);
-        for (int j = 0; j < (int)FingersBent.four; j++)
+        for (int j = 0; j < 4; j++)
         {
             gameTransforms[0][j].localRotation = modelTransforms[0][j].localRotation;
         }
@@ -230,64 +221,8 @@ public abstract class Hand : IHand
     /// </summary>
     public virtual void UpdateGestures()
     {
-        Gestures gesture = GetGesture();
-
-        //if (!manusGrab.IsGrabbing())
-        //{
-        //    if (gesture == Gestures.Grab)
-        //    {
-        //        manusGrab.GrabHighlightedObject();
-        //        manusGrab.SetPrevGrabberRot(baseCollider.transform.rotation);
-        //    }
-        //}
-        //else
-        //{
-        //    if (gesture == Gestures.Open)
-        //        manusGrab.DropObject();
-        //}
-
-        if (manusGrab.IsGrabbing())
-        {
-            if (gesture == Gestures.Open)
-                manusGrab.DropObject();
-        }
-    }
-
-    /// <summary>
-    /// Returns which gesture the hand is making.
-    /// </summary>
-    /// <returns>Gesture the hand is making</returns>
-    public Gestures GetGesture()
-    {
-        int fingersBent = 0;
-        for (int i = 0; i < (int)FingersBent.five; i++)
-        {
-            if (this.glove.Fingers[i] >= BendThreshold)
-            {
-                fingersBent++;
-            }
-        }
-        return GetGesturesHelp(fingersBent);
-    }
-
-    /// <summary>
-    /// Returns a gesture by checking the number of fingers bent.
-    /// </summary>
-    /// <param name="fingersBent">The number of fingers bent.</param>
-    /// <returns></returns>
-    public Gestures GetGesturesHelp(int fingersBent)
-    {
-        if (fingersBent == (int)FingersBent.five)
-            return Gestures.Grab;
-        else if (fingersBent == (int)FingersBent.four && glove.Fingers[0] < 0.4f)
-            return Gestures.Thumb;
-        else if (fingersBent == (int)FingersBent.four && glove.Fingers[4] < 0.4f)
-            return Gestures.Pinky;
-        else if (glove.Fingers[1] < 0.4f && glove.Fingers[2] < 0.4f && fingersBent == (int)FingersBent.three)
-            return Gestures.Point;
-        else if (fingersBent <= (int)FingersBent.one)
-            return Gestures.Open;
-        return Gestures.None;
+        IMoveGesture gesture = GestureController.GetGesture(this.glove);
+        gesture.UpdateGrabbed(baseCollider.transform.rotation, this.manusGrab);
     }
 
     /// <summary>
@@ -297,7 +232,7 @@ public abstract class Hand : IHand
     {
         InitializeBaseCollider();
 
-        //InitializeRigidCollider(); not needed
+        InitializeRigidCollider();
     }
 
     /// <summary>
@@ -353,13 +288,13 @@ public abstract class Hand : IHand
     /// </summary>
     public void InitTransforms()
     {
-        gameTransforms = new Transform[(int)FingersBent.five][];
-        modelTransforms = new Transform[(int)FingersBent.five][];
-        for (int i = 0; i < (int)FingersBent.five; i++)
+        gameTransforms = new Transform[5][];
+        modelTransforms = new Transform[5][];
+        for (int i = 0; i < 5; i++)
         {
-            gameTransforms[i] = new Transform[(int)FingersBent.four];
-            modelTransforms[i] = new Transform[(int)FingersBent.four];
-            for (int j = 0; j < (int)FingersBent.four; j++)
+            gameTransforms[i] = new Transform[4];
+            modelTransforms[i] = new Transform[4];
+            for (int j = 0; j < 4; j++)
             {
                 gameTransforms[i][j] = FindDeepChild(RootTransform, "Finger_" + i.ToString() + j.ToString());
                 modelTransforms[i][j] = FindDeepChild(hand.transform, "Finger_" + i.ToString() + j.ToString());
