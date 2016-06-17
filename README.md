@@ -22,10 +22,6 @@ t.n.nguyen@student.tudelft.nl 4287118
 # System requirements / dependencies
 * Visual Studio 2013
 * Unity 5.3.4 P1 or newer stable releases.
-* [Manus-Unity SDK](https://github.com/ManusVR/Manus-Unity)
-* [Kinect Windows SDK v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
-* [Kinect Toolkit v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40276)
-* [Kinect Wrapper Package for Unity3D (direct link)](http://wiki.etc.cmu.edu/unity3d/images/a/ac/Kinect1.7UnityPackage.new.zip)
 
 # Code Tools (Visual Studio Extensions)
 * [StyleCop](https://visualstudiogallery.msdn.microsoft.com/cac2a05b-6eb6-4fa2-95b9-1f8d011e6cae)
@@ -36,22 +32,15 @@ t.n.nguyen@student.tudelft.nl 4287118
 
 # Unity Cloud Build
 * Most recent builds:
-![Unity builds 17/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds10-6.jpg)
+![Unity builds 17/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds-final.jpg)
 * [Unity Cloud (Might need Unity Account and invite first)] (https://build.cloud.unity3d.com/orgs/msimidzioski/projects/hi_hg/) 
 
 # SIG Code Quality Report
 * Most recent report:
-![SIG report 10/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/final-build.jpg)
+![SIG report 17/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/SIG17-6.jpg)
 
 # Running the project
 
-* Clone or download the repository as a zip file.
-* Open up Unity and import project, import folder named 'Marketsim'
-* To run, press the play button in the editor of Unity.
-* To test the simulation using keyboard and mouse, use keys wasd to move, look around with mouse, select an object (bottles) bij standing near to it and left-click it. To jump press space, to crouch down press left ctrl, to stand up press left shift. 
-
-# About
-(Draft version)
-The structure of the project is as follows:
-The Asset folder contains source code and 3D models.
-The Asset/src/model/ folder contains classes that the Unity controllers in Asset/src/controllers will use.
+* The project needs to be downloaded or cloned from the repository. Then the project needs 
+* to be imported into Unity, specifically the folder “Marketsim”. To run the project the
+* play button in the editor of Unity needs to be pressed.
