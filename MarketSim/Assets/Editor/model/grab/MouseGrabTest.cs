@@ -104,15 +104,6 @@ namespace Assets.Editor
             Assert.AreEqual(mouseGrab.GrabbedObject, highlighted);
         }
 
-        /// <summary>
-        /// Constructor test
-        /// </summary>
-        [Test]
-        public void ConstructorTest()
-        {
-            Assert.NotNull(this.mouseGrab);
-        }
-
         #endregion Methods
     }
 }

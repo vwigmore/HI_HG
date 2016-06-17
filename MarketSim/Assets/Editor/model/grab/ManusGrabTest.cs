@@ -33,7 +33,7 @@ namespace Assets.Editor
         /// <summary>
         /// The basket
         /// </summary>
-        private GameObject basket;
+        private GameObject wrist;
 
         private IHand hand;
 
@@ -47,12 +47,11 @@ namespace Assets.Editor
         [SetUp]
         public new void Setup()
         {
-            basket = new GameObject("basket");
-            basket.AddComponent<Rigidbody>();
-            basket.AddComponent<BoxCollider>();
-            h = new ItemHolder(basket, 2, 4);
+            wrist = GameObject.Find("Wrist");
+            wrist.AddComponent<BoxCollider>();
+            h = new ItemHolder(wrist, 2, 4);
             manusGrab = (ManusGrab)PassGrab();
-            hand = HandFactory.createHand(GLOVE_HAND.GLOVE_RIGHT, basket.transform);
+            hand = HandFactory.createHand(GLOVE_HAND.GLOVE_RIGHT, wrist.transform);
         }
 
         /// <summary>
@@ -63,7 +62,7 @@ namespace Assets.Editor
         {
             manusGrab = null;
             h = null;
-            basket = null;
+            wrist = null;
         }
 
         /// <summary>
@@ -74,8 +73,6 @@ namespace Assets.Editor
         {
             GameObject player = new GameObject("player");
             return new ManusGrab(player, highlightColor, hand);
-
-            //return new ManusGrab(player, highlightColor);
         }
 
         /// <summary>
@@ -86,15 +83,6 @@ namespace Assets.Editor
         {
             manusGrab.GrabHighlightedObject();
             Assert.AreEqual(manusGrab.GrabbedObject, highlighted);
-        }
-
-        /// <summary>
-        /// Constructor test
-        /// </summary>
-        [Test]
-        public void ConstructorTest()
-        {
-            Assert.NotNull(this.manusGrab);
         }
 
         #endregion Methods

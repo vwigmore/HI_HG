@@ -38,16 +38,16 @@ public class RightHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-		if (Manager.MKBOnly)
-			return;
-		
-		Vector3 newpos = this.root.transform.position;
-		this.handModel.transform.position = newpos;
+        if (Manager.MKBOnly)
+            return;
 
-		GameObject wrist = GameObject.Find ("22_Wrist_Right");
-		GameObject elbow = GameObject.Find ("21_Elbow_Right");
-		Vector3 dir = wrist.transform.position - elbow.transform.position;
-		this.handModel.transform.rotation = Quaternion.FromToRotation (new Vector3(0, 0, Manager.GloveForward), dir);
+        Vector3 newpos = this.root.transform.position;
+        this.handModel.transform.position = newpos;
+
+        GameObject wrist = GameObject.Find("22_Wrist_Right");
+        GameObject elbow = GameObject.Find("21_Elbow_Right");
+        Vector3 dir = wrist.transform.position - elbow.transform.position;
+        this.handModel.transform.rotation = Quaternion.FromToRotation(new Vector3(0, 0, Manager.GloveForward), dir);
     }
 
     #endregion Methods

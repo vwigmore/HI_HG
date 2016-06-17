@@ -24,7 +24,7 @@ public interface IMoveGesture
 /// <summary>
 /// Strategy for the gesture grab.
 /// </summary>
-internal class GestureGrab : IMoveGesture
+public class GestureGrab : IMoveGesture
 {
     #region Methods
 
@@ -47,7 +47,7 @@ internal class GestureGrab : IMoveGesture
 /// <summary>
 /// Strategy for the gesture pointing.
 /// </summary>
-internal class GesturePoint : IMoveGesture
+public class GesturePoint : IMoveGesture
 {
     #region Methods
 
@@ -66,7 +66,7 @@ internal class GesturePoint : IMoveGesture
 /// <summary>
 /// Strategy for the gesture thumb.
 /// </summary>
-internal class GestureThumb : IMoveGesture
+public class GestureThumb : IMoveGesture
 {
     #region Methods
 
@@ -85,7 +85,7 @@ internal class GestureThumb : IMoveGesture
 /// <summary>
 /// Strategy for the gesture pinky.
 /// </summary>
-internal class GesturePinky : IMoveGesture
+public class GesturePinky : IMoveGesture
 {
     #region Methods
 
@@ -104,7 +104,7 @@ internal class GesturePinky : IMoveGesture
 /// <summary>
 /// Strategy for no gesture.
 /// </summary>
-internal class GestureNone : IMoveGesture
+public class GestureNone : IMoveGesture
 {
     #region Methods
 
@@ -122,7 +122,7 @@ internal class GestureNone : IMoveGesture
 /// <summary>
 /// Strategy for the gesture open.
 /// </summary>
-internal class GestureOpen : IMoveGesture
+public class GestureOpen : IMoveGesture
 {
     #region Methods
 

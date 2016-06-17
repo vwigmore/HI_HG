@@ -32,16 +32,16 @@ public class LeftHand : Hand
     /// </summary>
     public override void UpdatePosition()
     {
-		if (Manager.MKBOnly)
-			return;
-		
-		Vector3 newpos = this.root.transform.position;
-		this.handModel.transform.position = newpos;
+        if (Manager.MKBOnly)
+            return;
 
-		GameObject wrist = GameObject.Find ("12_Wrist_Left");
-		GameObject elbow = GameObject.Find ("11_Elbow_Left");
-		Vector3 dir = wrist.transform.position - elbow.transform.position;
-		this.handModel.transform.rotation = Quaternion.FromToRotation (new Vector3(0, 0, Manager.GloveForward), dir);
+        Vector3 newpos = this.root.transform.position;
+        this.handModel.transform.position = newpos;
+
+        GameObject wrist = GameObject.Find("12_Wrist_Left");
+        GameObject elbow = GameObject.Find("11_Elbow_Left");
+        Vector3 dir = wrist.transform.position - elbow.transform.position;
+        this.handModel.transform.rotation = Quaternion.FromToRotation(new Vector3(0, 0, Manager.GloveForward), dir);
     }
 
     /// <summary>
@@ -89,5 +89,6 @@ public class LeftHand : Hand
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().rotateRight();
     }
+
     #endregion Methods
 }
