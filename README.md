@@ -44,7 +44,7 @@ t.n.nguyen@student.tudelft.nl 4287118
 ![SIG report 10/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/final-build.jpg)
 
 # Running the project
-(Draft version)
+
 * Clone or download the repository as a zip file.
 * Open up Unity and import project, import folder named 'Marketsim'
 * To run, press the play button in the editor of Unity.
