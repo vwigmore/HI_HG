@@ -36,12 +36,12 @@ t.n.nguyen@student.tudelft.nl 4287118
 
 # Unity Cloud Build
 * Most recent builds:
-![Unity builds 10/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds10-6.jpg)
+![Unity builds 17/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds10-6.jpg)
 * [Unity Cloud (Might need Unity Account and invite first)] (https://build.cloud.unity3d.com/orgs/msimidzioski/projects/hi_hg/) 
 
 # SIG Code Quality Report
 * Most recent report:
-![SIG report 10/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/SIG10-6.jpg)
+![SIG report 10/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/final-build.jpg)
 
 # Running the project
 (Draft version)
