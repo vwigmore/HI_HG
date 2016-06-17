@@ -49,6 +49,11 @@ public class Manager : MonoBehaviour
     /// </summary>
     private static int vibrationTime;
 
+	/// <summary>
+	/// The glove orientation (z-axis), used to align the glove with the arms.
+	/// </summary>
+	private static int gloveForward;
+
     /// <summary>
     /// The configuration location.
     /// </summary>
@@ -136,6 +141,18 @@ public class Manager : MonoBehaviour
         }
     }
 
+	/// <summary>
+	/// Gets the glove orientation.
+	/// </summary>
+	/// <value>The glove orientation.</value>
+	public static int GloveForward
+	{
+		get 
+		{
+			return Manager.gloveForward;
+		}
+	}
+
     /// <summary>
     /// Gets a value indicating whether [MKB only].
     /// </summary>
@@ -207,14 +224,15 @@ public class Manager : MonoBehaviour
     {
         switch (split[0])
         {
-            case "HIGHLIGHTON": Manager.highlightOn = (split[1] == "TRUE"); break;
-            case "GESTUREMOVEMENTON": Manager.gestureMovementOn = (split[1] == "TRUE"); break;
-            case "MKBONLY": Manager.mKbOnly = (split[1] == "TRUE"); break;
-            case "PROXDIST": Manager.proximityDist = float.Parse(split[1]); break;
-            case "THROWFORCE": Manager.throwForce = float.Parse(split[1]); break;
-            case "ENABLEVIBRATION": Manager.enableVibration = (split[1] == "TRUE"); break;
-            case "VIBRATIONFORCE": Manager.vibrationForce = float.Parse(split[1]); break;
-            case "VIBRATIONTIME": Manager.vibrationTime = int.Parse(split[1]); break;
+            case "HIGHLIGHTON": 		Manager.highlightOn 		= (split[1] == "TRUE"); break;
+            case "GESTUREMOVEMENTON": 	Manager.gestureMovementOn 	= (split[1] == "TRUE"); break;
+            case "MKBONLY": 			Manager.mKbOnly 			= (split[1] == "TRUE"); break;
+            case "PROXDIST": 			Manager.proximityDist 		= float.Parse(split[1]); break;
+            case "THROWFORCE": 			Manager.throwForce 			= float.Parse(split[1]); break;
+            case "ENABLEVIBRATION": 	Manager.enableVibration 	= (split[1] == "TRUE"); break;
+            case "VIBRATIONFORCE": 		Manager.vibrationForce 		= float.Parse(split[1]); break;
+            case "VIBRATIONTIME": 		Manager.vibrationTime 		= int.Parse(split[1]); break;
+			case "GLOVEFORWARD":	 	Manager.gloveForward	 	= int.Parse (split [1]); break;
             default: break;
         }
     }
@@ -238,6 +256,7 @@ public class Manager : MonoBehaviour
         Manager.enableVibration = true;
         Manager.vibrationForce = 0.1f;
         Manager.vibrationTime = 300;
+		Manager.gloveForward = 1;
         readConfig();
     }
 

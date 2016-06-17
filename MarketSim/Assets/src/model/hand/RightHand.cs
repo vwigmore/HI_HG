@@ -47,7 +47,7 @@ public class RightHand : Hand
         GameObject wrist = GameObject.Find("22_Wrist_Right");
         GameObject elbow = GameObject.Find("21_Elbow_Right");
         Vector3 dir = wrist.transform.position - elbow.transform.position;
-        this.handModel.transform.rotation = Quaternion.FromToRotation(Vector3.forward, dir);
+        this.handModel.transform.rotation = Quaternion.FromToRotation(new Vector3(0, 0, Manager.GloveForward), dir);
     }
 
     #endregion Methods
