@@ -22,9 +22,11 @@ t.n.nguyen@student.tudelft.nl 4287118
 # System requirements / dependencies
 * Visual Studio 2013
 * Unity 5.3.4 P1 or newer stable releases.
-* [Manus-Unity SDK](https://github.com/ManusVR/Manus-Unity)
 * [Kinect Windows SDK v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
 * [Kinect Toolkit v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40276)
+
+  **Unity packages**
+* [Manus-Unity SDK](https://github.com/ManusVR/Manus-Unity)
 * [Kinect Wrapper Package for Unity3D (direct link)](http://wiki.etc.cmu.edu/unity3d/images/a/ac/Kinect1.7UnityPackage.new.zip)
 
 # Code Tools (Visual Studio Extensions)
