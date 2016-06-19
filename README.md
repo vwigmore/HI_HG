@@ -25,7 +25,7 @@ t.n.nguyen@student.tudelft.nl 4287118
 * [Kinect Windows SDK v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40278)
 * [Kinect Toolkit v1.8](https://www.microsoft.com/en-us/download/details.aspx?id=40276)
 
-  **Unity packages**
+  **Unity packages:**
 * [Manus-Unity SDK](https://github.com/ManusVR/Manus-Unity)
 * [Kinect Wrapper Package for Unity3D (direct link)](http://wiki.etc.cmu.edu/unity3d/images/a/ac/Kinect1.7UnityPackage.new.zip)
 
