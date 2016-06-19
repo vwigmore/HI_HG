@@ -31,7 +31,7 @@ t.n.nguyen@student.tudelft.nl 4287118
 * [CodeMaid](http://www.codemaid.net/)
 
 # Unity Cloud Build
-* Most recent builds:
+* Most recent builds (screenshot taken on 19-06-2016):
 ![Unity builds 17/6/2016](https://raw.githubusercontent.com/vwigmore/HI_HG/master/SE%20deliverables/builds19-06.PNG)
 * [Unity Cloud (Might need Unity Account and invite first)] (https://build.cloud.unity3d.com/orgs/msimidzioski/projects/hi_hg/) 
 
