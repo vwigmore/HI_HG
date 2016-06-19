@@ -16,9 +16,9 @@
 # MKBONLY: Controlling the simulation without VR hardware
 ###############################################
 
-HIGHLIGHTON		= True
+HIGHLIGHTON			= True
 GESTUREMOVEMENTON 	= FALSE
-MKBONLY 		= false
+MKBONLY 			= true
 
 ################## [GRABBING] ################## 
 # PROXDIST: the 'grabber' (hand/camera) has to be within this distance to grab
@@ -31,8 +31,8 @@ MKBONLY 		= false
 # GLOVEORIENTATION: used to align the glove in the z axis -1 or 1
 ###############################################
 
-PROXDIST 		= 0.5
-THROWFORCE		= 500
+PROXDIST 			= 2
+THROWFORCE			= 500
 
 ENABLEVIBRATION		= true
 VIBRATIONFORCE		= 0.1
