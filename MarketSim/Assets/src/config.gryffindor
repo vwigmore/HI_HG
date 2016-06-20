@@ -18,7 +18,7 @@
 
 HIGHLIGHTON			= True
 GESTUREMOVEMENTON 	= FALSE
-MKBONLY 			= true
+MKBONLY 			= false
 
 ################## [GRABBING] ################## 
 # PROXDIST: the 'grabber' (hand/camera) has to be within this distance to grab
@@ -38,4 +38,4 @@ ENABLEVIBRATION		= true
 VIBRATIONFORCE		= 0.1
 VIBRATIONTIME		= 100
 
-GLOVEFORWARD		= -1
+GLOVEFORWARD		= 1
