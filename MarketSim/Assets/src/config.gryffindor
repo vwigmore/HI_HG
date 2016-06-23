@@ -16,7 +16,7 @@
 # MKBONLY: Controlling the simulation without VR hardware
 ###############################################
 
-HIGHLIGHTON			= True
+HIGHLIGHTON			= false
 GESTUREMOVEMENTON 	= FALSE
 MKBONLY 			= false
 
@@ -31,10 +31,10 @@ MKBONLY 			= false
 # GLOVEORIENTATION: used to align the glove in the z axis -1 or 1
 ###############################################
 
-PROXDIST 			= 2
-THROWFORCE			= 500
+PROXDIST 			= 1
+THROWFORCE			= 1500
 
-ENABLEVIBRATION		= true
+ENABLEVIBRATION		= false
 VIBRATIONFORCE		= 0.1
 VIBRATIONTIME		= 100
 
