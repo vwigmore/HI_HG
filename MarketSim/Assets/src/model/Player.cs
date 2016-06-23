@@ -166,6 +166,11 @@ public class Player
     /// </summary>
     public void updateRotation()
     {
+        if (Input.GetKey(KeyCode.Q))
+            pc.transform.Rotate(new Vector3(0, -50 * Time.deltaTime, 0));
+        else if (Input.GetKey(KeyCode.E))
+            pc.transform.Rotate(new Vector3(0, 50 * Time.deltaTime, 0));
+
         mouseAxisY = Input.GetAxis("Mouse Y");
         cam_vert_rot -= mouseAxisY;
 
