@@ -6,6 +6,8 @@
 #| |(_)|_|_> (/_   \_| |  /  |  |  | | |(_|(_) | #
 ##################################################
 
+####THIS FILE IS READ BY controllers\Manager.cs####
+
 # Lines starting with # are ignored.
 # Format: <attribute> = <val>
 # Not case sensitive.
